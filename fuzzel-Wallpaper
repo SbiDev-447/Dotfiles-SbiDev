@@ -1,0 +1,143 @@
+#!/bin/bash
+# wallpaper-switcher - Cambia el wallpaper con transiciones y temas personalizados
+# Copyright (C) 2026  SbiDev-447
+#
+# Este programa es software libre: puedes redistribuirlo y/o modificarlo
+# bajo los términos de la Licencia Pública General de GNU v3 o posterior.
+#
+# Este programa se distribuye SIN NINGUNA GARANTÍA; ni siquiera la garantía
+# implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.
+# Consulta la GPLv3 para más detalles en <https://www.gnu.org/licenses/>.
+#
+# Deberías haber recibido una copia de la GPLv3 junto con este programa.
+# Si no, consulta <https://www.gnu.org/licenses/gpl-3.0.html>.
+
+# ~/.local/bin/niri-wallpaper-fuzzel
+
+set -euo pipefail
+
+# ==================== CONFIGURACIÓN ====================
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Imágenes/Wallpapers}"
+RENDER_MODE="${WALLPAPER_RENDER_MODE:-fill}"
+
+# Intentar con tilde y sin tilde (español)
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  WALLPAPER_DIR="$HOME/Imagenes/Wallpapers"
+fi
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+fi
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  notify-send "Error" "No se encuentra la carpeta de wallpapers"
+  exit 1
+fi
+
+# Formatear nombre para mostrar en fuzzel
+format_name() {
+  local file="$1"
+  local dir="$WALLPAPER_DIR"
+
+  # Obtener ruta relativa
+  local rel_path="${file#$dir/}"
+
+  # Extraer carpeta y nombre
+  local folder=$(dirname "$rel_path")
+  local basename=$(basename "$rel_path")
+
+  if [ "$folder" = "." ]; then
+    echo "$basename"
+  else
+    echo "[$folder] $basename"
+  fi
+}
+
+# Seleccionar imagen con fuzzel
+select_image() {
+  local selected
+
+  # SOLO BUSCA .webp
+  selected=$(find "$WALLPAPER_DIR" -type f -iname "*.webp" -print0 | while IFS= read -r -d '' file; do
+    format_name "$file"
+  done | fuzzel --dmenu \
+    -p "Fondo: " \
+    --lines=15 \
+    --width=70 \
+    --font "IosevkaTerm NF:size=14")
+
+  echo "$selected"
+}
+
+# Reconstruir ruta completa desde el nombre formateado
+reconstruct_path() {
+  local selected="$1"
+  local full_path
+
+  if [[ "$selected" =~ ^\[([^\]]+)\]\ (.*)$ ]]; then
+    # Tiene formato [carpeta] nombre
+    local folder="${BASH_REMATCH[1]}"
+    local filename="${BASH_REMATCH[2]}"
+
+    # Si el filename tiene barras, hay subcarpetas adicionales
+    if [[ "$filename" == */* ]]; then
+      local file_dir=$(dirname "$filename")
+      local file_base=$(basename "$filename")
+      full_path="$WALLPAPER_DIR/$folder/$file_dir/$file_base"
+    else
+      full_path="$WALLPAPER_DIR/$folder/$filename"
+    fi
+  else
+    # Archivo en la raíz
+    full_path="$WALLPAPER_DIR/$selected"
+  fi
+
+  echo "$full_path"
+}
+
+# Validar imagen
+validate_image() {
+  local image="$1"
+
+  # Solo verificar que existe, es legible y no está vacío
+  [ -f "$image" ] && [ -r "$image" ] && [ -s "$image" ]
+}
+
+# Cambiar wallpaper
+change_wallpaper() {
+  local full_path="$1"
+
+  # Matar proceso anterior
+  pkill -u "$USER" -x swaybg 2>/dev/null || true
+
+  # Dormir solo 20 milisegundos (prácticamente instantáneo)
+  sleep 0.01
+
+  # Lanzar nuevo wallpaper
+  nohup swaybg -i "$full_path" -m "$RENDER_MODE" >/dev/null 2>&1 &
+  disown
+
+  # Guardar último wallpaper
+  echo "$full_path" >"/tmp/last_wallpaper.txt"
+
+}
+
+# ==================== EJECUCIÓN PRINCIPAL ====================
+
+# Seleccionar imagen
+selected=$(select_image)
+
+# Si no se seleccionó nada, salir
+[ -z "$selected" ] && exit 0
+
+# Reconstruir ruta
+full_path=$(reconstruct_path "$selected")
+
+# Verificar que la imagen existe y es válida
+if ! validate_image "$full_path"; then
+  notify-send "Error" "La imagen no es válida o está corrupta"
+  exit 1
+fi
+
+# Cambiar wallpaper
+change_wallpaper "$full_path"

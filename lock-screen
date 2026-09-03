@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Ejecuta swaylock en segundo plano
+swaylock \
+  --image "/home/sbi/Imágenes/Wallpapers/Dark/Sepia/Muun-You-Ghost-My-Heart.webp" \
+  --scaling "fill" \
+  --font "IosevkaTerm NF" \
+  --color 06080f \
+  --text-color f3f6f9 \
+  --ring-color 263356 \
+  --key-hl-color 7fb4ca \
+  --line-color 06080f \
+  --inside-color 06080f \
+  --separator-color 06080f \
+  --line-uses-ring \
+  --indicator-radius 100 \
+  --indicator-thickness 10 \
+  --ring-ver-color 7aa89f \
+  --inside-ver-color 1a2a3a \
+  --text-ver-color f3f6f9 \
+  --ring-wrong-color cb7c94 \
+  --inside-wrong-color 2a1218 \
+  --text-wrong-color f3f6f9 &
+
+sleep 0.25
+
+# Apaga la pantalla OLED antes de bloquear (protege burn-in)
+niri msg action power-off-monitors &
+systemctl suspend
