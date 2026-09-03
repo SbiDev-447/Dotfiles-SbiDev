@@ -1,0 +1,133 @@
+#!/bin/bash
+
+# CLI para convertir recursivamente imágenes a WebP en ~/Imagenes/Wallpaper
+# Orientado como CLI
+
+set -euo pipefail
+
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Imágenes/Wallpapers}"
+
+# Intentar con tilde y sin tilde (español)
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  WALLPAPER_DIR="$HOME/Imagenes/Wallpapers"
+fi
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+fi
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  notify-send "Error" "No se encuentra la carpeta de wallpapers"
+  exit 1
+fi
+
+CONVERTED_COUNT=0
+FAILED_COUNT=0
+TOTAL_IMAGES=0
+ORIGINAL_FILES=()
+
+# Colores para output (opcional, para mejor legibilidad)
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Verificar que ImageMagick está instalado
+if ! command -v convert &>/dev/null; then
+  echo -e "${RED}Error: ImageMagick no está instalado.${NC}"
+  echo "Instálalo con: sudo apt install imagemagick  (o el gestor de paquetes de tu distro)"
+  exit 1
+fi
+
+# Verificar que el directorio existe
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  echo -e "${RED}Error: El directorio $WALLPAPER_DIR no existe.${NC}"
+  exit 1
+fi
+
+echo -e "${GREEN}=== CONVERSOR RECURSIVO A WEBP ===${NC}"
+echo "Directorio base: $WALLPAPER_DIR"
+echo "Buscando imágenes... (esto puede tomar un momento)"
+echo ""
+
+# Función para convertir una imagen
+convert_image() {
+  local input_file="$1"
+  local output_file="${input_file%.*}.webp"
+
+  # Verificar si ya existe el WebP (para no reconvertir)
+  if [ -f "$output_file" ]; then
+    echo -e "${YELLOW}⚠  Saltando: $input_file (el WebP ya existe)${NC}"
+    return 0
+  fi
+
+  echo -e "🔄  Convirtiendo: $input_file"
+
+  # Intentar convertir con calidad 80 (buen balance)
+  if convert "$input_file" -quality 80 -strip "$output_file" 2>/dev/null; then
+    echo -e "${GREEN}✓  Convertido: $(basename "$output_file")${NC}"
+    CONVERTED_COUNT=$((CONVERTED_COUNT + 1))
+    ORIGINAL_FILES+=("$input_file")
+    return 0
+  else
+    echo -e "${RED}✗  Falló: $input_file${NC}"
+    FAILED_COUNT=$((FAILED_COUNT + 1))
+    return 1
+  fi
+}
+
+# Buscar y procesar archivos de imagen
+# Usamos find para buscar recursivamente todas las imágenes comunes
+echo "Procesando archivos..."
+while IFS= read -r -d '' file; do
+  TOTAL_IMAGES=$((TOTAL_IMAGES + 1))
+  convert_image "$file"
+done < <(find "$WALLPAPER_DIR" -type f \( \
+  -iname "*.jpg" -o \
+  -iname "*.jpeg" -o \
+  -iname "*.png" -o \
+  -iname "*.gif" -o \
+  -iname "*.bmp" -o \
+  -iname "*.tiff" -o \
+  -iname "*.tif" -o \
+  -iname "*.webp" -o \
+  -iname "*.avif" -o \
+  -iname "*.heic" -o \
+  -iname "*.heif" \) -print0)
+
+echo ""
+echo -e "${GREEN}=== RESUMEN ===${NC}"
+echo "Total de imágenes encontradas: $TOTAL_IMAGES"
+echo -e "${GREEN}Conversiones exitosas: $CONVERTED_COUNT${NC}"
+echo -e "${RED}Fallos: $FAILED_COUNT${NC}"
+
+# Si no hay archivos para eliminar, salir
+if [ ${#ORIGINAL_FILES[@]} -eq 0 ]; then
+  echo "No hay archivos originales que eliminar."
+  exit 0
+fi
+
+# Preguntar si quiere eliminar los archivos originales
+echo ""
+echo -e "${YELLOW}¿Deseas eliminar los archivos originales (no WebP) que se convirtieron?${NC}"
+echo "Archivos que se eliminarían:"
+printf "  - %s\n" "${ORIGINAL_FILES[@]}"
+echo ""
+read -p "¿Eliminar estos archivos? (s/N): " -n 1 -r
+echo ""
+
+if [[ $REPLY =~ ^[Ss]$ ]]; then
+  echo "Eliminando archivos originales..."
+  DELETED=0
+  for file in "${ORIGINAL_FILES[@]}"; do
+    if [ -f "$file" ]; then
+      rm "$file" && DELETED=$((DELETED + 1))
+    fi
+  done
+  echo -e "${GREEN}Eliminados $DELETED archivos originales.${NC}"
+else
+  echo "No se eliminaron archivos. Los originales permanecen."
+fi
+
+echo ""
+echo -e "${GREEN}¡Proceso completado!${NC}"
