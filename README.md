@@ -20,9 +20,9 @@ Todos los scripts están pensados para ubicarse en `~/.local/bin/` y **no requie
 * **`niri-custom-launcher`**: Lanzador CLI con acceso rápido a `btop` (monitor), `fastfetch` (información) y `nmtui` (red).
 * **`fuzzel-power-menu`**: Menú interactivo de apagar, reiniciar, bloquear y suspender.
 * **`fuzzel-launcher`**: Menú principal integrador (agrupa energía, herramientas CLI y selector de wallpapers).
-* **`fuzzel-Wallpaper`**: Selector dinámico con soporte para subcarpetas en `~/Imágenes/Wallpapers/`, transiciones rápidas con `swaybg` y persistencia en `/tmp/last_wallpaper.txt`.
+* **`fuzzel-Wallpaper`**: Selector dinámico de Wallpapers (solo admite .webp) con soporte para subcarpetas en `~/Imágenes/Wallpapers/`, transiciones rápidas con `swaybg` y persistencia en `/tmp/last_wallpaper.txt`.
 * **`lock-screen`**: Bloqueo con `swaylock` (colores oscuros OLED-friendly), apagado de pantallas y suspensión automática.
-
+* **convertMyBackgrounds:** Convertidor CLI automatico de Imagenes con formatos distintos a .webp en ~/Imágenes/Wallpapers/ de forma recursiva (busca en subcarpetas), pide confirmación para eliminar archivos residuales (Imágenes con extension de formato ya convertidas a webp).
 ---
 
 ## 🔧 Requisitos e Instalación
@@ -31,56 +31,7 @@ Todos los scripts están pensados para ubicarse en `~/.local/bin/` y **no requie
 
 ```bash
 # Instalación en Debian
-sudo apt install fuzzel swaybg swaylock kitty btop fastfetch nmtui libnotify-bin
-```
-
-Estructura de Wallpapers
-Plaintext
-
-~/Imágenes/Wallpapers/
-├── Dark/
-│   └── Sepia/
-│       └── Muun-You-Ghost-My-Heart.webp
-├── General/
-└── imagen.webp
-
-    Nota: El script busca automáticamente imágenes con extensión .webp.
-
-🚀 Instalación
-
-    Clonar el repositorio:
-    Bash
-
-    git clone https://github.com/SbiDev-447/niri-scripts.git
-    cd niri-scripts
-
-    Copiar y dar permisos de ejecución:
-    Bash
-
-    mkdir -p ~/.local/bin
-    cp scripts/* ~/.local/bin/
-    chmod +x ~/.local/bin/*
-
-    Agregar ~/.local/bin al PATH:
-
-    Añade la siguiente línea a tu ~/.bashrc o ~/.zshrc si aún no la tienes:
-    Bash
-
-    export PATH="$HOME/.local/bin:$PATH"
-
-## 📂 Estructura del Repositorio
-
-```Plaintext
-
-niri-scripts/
-├── scripts/
-│   ├── fuzzel-launcher        # Menú principal
-│   ├── fuzzel-power-menu      # Menú de energía
-│   ├── fuzzel-Wallpaper       # Selector de fondos
-│   ├── niri-custom-launcher   # Lanzador CLI
-│   └── lock-screen            # Bloqueo + suspensión
-├── LICENSE                    # Licencia GNU GPLv3
-└── README.md                  # Documentación
+sudo apt install fuzzel swaybg swaylock kitty btop fastfetch nmtui
 ```
 
 ## 🐛 Solución de Problemas
