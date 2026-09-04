@@ -1,7 +1,7 @@
 
 <div align="center">
 
-# Niri Scripts Collection
+# My Dotfiles by SbiDev-447 
 
 ![Debian](https://img.shields.io/badge/Debian-13%20Trixie-blue?logo=debian)
 ![Wayland](https://img.shields.io/badge/Wayland-Niri-brightgreen)
@@ -31,7 +31,9 @@ Todos los scripts están pensados para ubicarse en `~/.local/bin/` y **no requie
 
 ```bash
 # Instalación en Debian
-sudo apt install fuzzel swaybg swaylock kitty btop fastfetch nmtui
+sudo apt install fuzzel swaybg swaylock kitty btop fastfetch nmtui 
+
+# Para nvim like LazyVim seguir los pasos de GentlemanDots o de la pagina oficial de LazyVim
 ```
 
 ## 🐛 Solución de Problemas
