@@ -7,7 +7,7 @@
 ![Wayland](https://img.shields.io/badge/Wayland-Niri-brightgreen)
 ![License](https://img.shields.io/badge/License-GPLv3-blue)
 
-Colección de scripts de personalización, gestión de energía y lanzadores rápidos con **Fuzzel** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian**. Pensado para quienes disfrutan de un entorno Niri dinámico y minimalista desde *Vanilla*.
+Colección de dotfiles, configuraciones propias y basadas de otros repos, scripts de personalización, gestión de energía y lanzadores rápidos con **Fuzzel** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian**.
 
 </div>
 
