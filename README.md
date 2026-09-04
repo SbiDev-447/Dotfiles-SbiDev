@@ -44,14 +44,19 @@ sudo apt install fuzzel swaybg swaylock kitty btop fastfetch nmtui
 
 ## 📄 Licencia y Contribuciones
 
-Proyecto bajo la licencia GNU General Public License v3.0.
+Este repositorio usa **dos licencias** diferentes:
 
-Copyright (C) 2026 SbiDev-447.
+- **MIT**: Aplica a todos los archivos de configuración (nvim, niri, etc.) y a los scripts que no indiquen lo contrario.
+- **GPL-3.0**: Aplica específicamente a los scripts que incluyan la cabecera GPL en su interior.
+
+Cada archivo con licencia GPL tiene una cabecera que lo indica claramente.
 
 Las contribuciones son bienvenidas.
 
 <div align="center">
 
 Hecho con ❤️ para Debian + Niri por SbiDev-447
+
+Copyright (c) 2026 SbiDev-447.
 
 </div>

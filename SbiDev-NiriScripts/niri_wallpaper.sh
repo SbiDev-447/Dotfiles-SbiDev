@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# fuzzel-launcher - Lanzador personalizado para fuzzel con menú de opciones
+# Copyright (C) 2026  SbiDev-447
+#
+# Este programa es software libre: puedes redistribuirlo y/o modificarlo
+# bajo los términos de la Licencia Pública General de GNU v3 o posterior.
+#
+# Este programa se distribuye SIN NINGUNA GARANTÍA; ni siquiera la garantía
+# implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.
+# Consulta la GPLv3 para más detalles en <https://www.gnu.org/licenses/>.
+#
+# Deberías haber recibido una copia de la GPLv3 junto con este programa.
+# Si no, consulta <https://www.gnu.org/licenses/gpl-3.0.html>
+
 # ================================================
 # Script para cambiar fondo de pantalla en Niri
 # Usa swaybg con orden aleatorio sin repeticiones

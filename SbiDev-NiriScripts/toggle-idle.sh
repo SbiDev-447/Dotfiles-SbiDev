@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Usar en NiriWM disponiendo un BIND especifico
+
 if pgrep -x swayidle >/dev/null; then
   pkill -x swayidle
   notify-send 'Idle' 'Desactivado (modo presentación)'
