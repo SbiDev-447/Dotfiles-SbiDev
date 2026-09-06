@@ -1,14 +1,17 @@
+![Wallpapers](./Files/image.webp) 
 
 <div align="center">
 
-# My Dotfiles by SbiDev-447 
+# Dotfiles by SbiDev-447 
 
-![Debian](https://img.shields.io/badge/Debian-13%20Trixie-blue?logo=debian)
-![Wayland](https://img.shields.io/badge/Wayland-Niri-brightgreen)
-![License](https://img.shields.io/badge/License-GPLv3-blue)
+![Debian](https://img.shields.io/badge/Debian-13%20Trixie-blue?logo=debian&style=for-the-badge)
+![Wayland](https://img.shields.io/badge/Wayland-Niri-brightgreen?logo=wayland&style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT%20%26%20GPLv3-blue?style=for-the-badge)
+![Neovim](https://img.shields.io/badge/Neovim-LazyVim-57A143?logo=neovim&style=for-the-badge)
+![Fuzzel](https://img.shields.io/badge/Launcher-Fuzzel-orange?style=for-the-badge)
 
-Colección de dotfiles, configuraciones propias y basadas de otros repos, scripts de personalización, gestión de energía y lanzadores rápidos con **Fuzzel** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian**.
-
+**Colección de dotfiles, configuraciones y scripts** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian 13 Trixie**.  
+Incluye personalización de entorno, gestión de energía, lanzadores rápidos con **Fuzzel**, editor **Neovim** potenciado con **LazyVim** (Basado en GentlemanDots), y utilidades CLI propias.
 </div>
 
 ---
@@ -57,7 +60,9 @@ Las contribuciones son bienvenidas.
 
 <div align="center">
 
-Hecho con ❤️ para Debian + Niri por SbiDev-447
+**Hecho con ❤️ por SbiDev-447**
+
+Inpirado por el queridisimo [Gentleman Programming / Alan Buscaglia](https://github.com/Gentleman-Programming/Gentleman.Dots). 
 
 Copyright (c) 2026 SbiDev-447.
 
