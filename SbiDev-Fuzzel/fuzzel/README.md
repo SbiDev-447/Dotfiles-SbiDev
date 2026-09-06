@@ -2,8 +2,9 @@
 
 # Flavors:
 
-- Owl47-Dark
-- Turtle47-Light
+**🦉 Owl47-Dark**
+
+**🐢 Turtle47-Light**
 
 </div>
 
