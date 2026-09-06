@@ -1,4 +1,20 @@
 #!/usr/bin/env bash
+# Emoji Picker - Lanzador de emojis mediante fuzzel
+# Copyright (C) 2026  SbiDev-447
+#
+# Este programa es software libre: puedes redistribuirlo y/o modificarlo
+# bajo los términos de la Licencia Pública General de GNU v3 o posterior.
+#
+# Este programa se distribuye SIN NINGUNA GARANTÍA; ni siquiera la garantía
+# implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.
+# Consulta la GPLv3 para más detalles en <https://www.gnu.org/licenses/>.
+#
+# Deberías haber recibido una copia de la GPLv3 junto con este programa.
+# Si no, consulta <https://www.gnu.org/licenses/gpl-3.0.html>.
+
+# ~/.local/bin/emojipicker.sh
+
+
 set -euo pipefail
 
 # --- Configuración ---
@@ -45,8 +61,8 @@ select_emoji() {
     # y pasarlo a fuzzel para búsqueda por palabras clave
     tail -n +$((emoji_data_start + 1)) "$0" | \
         fuzzel --match-mode fzf --dmenu --prompt "🔍 Buscar emoji: " \
-        --font "Noto Color Emoji:size=14" \
-        --lines 20 --width 30 | \
+        --font "IosevkaTerm NF:size=12, Noto Color Emoji:size=16" \
+        --lines 15 --width 50 | \
         awk '{print $1}' | tr -d '\n'
 }
 

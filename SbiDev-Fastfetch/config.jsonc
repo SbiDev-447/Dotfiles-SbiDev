@@ -1,16 +1,16 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "source": "$HOME/.config/fastfetch/logo.txt",
+    "source": "$HOME/.config/fastfetch/logoDeciduay.txt",
     "color": {
       "1": "black",
       "2": "red",
       "3": "green",
       "4": "yellow",
       "5": "blue",
-      "6": "magenta",
+      "6": "#A245DE",
       "7": "cyan",
-      "8": "white",
+      "8": "#ffffff",
     },
     "padding": {
       "right": 2,

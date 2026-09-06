@@ -44,9 +44,8 @@ input {
 ///////////////////////////////////////////////
 
 output "eDP-1" {
-    mode "1920x1080"
+    mode "1920x1080@60.008"
     scale 1.0
-    transform "normal"
     position x=0 y=0
 }
 
@@ -232,14 +231,16 @@ binds {
   //              CUSTOMIZED BINDS
   //================================================
 
-  // Alternar idle (activa/desactiva el script de ahorro OLED)
+  // <D-z> <D-x> <D-ñ> <D-p> <D-y> <D-t> <D-g> <D-s> <D-a> 
+  
+  // Alternar idle (activa/desactiva el script de ah
   Mod+Shift+T hotkey-overlay-title="Toggle ON/OFF AutoSuspend" { spawn "~/.local/bin/toggle-idle.sh"; }
   Mod+N hotkey-overlay-title="Toggle ON/OFF Visual Protect" { spawn "sh" "-c" "pgrep wlsunset && pkill wlsunset || wlsunset -T 3501 -t 3500"; }
 
   // Wallpaper Random Change
-  Mod+Shift+W hotkey-overlay-title="Open Wallpaper Change Menu" { spawn "/home/sbi/.local/bin/fuzzel-Wallpaper"; }
+  Mod+W hotkey-overlay-title="Open Wallpaper Change Menu" { spawn "/home/sbi/.local/bin/fuzzel-Wallpaper"; }
   
-  Mod+W hotkey-overlay-title="Change Wallpaper Randomly" { spawn "sh" "-c" "rm -f /tmp/niri_wallpaper.lock; /home/sbi/.local/bin/niri_wallpaper.sh"; }
+  Mod+Shift+W hotkey-overlay-title="Change Wallpaper Randomly" { spawn "sh" "-c" "rm -f /tmp/niri_wallpaper.lock; /home/sbi/.local/bin/niri_wallpaper.sh"; }
   
   Mod+E hotkey-overlay-title="Emoji Picker" {spawn "/home/sbi/.local/bin/emojipicker.sh";}
 
@@ -255,14 +256,15 @@ binds {
 
   // Open FUZZEL
   Mod+D                   hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+  Mod+F1 hotkey-overlay-title="Run Fuzzel In dmenu MODE" {spawn "~/.local/bin/dmenu";}
 
   // Open THUNAR
-  Mod+T               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
+  Mod+Space               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
 
   // Open SWAYLOCK
-  Mod+Shift+B           hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/lock-screen"; }
+  Mod+Shift+Q           hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/lock-screen"; }
 
-  Mod+F1 { show-hotkey-overlay; }
+  Mod+F5 { show-hotkey-overlay; }
 
   // ========================================
   //            VOLUMEN Y MULTIMEDIA
@@ -271,7 +273,6 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
     XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
