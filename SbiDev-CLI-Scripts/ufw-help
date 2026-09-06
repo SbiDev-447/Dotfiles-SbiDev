@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "=== UFW CHEAT SHEET ==="
+echo "1. Estado: sudo ufw status verbose"
+echo "2. Abrir puerto: sudo ufw allow 80/tcp"
+echo "3. Cerrar puerto: sudo ufw delete allow 80"
+echo "4. Reglas numeradas: sudo ufw status numbered"
+echo "5. Eliminar regla: sudo ufw delete [numero]"
+echo "6. Activar: sudo ufw enable"
+echo "7. Desactivar: sudo ufw disable"
+echo "8. Reset: sudo ufw reset"
+echo "9. Logs: sudo tail -f /var/log/ufw.log"
+echo "10. Limitar SSH: sudo ufw limit ssh"
