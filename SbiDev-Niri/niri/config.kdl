@@ -238,8 +238,10 @@ binds {
 
   // Wallpaper Random Change
   Mod+Shift+W hotkey-overlay-title="Open Wallpaper Change Menu" { spawn "/home/sbi/.local/bin/fuzzel-Wallpaper"; }
-
+  
   Mod+W hotkey-overlay-title="Change Wallpaper Randomly" { spawn "sh" "-c" "rm -f /tmp/niri_wallpaper.lock; /home/sbi/.local/bin/niri_wallpaper.sh"; }
+  
+  Mod+E hotkey-overlay-title="Emoji Picker" {spawn "/home/sbi/.local/bin/emojipicker.sh";}
 
   // ========================================
   //            APLICACIONES
@@ -255,10 +257,10 @@ binds {
   Mod+D                   hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
 
   // Open THUNAR
-  Mod+E                   hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
+  Mod+T               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
 
   // Open SWAYLOCK
-  Mod+Shift+Q           hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/lock-screen"; }
+  Mod+Shift+B           hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/lock-screen"; }
 
   Mod+F1 { show-hotkey-overlay; }
 
@@ -442,7 +444,7 @@ binds {
   // ========================================
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-    Mod+Shift+E { quit; }
+    Mod+Shift+Escape { quit; }
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
 }
