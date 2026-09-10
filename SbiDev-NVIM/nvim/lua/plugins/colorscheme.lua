@@ -41,9 +41,9 @@ return {
             LspInfoBorder = { bg = "none" },
           }
         end,
-        theme = "lotus",
+        theme = "dragon",
         background = {
-          dark = "wave",
+          dark = "dragon",
           light = "lotus",
         },
       })

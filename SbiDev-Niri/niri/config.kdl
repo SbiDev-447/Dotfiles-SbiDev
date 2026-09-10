@@ -39,6 +39,12 @@ input {
     // focus-follows-mouse
 }
 
+cursor {
+  xcursor-theme "Win7OS-cursors"
+  xcursor-size 40
+}
+
+
 ////////////////////////////////////////////////
 //                  OUTPUTS
 ///////////////////////////////////////////////
