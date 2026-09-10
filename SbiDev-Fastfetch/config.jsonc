@@ -24,7 +24,7 @@
     {
       "type": "os",
       "key": "OS    ",
-      "keyColor": "31", // = color1
+      "keyColor": "31",
     },
     {
       "type": "kernel",
@@ -33,13 +33,28 @@
     },
     {
       "type": "host",
-      "format": "{5} {1}",
+      "format": "{1}",
       "key": "Host  ",
       "keyColor": "33",
     },
     {
       "type": "terminal",
       "key": "Term  ",
+      "keyColor": "34",
+    },
+    {
+      "type": "shell",
+      "key": "Shell ",
+      "keyColor": "34",
+    },
+    {
+      "type": "de",
+      "key": "DE    ",
+      "keyColor": "34",
+    },
+    {
+      "type": "wm",
+      "key": "WM    ",
       "keyColor": "34",
     },
     {
@@ -58,21 +73,30 @@
       "type": "cpu",
       "key": "CPU   ",
       "keyColor": "37",
+      "format": "{1} ({3}) @ {7}GHz",
+    },
+    {
+      "type": "gpu",
+      "key": "GPU   ",
+      "keyColor": "37",
     },
     {
       "type": "memory",
       "key": "Memory",
       "keyColor": "37",
+      "format": "{1} / {2} ({3})",
     },
     {
       "type": "disk",
       "key": "Disk  ",
       "keyColor": "37",
+      "format": "{1} / {2} ({3})",
     },
     {
       "type": "battery",
       "key": "Bat   ",
       "keyColor": "37",
+      "format": "{1} {2} ({3})",
     },
     "break",
     "colors",
