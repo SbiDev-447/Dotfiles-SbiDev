@@ -1,54 +1,44 @@
+// ============================================================================
+//                          NIRI CONFIGURATION
+// ============================================================================
+
+// ============================================================================
+//                            ENTORNO
+// ============================================================================
 environment {
     XDG_CURRENT_DESKTOP "niri"
 }
 
-////////////////////////////////////////////
-////////        INPUTS
-////////////////////////////////////////////
+// ============================================================================
+//                            CURSOR
+// ============================================================================
+cursor {
+    xcursor-theme "Win7OS-cursors"
+    xcursor-size 40
+}
+
+// ============================================================================
+//                              INPUTS
+// ============================================================================
 input {
     keyboard {
-        xkb { 
-        }
+        xkb {}
         numlock
     }
+
     touchpad {
-        // off
         tap
         dwt
-        // dwtp
-        // drag false
-        // drag-lock
         natural-scroll
         accel-speed 0.2
         accel-profile "flat"
         scroll-method "two-finger"
-        // disabled-on-external-mouse
     }
-
-    mouse {
-    }
-
-    trackpoint {
-    }
-
-    // Uncomment this to make the mouse warp to the center of newly focused windows.
-    //warp-mouse-to-focus
-
-    // Focus windows and outputs automatically when moving the mouse into them.
-    // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse
 }
 
-cursor {
-  xcursor-theme "Win7OS-cursors"
-  xcursor-size 40
-}
-
-
-////////////////////////////////////////////////
-//                  OUTPUTS
-///////////////////////////////////////////////
-
+// ============================================================================
+//                             OUTPUTS
+// ============================================================================
 output "eDP-1" {
     mode "1920x1080@60.008"
     scale 1.0
@@ -61,87 +51,70 @@ output "HDMI-A-1" {
     position x=1280 y=0
 }
 
-
-///////////////////////////////////////////////
-//              LAYOUT
-//////////////////////////////////////////////
-
+// ============================================================================
+//                              LAYOUT
+// ============================================================================
 layout {
     gaps 6
     center-focused-column "never"
 
-    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
     preset-column-widths {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
     }
 
-    // You can also customize the heights that "switch-preset-window-height" (Mod+Ctrl+Shift+R) toggles between.
     preset-window-heights {
-   	proportion 0.33333
-	  proportion 0.5
-	  proportion 0.66667
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
     }
 
     default-column-width { proportion 0.5; }
 
     focus-ring {
-        width 2.5 
+        width 2.5
         inactive-color "#505050"
         active-gradient from="#B0E4CC" to="#8BAE66" angle=45
     }
 
-    // You can also add a border. It's similar to the focus ring, but always visible.
-    border {
-off
-    }
-
-    shadow {
-        off
-    }
-
-    struts {
-    }
+    border { off; }
+    shadow { off; }
 }
 
-//=================================================
-//              SPAWN PROCESOS & Apps
-//=================================================
+// ============================================================================
+//                         APLICACIONES AL INICIO
+// ============================================================================
 prefer-no-csd
 
 hotkey-overlay {
     skip-at-startup
 }
 
-// Temperatura de Pantalla
-spawn-at-startup "wlsunset" "-T" "3501" "-t" "3500"
-
-// Barra
-spawn-at-startup "waybar"
-
-// Wallpaper
-spawn-at-startup "/home/sbi/.local/bin/niri_wallpaper.sh"
-
-// Notificaciones
-spawn-at-startup "swaync"
-
-// Apagado de Pantalla
-spawn-at-startup "/home/sbi/.local/bin/niri-idle.sh"
-
 screenshot-path "~/Imágenes/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
+spawn-at-startup "wlsunset" "-T" "3001" "-t" "3000"
+spawn-at-startup "waybar"
+spawn-at-startup "swaync"
+spawn-at-startup "/home/sbi/.local/bin/niri_wallpaper.sh"
+spawn-at-startup "/home/sbi/.local/bin/niri-idle.sh"
 
-// Window-Rules & Animations
+// ============================================================================
+//                             ANIMACIONES
+// ============================================================================
+animations {}
 
-animations {
+// ============================================================================
+//                         REGLAS DE VENTANAS
+// ============================================================================
+
+// -- Esquinas redondeadas (global) --
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
 }
 
-// =====================================================================
-//                       REGLAS DE VENTANAS (NIRI)
-// =====================================================================
-
-// ---- Qalculate! (Calculadora) ----
+// -- Qalculate! (Calculadora) --
 window-rule {
     match app-id=r#"^qalculate-gtk$"#
     open-floating true
@@ -150,7 +123,7 @@ window-rule {
     default-window-height { fixed 750; }
 }
 
-// ---- Diálogos GTK (Abrir/Salvar) ----
+// -- Diálogos GTK (Abrir/Salvar) --
 window-rule {
     match app-id=r#"xdg-desktop-portal-gtk"#
     default-column-width { fixed 900; }
@@ -159,7 +132,7 @@ window-rule {
     open-focused true
 }
 
-// ---- Pulso Audio (Pavucontrol) ----
+// -- Pavucontrol (Audio) --
 window-rule {
     match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
     open-floating true
@@ -168,7 +141,7 @@ window-rule {
     open-focused true
 }
 
-// ---- Blueman (Gestor de Bluetooth) ----
+// -- Blueman (Bluetooth) --
 window-rule {
     match app-id=r#"^blueman-manager$"#
     open-floating true
@@ -177,7 +150,7 @@ window-rule {
     open-focused true
 }
 
-// ---- Thunar (Diálogos de propiedades, compresión, etc.) ----
+// -- Thunar: diálogos de propiedades --
 window-rule {
     match app-id=r#"^thunar$"# title="^Properties$"
     match app-id=r#"^thunar$"# title="^Compress$"
@@ -186,14 +159,14 @@ window-rule {
     open-floating true
 }
 
-// ---- Thunar (Diálogo de progreso de copiar/mover) ----
+// -- Thunar: progreso de copiar/mover --
 window-rule {
     match app-id=r#"^thunar$"# title="^File Operation Progress$"
     open-floating true
     default-column-width { proportion 0.4; }
 }
 
-// ---- Navegadores Floating Windows ----
+// -- Picture-in-Picture (navegadores) --
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id="librewolf$" title="^Picture-in-Picture$"
@@ -208,13 +181,13 @@ window-rule {
     open-focused true
 }
 
-// ---- Privacidad: Proteger ventanas sensibles de capturas ----
+// -- Privacidad: bloquear capturas de KeePassXC --
 window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     block-out-from "screen-capture"
 }
 
-// ---- Diálogos de impresión (Comunes en muchas apps) ----
+// -- Diálogos de impresión --
 window-rule {
     match title="^Print$"
     match title="^Imprimir$"
@@ -222,146 +195,136 @@ window-rule {
     open-focused true
 }
 
-// ---- Regla global para esquinas redondeadas ----
-window-rule {
-    geometry-corner-radius 8
-    clip-to-geometry true
-}
-
-// =====================================================================
+// ============================================================================
 //                               BINDS
-// =====================================================================
+// ============================================================================
 binds {
 
-  //================================================
-  //              CUSTOMIZED BINDS
-  //================================================
+    // ====================================================================
+    //                     APLICACIONES
+    // ====================================================================
 
-  // <D-z> <D-x> <D-ñ> <D-p> <D-y> <D-t> <D-g> <D-s> <D-a> 
-  
-  // Alternar idle (activa/desactiva el script de ah
-  Mod+Shift+T hotkey-overlay-title="Toggle ON/OFF AutoSuspend" { spawn "~/.local/bin/toggle-idle.sh"; }
-  Mod+N hotkey-overlay-title="Toggle ON/OFF Visual Protect" { spawn "sh" "-c" "pgrep wlsunset && pkill wlsunset || wlsunset -T 3501 -t 3500"; }
+    // Terminales
+    Mod+Return              hotkey-overlay-title="Open a Terminal: Kitty" { spawn "kitty"; }
+    Mod+BackSpace           hotkey-overlay-title="Open nvim in WORKDIR" { spawn "kitty" "-d" "~/turtleShell" "-e" "tmux" "new" "-s" "turtleShell" "nvim"; }
 
-  // Wallpaper Random Change
-  Mod+W hotkey-overlay-title="Open Wallpaper Change Menu" { spawn "/home/sbi/.local/bin/fuzzel-Wallpaper"; }
-  
-  Mod+Shift+W hotkey-overlay-title="Change Wallpaper Randomly" { spawn "sh" "-c" "rm -f /tmp/niri_wallpaper.lock; /home/sbi/.local/bin/niri_wallpaper.sh"; }
-  
-  Mod+E hotkey-overlay-title="Emoji Picker" {spawn "/home/sbi/.local/bin/emojipicker.sh";}
+    // Lanzadores
+    Mod+D                   hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+F1                  hotkey-overlay-title="Run Fuzzel In dmenu MODE" { spawn "~/.local/bin/dmenu"; }
+    Mod+Space               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
+    Mod+E                   hotkey-overlay-title="Emoji Picker" { spawn "/home/sbi/.local/bin/emojipicker.sh"; }
 
-  // ========================================
-  //            APLICACIONES
-  // ========================================
+    // Seguridad
+    Mod+Shift+Q             hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/lock-screen"; }
 
-  // Open nvim in WORKDIR
-  Mod+BackSpace              hotkey-overlay-title="Open a Terminal: Kitty" { spawn "kitty" "-d" "~/turtleShell" "-e" "tmux" "new" "-s" "turtleShell" "nvim"; }
-  
-  // Open Terminal: Kitty
-  Mod+Return              hotkey-overlay-title="Open a Terminal: Kitty" { spawn "kitty"; }
+    // Utilidades
+    Mod+Shift+T             hotkey-overlay-title="Toggle ON/OFF AutoSuspend" { spawn "~/.local/bin/toggle-idle.sh"; }
+    Mod+N                   hotkey-overlay-title="Toggle ON/OFF Visual Protect" { spawn "sh" "-c" "pgrep wlsunset && pkill wlsunset || wlsunset -T 3001 -t 3000"; }
+    Mod+W                   hotkey-overlay-title="Open Wallpaper Change Menu" { spawn "/home/sbi/.local/bin/fuzzel-Wallpaper"; }
+    Mod+Shift+W             hotkey-overlay-title="Change Wallpaper Randomly" { spawn "sh" "-c" "rm -f /tmp/niri_wallpaper.lock; /home/sbi/.local/bin/niri_wallpaper.sh"; }
 
-  // Open FUZZEL
-  Mod+D                   hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-  Mod+F1 hotkey-overlay-title="Run Fuzzel In dmenu MODE" {spawn "~/.local/bin/dmenu";}
+    // Overlay
+    Mod+F5 { show-hotkey-overlay; }
 
-  // Open THUNAR
-  Mod+Space               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
+    // ====================================================================
+    //                     VOLUMEN Y MULTIMEDIA
+    // ====================================================================
 
-  // Open SWAYLOCK
-  Mod+Shift+Q           hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/lock-screen"; }
+    XF86AudioRaiseVolume    allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"; }
+    XF86AudioLowerVolume    allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
+    XF86AudioMute           allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioPlay           allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioPause          allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop           allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev           allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext           allow-when-locked=true { spawn-sh "playerctl next"; }
 
-  Mod+F5 { show-hotkey-overlay; }
+    // ====================================================================
+    //                         BRILLO
+    // ====================================================================
 
-  // ========================================
-  //            VOLUMEN Y MULTIMEDIA
-  // ========================================    
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-    // Example media keys mapping using playerctl.
-    // This will work with any MPRIS-enabled media player.
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioPause       allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86MonBrightnessUp     allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    XF86MonBrightnessDown   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-  // ========================================
-  //            BRILLO
-  // ========================================
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+    // ====================================================================
+    //                    NAVEGACIÓN DE VENTANAS
+    // ====================================================================
 
-  // ========================================
-  //            NAVEGACIÓN PRINCIPAL
-  // ========================================
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
 
-  // Movimiento entre columnas/ventanas
-    Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
-    Mod+Right { focus-column-right; }
-    Mod+H     { focus-column-left; }
-    Mod+J     { focus-window-down; }
-    Mod+K     { focus-window-up; }
-    Mod+L     { focus-column-right; }
+    // Foco: columnas
+    Mod+Left                { focus-column-left; }
+    Mod+Right               { focus-column-right; }
+    Mod+H                   { focus-column-left; }
+    Mod+L                   { focus-column-right; }
 
-  // Mover columnas/ventanas
-    Mod+Ctrl+Left  { move-column-left; }
-    Mod+Ctrl+Down  { move-window-down; }
-    Mod+Ctrl+Up    { move-window-up; }
-    Mod+Ctrl+Right { move-column-right; }
-    Mod+Ctrl+H     { move-column-left; }
-    Mod+Ctrl+J     { move-window-down; }
-    Mod+Ctrl+K     { move-window-up; }
-    Mod+Ctrl+L     { move-column-right; }
+    // Foco: ventanas dentro de columna
+    Mod+Down                { focus-window-down; }
+    Mod+Up                  { focus-window-up; }
+    Mod+J                   { focus-window-down; }
+    Mod+K                   { focus-window-up; }
 
-  // ========================================
-  //            MONITORES
-  // ========================================
-    Mod+Shift+Left  { focus-monitor-left; }
-    Mod+Shift+Down  { focus-monitor-down; }
-    Mod+Shift+Up    { focus-monitor-up; }
-    Mod+Shift+Right { focus-monitor-right; }
-    Mod+Shift+H     { focus-monitor-left; }
-    Mod+Shift+J     { focus-monitor-down; }
-    Mod+Shift+K     { focus-monitor-up; }
-    Mod+Shift+L     { focus-monitor-right; }
+    // Mover columnas
+    Mod+Ctrl+Left           { move-column-left; }
+    Mod+Ctrl+Right          { move-column-right; }
+    Mod+Ctrl+H              { move-column-left; }
+    Mod+Ctrl+L              { move-column-right; }
 
-    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
-    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
-    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
-    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
-    Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
-    Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+    // Mover ventanas dentro de columna
+    Mod+Ctrl+Down           { move-window-down; }
+    Mod+Ctrl+Up             { move-window-up; }
+    Mod+Ctrl+J              { move-window-down; }
+    Mod+Ctrl+K              { move-window-up; }
 
-  // ========================================
-  //            WORKSPACES
-  // ========================================
+    // ====================================================================
+    //                           MONITORES
+    // ====================================================================
 
-  // Navegación entre workspaces
-    Mod+Page_Down      { focus-workspace-down; }
-    Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
+    // Foco
+    Mod+Shift+Left          { focus-monitor-left; }
+    Mod+Shift+Right         { focus-monitor-right; }
+    Mod+Shift+H             { focus-monitor-left; }
+    Mod+Shift+L             { focus-monitor-right; }
+    Mod+Shift+Down          { focus-monitor-down; }
+    Mod+Shift+Up            { focus-monitor-up; }
+    Mod+Shift+J             { focus-monitor-down; }
+    Mod+Shift+K             { focus-monitor-up; }
 
-  // Mover columnas entre workspaces
-    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
-    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-    Mod+Ctrl+U         { move-column-to-workspace-down; }
-    Mod+Ctrl+I         { move-column-to-workspace-up; }
+    // Mover columna a monitor
+    Mod+Shift+Ctrl+Left     { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Right    { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+H        { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+L        { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+Down     { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up       { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+J        { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K        { move-column-to-monitor-up; }
 
-  // Mover workspaces enteros
-    Mod+Shift+Page_Down { move-workspace-down; }
-    Mod+Shift+Page_Up   { move-workspace-up; }
-    Mod+Shift+U         { move-workspace-down; }
-    Mod+Shift+I         { move-workspace-up; }
+    // ====================================================================
+    //                         WORKSPACES
+    // ====================================================================
 
+    // Foco entre workspaces
+    Mod+Page_Down           { focus-workspace-down; }
+    Mod+Page_Up             { focus-workspace-up; }
+    Mod+U                   { focus-workspace-down; }
+    Mod+I                   { focus-workspace-up; }
+
+    // Mover columna a workspace contiguo
+    Mod+Ctrl+Page_Down      { move-column-to-workspace-down; }
+    Mod+Ctrl+Page_Up        { move-column-to-workspace-up; }
+    Mod+Ctrl+U              { move-column-to-workspace-down; }
+    Mod+Ctrl+I              { move-column-to-workspace-up; }
+
+    // Mover workspace entero
+    Mod+Shift+Page_Down     { move-workspace-down; }
+    Mod+Shift+Page_Up       { move-workspace-up; }
+    Mod+Shift+U             { move-workspace-down; }
+    Mod+Shift+I             { move-workspace-up; }
+
+    // Foco por número
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
     Mod+3 { focus-workspace 3; }
@@ -371,6 +334,8 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
+
+    // Mover columna a workspace por número
     Mod+Shift+1 { move-column-to-workspace 1; }
     Mod+Shift+2 { move-column-to-workspace 2; }
     Mod+Shift+3 { move-column-to-workspace 3; }
@@ -381,77 +346,80 @@ binds {
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
-    // ========================================
-    //            RATÓN
-    // ========================================
-    Mod+WheelScrollDown      cooldown-ms=149 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=149 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=149 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=149 { move-column-to-workspace-up; }
+    // ====================================================================
+    //                           RATÓN
+    // ====================================================================
 
-    Mod+WheelScrollRight      { focus-column-right; }
-    Mod+WheelScrollLeft       { focus-column-left; }
-    Mod+Ctrl+WheelScrollRight { move-column-right; }
-    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+    // Workspaces
+    Mod+WheelScrollDown             cooldown-ms=149 { focus-workspace-down; }
+    Mod+WheelScrollUp               cooldown-ms=149 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown        cooldown-ms=149 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp          cooldown-ms=149 { move-column-to-workspace-up; }
 
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    // Columnas
+    Mod+WheelScrollRight            { focus-column-right; }
+    Mod+WheelScrollLeft             { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight       { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft        { move-column-left; }
 
-    // ========================================
-    //            VENTANAS
-    // ========================================
-    Mod+BracketLeft  { consume-or-expel-window-left; }
-    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Shift+WheelScrollDown       { focus-column-right; }
+    Mod+Shift+WheelScrollUp         { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown  { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp    { move-column-left; }
 
-    // Consume one window from the right to the bottom of the focused column.
-    Mod+Comma  { consume-window-into-column; }
-    // Expel the bottom window from the focused column to the right.
-    Mod+Period { expel-window-from-column; }
+    // ====================================================================
+    //                     GESTIÓN DE VENTANAS
+    // ====================================================================
 
-  // Tamaños
-    Mod+R { switch-preset-column-width; }
-    Mod+Shift+R { switch-preset-column-width-back; }
-    Mod+Ctrl+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R { reset-window-height; }
+    // Comer/expulsar entre columnas
+    Mod+BracketLeft         { consume-or-expel-window-left; }
+    Mod+BracketRight        { consume-or-expel-window-right; }
+    Mod+Comma               { consume-window-into-column; }
+    Mod+Period              { expel-window-from-column; }
 
-  // Maximizar y pantalla completa
-    Mod+F { maximize-column; }
-    Mod+Shift+F { fullscreen-window; }
-    Mod+M { maximize-window-to-edges; }
-    Mod+Ctrl+F { expand-column-to-available-width; }
+    // Tamaños
+    Mod+R                   { switch-preset-column-width; }
+    Mod+Shift+R             { switch-preset-column-width-back; }
+    Mod+Ctrl+Shift+R        { switch-preset-window-height; }
+    Mod+Ctrl+R              { reset-window-height; }
 
-  // Centrar
-    Mod+C { center-column; }
-    Mod+Ctrl+C { center-visible-columns; }
+    // Ajuste fino
+    Mod+Minus               { set-column-width "-10%"; }
+    Mod+Plus                { set-column-width "+10%"; }
+    Mod+Shift+Minus         { set-window-height "-10%"; }
+    Mod+Shift+Plus          { set-window-height "+10%"; }
 
-  // Ajustes Finos
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+Plus {set-column-width "+10%";}
+    // Maximizar / pantalla completa
+    Mod+F                   { maximize-column; }
+    Mod+Shift+F             { fullscreen-window; }
+    Mod+M                   { maximize-window-to-edges; }
+    Mod+Ctrl+F              { expand-column-to-available-width; }
 
-    Mod+Shift+Minus { set-window-height "-10%"; }
-    Mod+Shift+Plus { set-window-height "+10%"; }
+    // Centrar
+    Mod+C                   { center-column; }
+    Mod+Ctrl+C              { center-visible-columns; }
 
-  // Modo Flotante 
-    Mod+V       { toggle-window-floating; }
-    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    // Modo flotante
+    Mod+V                   { toggle-window-floating; }
+    Mod+Shift+V             { switch-focus-between-floating-and-tiling; }
 
-    Mod+B { toggle-column-tabbed-display; }
+    // Tabbed
+    Mod+B                   { toggle-column-tabbed-display; }
 
-  // ========================================
-  //            CAPTURAS DE PANTALLA
-  // ========================================
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    // ====================================================================
+    //                     CAPTURAS DE PANTALLA
+    // ====================================================================
 
-  // ========================================
-  //            SISTEMA
-  // ========================================
+    Print                    { screenshot; }
+    Ctrl+Print               { screenshot-screen; }
+    Alt+Print                { screenshot-window; }
+
+    // ====================================================================
+    //                          SISTEMA
+    // ====================================================================
+
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-
-    Mod+Shift+Escape { quit; }
-    Ctrl+Alt+Delete { quit; }
-    Mod+Shift+P { power-off-monitors; }
+    Mod+Shift+Escape         { quit; }
+    Ctrl+Alt+Delete          { quit; }
+    Mod+Shift+P              { power-off-monitors; }
 }
