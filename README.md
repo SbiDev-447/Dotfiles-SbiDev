@@ -1,5 +1,3 @@
-![Wallpapers](./Files/image.webp)
-
 <div align="center">
 
 # Dotfiles by SbiDev-447
@@ -193,3 +191,5 @@ Inspirado por el queridisimo [Gentleman Programming / Alan Buscaglia](https://gi
 Copyright (c) 2026 SbiDev-447.
 
 </div>
+
+![Wallpapers](./Files/image.webp)
