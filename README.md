@@ -1,3 +1,5 @@
+![Wallpapers](./Files/image.webp)
+
 <div align="center">
 
 # Dotfiles by SbiDev-447
@@ -192,4 +194,3 @@ Copyright (c) 2026 SbiDev-447.
 
 </div>
 
-![Wallpapers](./Files/image.webp)
