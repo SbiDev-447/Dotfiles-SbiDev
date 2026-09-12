@@ -12,11 +12,14 @@
 # Deberías haber recibido una copia de la GPLv3 junto con este programa.
 # Si no, consulta <https://www.gnu.org/licenses/gpl-3.0.html>
 
-option=$(echo -e "  Menú PowerSession\n📜 ScriptsTerminal\n  Wallpapers Swaybg\nSalir" | fuzzel --dmenu -l 5 -p "Niri: ")
+option=$(echo -e "  Menú PowerSession\n😀 EmojiPicker\n📜 ScriptsTerminal\n  Wallpapers Swaybg\nSalir" | fuzzel --dmenu -l 5 -p "Niri: ")
 
 case "$option" in
 "  Menú PowerSession")
   ~/.local/bin/fuzzel-power-menu
+  ;;
+"😀 EmojiPicker")
+  ~/.local/bin/emojipicker.sh
   ;;
 "📜 ScriptsTerminal")
   ~/.local/bin/fuzzel-custom-launcher

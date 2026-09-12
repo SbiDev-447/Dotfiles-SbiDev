@@ -1,9 +1,13 @@
 #!/bin/bash
 
-sudo apt update && sudo apt upgrade &&
-  sleep 1
+echo "UPGRADING APT PACKAGES:"
+sleep 1
+sudo apt update && sudo apt upgrade
 
-flatpak update &&
-  sleep 1
+echo "UPGRADING FLATPAK PACKAGES:"
+sleep 1
+flatpak update
 
+echo "UPGRADING NIX PACKAGES:"
+sleep 1
 nix profile upgrade --all

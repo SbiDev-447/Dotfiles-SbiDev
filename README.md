@@ -139,22 +139,15 @@ cp -r SbiDev-Fuzzel/fuzzel ~/.config/      # Config de Fuzzel
 cp -r SbiDev-NVIM/nvim ~/.config/          # Config de Neovim
 cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/ # Config de Fastfetch
 
-# Copiar scripts a ~/.local/bin/
-mkdir -p ~/.local/bin
-cp SbiDev-Niri/niri_wallpaper.sh ~/.local/bin/
-cp SbiDev-Niri/niri-idle.sh ~/.local/bin/
-cp SbiDev-Niri/swaylock-lock-screen ~/.local/bin/lock-screen
-cp SbiDev-Niri/toggle-idle.sh ~/.local/bin/
-cp SbiDev-Fuzzel/dmenu ~/.local/bin/
-cp SbiDev-Fuzzel/fuzzel-custom-launcher ~/.local/bin/
-cp SbiDev-Fuzzel/fuzzel-power-menu ~/.local/bin/
-cp SbiDev-Fuzzel/fuzzel-Wallpaper ~/.local/bin/
-cp SbiDev-Fuzzel/emojipicker.sh ~/.local/bin/
-cp SbiDev-CLI-Scripts/* ~/.local/bin/
-
-# Dar permisos de ejecución
-chmod +x ~/.local/bin/*
+# Enlazar los scripts a ~/.local/bin/
+./install-scripts.sh
 ```
+
+> **¿Cómo funciona `install-scripts.sh`?**
+> Crea **enlaces simbólicos** de todos los ejecutables de `SbiDev-CLI-Scripts/`, `SbiDev-Fuzzel/` y `SbiDev-Niri/` hacia `~/.local/bin/` (lo crea si no existe). Así los scripts se actualizan automáticamente al hacer `git pull`, sin necesidad de recopiar.
+> - Es **idempotente**: si un symlink ya apunta al repo, lo salta con `OK`.
+> - Si **ya existe un archivo** con el mismo nombre, lo omite con `SKIP` para no sobrescribir nada.
+> - Con `./install-scripts.sh --force` elimina los archivos existentes y los sustituye por symlinks al repo (útil tras migrar de copias a enlaces).
 
 > **Nota**: Algunos scripts hacen referencia a rutas absolutas como `/home/sbi/`. Ajusta las rutas en los scripts o en `config.kdl` según tu usuario.
 
