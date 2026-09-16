@@ -137,6 +137,10 @@ window#waybar {
   color: @color1;
 }
 
+#battery.warning {
+  color: @color9;
+}
+
 /* temperature */
 #temperature.critical {
   color: @color1;

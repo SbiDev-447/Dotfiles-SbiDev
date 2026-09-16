@@ -18,7 +18,7 @@
   },
 
   "cpu": {
-    "format": "",
+    "format": " ",
     "interval": 1,
     "tooltip": true,
     "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
@@ -27,7 +27,7 @@
   },
 
   "memory": {
-    "format": "󰍛",
+    "format": "󰍛 ",
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB ({percentage}%)"
@@ -42,7 +42,7 @@
   },
 
   "custom/idle": {
-    "exec": "if pgrep -x swayidle >/dev/null; then echo '󰒲'; else echo '󰓣'; fi",
+    "exec": "if pgrep -x swayidle >/dev/null; then echo '󰌬 '; else echo '󰒲 '; fi",
     "interval": 5,
     "on-click": "$HOME/.local/bin/toggle-idle.sh",
     "tooltip": false
@@ -87,7 +87,7 @@
 
   // ── modules-right ─────────────────────────────────────────────
   "custom/localsend": {
-    "format": "",
+    "format": " ",
     "tooltip": false,
     "on-click": "flatpak run org.localsend.localsend_app"
   },
@@ -95,15 +95,14 @@
   "network": {
     "format-icons": {
       "wifi": [
-        "󰤯",
-        "󰤟",
-        "󰤢",
-        "󰤥",
-        "󰤨"
+        "󰤯 ",
+        "󰤟 ",
+        "󰤢 ",
+        "󰤥 ",
+        "󰤨 "
       ],
-      "ethernet": "󰈀",
-      "disabled": "󰤭",
-      "disconnected": "󰤩"
+      "disabled": "󰤭 ",
+      "disconnected": "󰤩 "
     },
     "format-wifi": "{icon}",
     "format-ethernet": "{icon}",
@@ -223,7 +222,8 @@
   "battery": {
     "interval": 5,
     "states": {
-      "critical": 20
+      "critical": 20,
+      "warning": 30
     },
     "format": "{icon}",
     "format-icons": [
@@ -238,8 +238,8 @@
       "󰂂",
       "󰁹"
     ],
-    "format-charging": "󰂄",
-    "format-plugged": "󰚥",
+    "format-charging": "",
+    "format-plugged": "",
     "format-critical": "󰂃",
     "tooltip": true,
     "tooltip-format": "Charge: {capacity}%",
@@ -247,7 +247,7 @@
   },
 
   "custom/dmenu": {
-    "format": "󰏒",
+    "format": "󰏒 ",
     "on-click": "$HOME/.local/bin/dmenu",
     "tooltip": false
   },
