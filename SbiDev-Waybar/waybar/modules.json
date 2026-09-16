@@ -1,0 +1,260 @@
+{
+  // ── modules-left ─────────────────────────────────────────────
+  "custom/cachy": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "kitty",
+    "on-click-right": "foot"
+  },
+
+  "clock": {
+    "interval": 1,
+    "format": "{:%H
+%M}",
+    "format-alt": "{:%d
+%m
+%y}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+  },
+
+  "cpu": {
+    "format": "",
+    "interval": 1,
+    "tooltip": true,
+    "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
+    "on-click": "kitty -e btop",
+    "on-click-right": "kitty -e btm"
+  },
+
+  "memory": {
+    "format": "󰍛",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB ({percentage}%)"
+  },
+
+  "temperature": {
+    "hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
+    "format": "",
+    "critical-threshold": 80,
+    "tooltip": true,
+    "tooltip-format": "CPU: {temperatureC}°C"
+  },
+
+  "custom/idle": {
+    "exec": "if pgrep -x swayidle >/dev/null; then echo '󰒲'; else echo '󰓣'; fi",
+    "interval": 5,
+    "on-click": "$HOME/.local/bin/toggle-idle.sh",
+    "tooltip": false
+  },
+
+  // ── modules-center ────────────────────────────────────────────
+  "niri/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "default": "󰄰",
+      "active": "󰄯"
+    }
+  },
+
+  "privacy": {
+    "icon-size": 14,
+    "transition-duration": 250,
+    "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": false
+      }
+    ],
+    "ignore": [
+      {
+        "type": "screenshare",
+        "name": "obs"
+      }
+    ]
+  },
+
+  "mpris": {
+    "format": "󰐎",
+    "interval": 1,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous",
+    "tooltip": true,
+    "tooltip-format": "{title}"
+  },
+
+  // ── modules-right ─────────────────────────────────────────────
+  "custom/localsend": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "flatpak run org.localsend.localsend_app"
+  },
+
+  "network": {
+    "format-icons": {
+      "wifi": [
+        "󰤯",
+        "󰤟",
+        "󰤢",
+        "󰤥",
+        "󰤨"
+      ],
+      "ethernet": "󰈀",
+      "disabled": "󰤭",
+      "disconnected": "󰤩"
+    },
+    "format-wifi": "{icon}",
+    "format-ethernet": "{icon}",
+    "format-disconnected": "{icon}",
+    "format-disabled": "{icon}",
+    "interval": 5,
+    "tooltip-format": "{essid}\t{gwaddr}",
+    "on-click": "/usr/sbin/rfkill toggle wifi",
+    "on-click-right": "nm-connection-editor",
+    "tooltip": true,
+    "max-length": 20
+  },
+
+  "bluetooth": {
+    "interval": 1,
+    "format-on": "󰂯",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "format-no-controller": "󰂯",
+    "tooltip": true,
+    "tooltip-format": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_address}",
+    "on-click": "sh -c 'if bluetoothctl show | grep -q \"Powered: yes\"; then bluetoothctl power off; else bluetoothctl power on; fi'",
+    "on-click-right": "blueman-manager"
+  },
+
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "󰍬",
+    "format-source-muted": "󰍭",
+    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+    "on-click-right": "pavucontrol -t 4",
+    "tooltip": false
+  },
+
+  "group/audio": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 400,
+      "children-class": "audio",
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "pulseaudio",
+      "pulseaudio/slider"
+    ]
+  },
+
+  "pulseaudio": {
+    "interval": 1,
+    "format": "{icon}",
+    "format-icons": [
+      "󰕿",
+      "󰖀",
+      "󰕾"
+    ],
+    "format-muted": "󰝟",
+    "on-click-right": "pavucontrol -t 3",
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "reverse-scrolling": true,
+    "tooltip": true,
+    "tooltip-format": "Volume: {volume}%\n{desc}",
+    "ignored-sinks": [
+      "Easy Effects Sink"
+    ]
+  },
+
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "vertical",
+    "size": 8
+  },
+
+  "group/brightness": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 400,
+      "children-class": "brightness",
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "backlight",
+      "backlight/slider"
+    ]
+  },
+
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon}",
+    "format-icons": [
+      "󰃚",
+      "󰃛",
+      "󰃜",
+      "󰃟",
+      "󰃞",
+      "󰃝",
+      "󰃠"
+    ],
+    "on-scroll-up": "brightnessctl --class=backlight set 5%+",
+    "on-scroll-down": "brightnessctl --class=backlight set 5%-",
+    "on-click": "brightnessctl --class=backlight set 10%+",
+    "on-click-right": "brightnessctl --class=backlight set 10%-",
+    "reverse-scrolling": false,
+    "tooltip": false,
+    "smooth-scrolling-threshold": 0.2
+  },
+
+  "backlight/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "vertical",
+    "device": "intel_backlight"
+  },
+
+  "battery": {
+    "interval": 5,
+    "states": {
+      "critical": 20
+    },
+    "format": "{icon}",
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
+    "format-charging": "󰂄",
+    "format-plugged": "󰚥",
+    "format-critical": "󰂃",
+    "tooltip": true,
+    "tooltip-format": "Charge: {capacity}%",
+    "tooltip-format-charging": "Charging: {capacity}%"
+  },
+
+  "custom/dmenu": {
+    "format": "󰏒",
+    "on-click": "$HOME/.local/bin/dmenu",
+    "tooltip": false
+  },
+
+  "custom/power": {
+    "format": "󰐥",
+    "tooltip": false,
+    "on-click": "$HOME/.local/bin/fuzzel-power-menu"
+  }
+}

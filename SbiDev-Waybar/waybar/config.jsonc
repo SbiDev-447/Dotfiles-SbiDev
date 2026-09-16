@@ -1,0 +1,37 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "right",
+  "margin-top": 0,
+  "margin-bottom": 0,
+  "margin-left": 0,
+  "margin-right": 0,
+  "spacing": 0,
+  "include": [
+    "~/.config/waybar/modules.json"
+  ],
+  "modules-left": [
+    "custom/cachy",
+    "clock",
+    "cpu",
+    "memory",
+    "temperature",
+    "custom/idle"
+  ],
+  "modules-center": [
+    "niri/workspaces",
+    "privacy",
+    "mpris"
+  ],
+  "modules-right": [
+    "custom/localsend",
+    "network",
+    "bluetooth",
+    "pulseaudio#microphone",
+    "group/audio",
+    "group/brightness",
+    "battery",
+    "custom/dmenu",
+    "custom/power"
+  ]
+}

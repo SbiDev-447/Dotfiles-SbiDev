@@ -1,0 +1,211 @@
+@import "./colors.css";
+
+/* ================================
+   CONFIGURACIÓN GLOBAL
+   ================================ */
+* {
+  font-family: "IosevkaTerm Nerd Font";
+  font-size: 18px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+window#waybar {
+  background: @background;
+}
+
+/* ================================
+   ESTILOS BASE DE MÓDULOS
+   ================================ */
+#custom-cachy,
+#clock,
+#cpu,
+#memory,
+#workspaces,
+#mpris,
+#privacy,
+#network,
+#bluetooth,
+#pulseaudio,
+#pulseaudio.microphone,
+#backlight,
+#battery,
+#temperature,
+#custom-localsend,
+#custom-dmenu,
+#custom-idle,
+#custom-power {
+  color: @foreground;
+  padding: 6px 0;
+}
+
+/* ================================
+   MODULES-LEFT
+   ================================ */
+/* custom/cachy */
+#custom-cachy {
+  color: @color5;
+}
+
+/* clock */
+#clock {
+  color: #f3f6f9;
+}
+
+/* cpu */
+#cpu {
+  color: @color7;
+}
+
+/* ================================
+   MODULES-CENTER
+   ================================ */
+/* niri/workspaces */
+#workspaces button {
+  color: @foreground;
+  padding: 0;
+  margin: 0;
+}
+
+#workspaces button.active {
+  color: @color3;
+}
+/* privacy */
+#privacy {
+  color: @color3;
+}
+
+/* mpris */
+#mpris {
+  color: @color3;
+}
+
+/* ================================
+   MODULES-RIGHT
+   ================================ */
+/* network */
+#network.disabled {
+  color: @color1;
+}
+
+#network.wifi {
+  color: @color2;
+}
+
+#network.ethernet {
+  color: @color3;
+}
+
+/* bluetooth */
+#bluetooth {
+  color: @foreground;
+}
+
+#bluetooth.connected {
+  color: @color4;
+}
+
+#bluetooth.off {
+  color: @color1;
+}
+
+/* pulseaudio#microphone */
+#pulseaudio.microphone.source-muted {
+  color: @color1;
+}
+
+/* group/audio */
+#pulseaudio.sink-muted:not(.microphone) {
+  color: @color3;
+}
+
+/* group/brightness */
+#backlight-slider highlight {
+  background: @color3;
+}
+
+/* battery */
+#battery.plugged {
+  color: @color4;
+}
+
+#battery.charging {
+  color: @color2;
+}
+
+#battery.critical {
+  color: @color1;
+}
+
+/* temperature */
+#temperature.critical {
+  color: @color1;
+}
+
+/* custom/localsend */
+/* (no tiene color específico, usa @foreground por defecto) */
+
+/* custom/dmenu */
+#custom-dmenu {
+  color: @color3;
+}
+
+/* custom/power */
+#custom-power {
+  color: @color1;
+}
+
+/* ================================
+   HOVER DE MÓDULOS
+   ================================ */
+#custom-cachy:hover,
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#pulseaudio.microphone:hover,
+#pulseaudio.sink-muted:hover,
+#custom-localsend:hover,
+#custom-dmenu:hover,
+#custom-idle:hover,
+#custom-power:hover {
+  opacity: 0.75;
+}
+
+/* ================================
+   TOOLTIP
+   ================================ */
+tooltip {
+  background: @background;
+  border: 1px solid @foreground;
+}
+
+tooltip * {
+  color: @foreground;
+  margin: 2px;
+  background: @background;
+}
+
+/* ================================
+   SLIDERS
+   ================================ */
+#pulseaudio-slider,
+#backlight-slider {
+  min-height: 80px;
+}
+
+#pulseaudio-slider slider,
+#backlight-slider slider {
+  background: transparent;
+}
+
+#pulseaudio-slider trough,
+#backlight-slider trough {
+  min-width: 8px;
+}
+
+#pulseaudio-slider highlight {
+  background: @color4;
+}
