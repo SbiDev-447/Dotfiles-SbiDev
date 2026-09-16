@@ -9,9 +9,12 @@
 ![License](https://img.shields.io/badge/License-MIT%20%26%20GPLv3-blue?style=for-the-badge)
 ![Neovim](https://img.shields.io/badge/Neovim-LazyVim-57A143?logo=neovim&style=for-the-badge)
 ![Fuzzel](https://img.shields.io/badge/Launcher-Fuzzel-orange?style=for-the-badge)
+![Waybar](https://img.shields.io/badge/Bar-Waybar-blueviolet?style=for-the-badge)
+![Kitty](https://img.shields.io/badge/Terminal-Kitty-000000?style=for-the-badge)
+![Foot](https://img.shields.io/badge/Terminal-Foot-8fba58?style=for-the-badge)
 
 **Colección de dotfiles, configuraciones y scripts** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian 13 Trixie**.  
-Incluye personalización de entorno, gestión de energía, lanzadores rápidos con **Fuzzel**, editor **Neovim** potenciado con **LazyVim** (basado en GentlemanDots), y utilidades CLI propias.
+Incluye personalización de entorno, gestión de energía, lanzadores rápidos con **Fuzzel**, barra de estado **Waybar**, terminales **Kitty** y **Foot** con temas SbiDev (oscuro/claro), editor **Neovim** potenciado con **LazyVim** (basado en GentlemanDots), y utilidades CLI propias.
 </div>
 
 ---
@@ -81,7 +84,7 @@ Incluye personalización de entorno, gestión de energía, lanzadores rápidos c
 ### Niri (`config.kdl`)
 - **Outputs**: eDP-1 (1920x1080) + HDMI-A-1 (1920x1080, offset 1280,0)
 - **Layout**: gaps 6, focus-ring con gradiente, esquinas redondeadas (radio 8)
-- **Startup**: wlsunset, waybar, wallpaper rotator, swaync, idle daemon
+- **Startup**: wlsunset, waybar, wallpaper rotator, swaync, idle daemon, low-battery-notify
 - **Reglas de ventana**: floating para calculadora, Bluetooth, PuP para Firefox/LibreWolf/Chromium, bloqueo de captura en KeePassXC
 - **Cursor**: Win7OS-cursors (size 40)
 
@@ -98,8 +101,27 @@ Incluye personalización de entorno, gestión de energía, lanzadores rápidos c
 - Plugins: Oil, Fzflua, Twilight, vim-tmux-navigation, live-server, markdown, DAP
 - Spellcheck: vocabulario personalizado EN/ES
 
+### Waybar (`config.jsonc`)
+- Barra vertical derecha en capa superior
+- Módulos: workspaces (niri), reloj, CPU, memoria, temperatura, toggle idle, privacidad, MPRIS, red, Bluetooth, audio + micrófono, brillo, batería, lanzador dmenu y menú de energía
+- Estilo CSS custom con paleta centralizada en `colors.css`
+
+### Kitty (`kitty.conf`)
+- Tema SbiDev con dos variantes: `kitty-theme.conf` (oscuro) y `kitty-theme-light.conf` (claro)
+- Fuente: IosevkaTerm Nerd Font 14pt
+- Rendimiento: scrollback 10000, `repaint_delay 10` / `input_delay 3`, `sync_to_monitor`
+- Transparencia: `background_opacity 0.925` con blur (compositor)
+- Integración con nvim: `allow_remote_control` + socket en `/tmp/kitty`
+- Tabs con `cmd+1-9`, copiar/pegar con `ctrl+shift+c/v`
+
+### Foot (`foot.ini`)
+- Terminal Wayland minimalista con el **tema claro SbiDev** (misma paleta que kitty light)
+- Fuente: IosevkaTerm Nerd Font 14pt
+- Paleta SbiDev light: fondo crema `#f5efe6`, texto `#2a2a2a`, `alpha 0.925`, selección azul `#2a3d5c`
+- Cursor bloque mostaza `#d9b45a` con blink, scrollback 10000
+
 ### Fastfetch
-- Logo ASCII personalizado (`logoSbiDev.txt`)
+- Logos ASCII personalizados (`logoSbiDev.txt`, `logoGengarASCII.txt`, `logoRowlet.txt`, `logoSamurott.txt`, `logoSnorlax.txt`)
 - Módulos: OS, Kernel, Terminal, Packages (apt), Uptime, CPU, Memory, Disk, Battery
 
 ---
@@ -110,7 +132,7 @@ Incluye personalización de entorno, gestión de energía, lanzadores rápidos c
 
 ```bash
 # Dependencias core
-sudo apt install fuzzel swaybg swaylock kitty btop fastfetch nmtui brightnessctl
+sudo apt install fuzzel swaybg swaylock kitty foot btop fastfetch nmtui brightnessctl
 
 # Para el rotador de wallpapers y notificaciones
 sudo apt install libnotify-bin imagemagick
@@ -136,6 +158,9 @@ cd Dotfiles-SbiDev
 # Copiar configuraciones
 cp -r SbiDev-Niri/niri ~/.config/          # Config de Niri
 cp -r SbiDev-Fuzzel/fuzzel ~/.config/      # Config de Fuzzel
+cp -r SbiDev-Kitty/kitty ~/.config/        # Config de Kitty
+cp -r SbiDev-Foot/foot ~/.config/          # Config de Foot
+cp -r SbiDev-Waybar/waybar ~/.config/      # Config de Waybar
 cp -r SbiDev-NVIM/nvim ~/.config/          # Config de Neovim
 cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/ # Config de Fastfetch
 
