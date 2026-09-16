@@ -21,8 +21,6 @@ vim.opt.spell = false -- activa spell checker
 vim.opt.spelllang = { "en" }
 
 vim.opt.clipboard = "unnamedplus"
-
--- Fallback Wayland para sesión local en Debian
 if vim.env.SSH_CONNECTION then
   local osc52 = require("vim.ui.clipboard.osc52")
   vim.g.clipboard = {
@@ -36,8 +34,6 @@ if vim.env.SSH_CONNECTION then
       ["*"] = osc52.paste("*"),
     },
   }
-elseif vim.env.WAYLAND_DISPLAY and vim.fn.executable("wl-copy") == 1 then
-  vim.g.clipboard = "wl-clipboard"
 end
 
 require("lazy").setup({

@@ -99,6 +99,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "swaync"
 spawn-at-startup "/home/sbi/.local/bin/niri_wallpaper.sh"
 spawn-at-startup "/home/sbi/.local/bin/niri-idle.sh"
+spawn-at-startup "/home/sbi/.local/bin/low-battery-notify.sh"
 
 // ============================================================================
 //                             ANIMACIONES
