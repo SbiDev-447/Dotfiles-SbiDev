@@ -1,7 +1,7 @@
 {
   // ── modules-left ─────────────────────────────────────────────
   "custom/cachy": {
-    "format": "",
+    "format": " ",
     "tooltip": false,
     "on-click": "kitty",
     "on-click-right": "foot"
