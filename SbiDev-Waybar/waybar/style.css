@@ -213,3 +213,39 @@ tooltip * {
 #pulseaudio-slider highlight {
   background: @color4;
 }
+
+/* ================================
+   AISLAMIENTO DEL TEMA GTK
+   El tema de escritorio (GTK3) es global y se superpone a este CSS en
+   todo lo no definido aqui. Cierro los puntos de fuga para que ninguna
+   estetica externa pinte en la barra.
+   ================================ */
+window#waybar button,
+window#waybar button:hover,
+window#waybar button:active {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+#pulseaudio-slider trough,
+#backlight-slider trough {
+  background: transparent;
+  border: none;
+}
+
+/* El tema GTK define scale { min-width:24px } y scale slider { min 16px };
+   eso infla la ranura vertical a ~20px en vez de los 8px pedidos. */
+#pulseaudio-slider scale,
+#backlight-slider scale {
+  min-width: 8px;
+  min-height: 0px;
+}
+
+#pulseaudio-slider slider,
+#backlight-slider slider {
+  min-width: 0px;
+  min-height: 0px;
+  border: none;
+  box-shadow: none;
+}
