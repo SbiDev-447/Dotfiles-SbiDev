@@ -1,5 +1,4 @@
 {
-  // ── modules-left ─────────────────────────────────────────────
   "custom/cachy": {
     "format": " ",
     "tooltip": false,
@@ -9,17 +8,14 @@
 
   "clock": {
     "interval": 1,
-    "format": "{:%H
-%M}",
-    "format-alt": "{:%d
-%m
-%y}",
+    "format": "{:%H:%M}",
+    "format-alt": "{:%d-%m-%y}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>"
   },
 
   "cpu": {
     "format": " ",
-    "interval": 1,
+    "interval": 5,
     "tooltip": true,
     "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
     "on-click": "kitty -e btop",
@@ -34,21 +30,16 @@
   },
 
   "temperature": {
+    "format": "",
+    "format-warning": "",
+    "format-critical": " ",
     "hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
-    "format": "",
+    "warning-threshold": 70,
     "critical-threshold": 80,
     "tooltip": true,
     "tooltip-format": "CPU: {temperatureC}°C"
   },
 
-  "custom/idle": {
-    "exec": "if pgrep -x swayidle >/dev/null; then echo '󰌬 '; else echo '󰒲 '; fi",
-    "interval": 5,
-    "on-click": "$HOME/.local/bin/toggle-idle.sh",
-    "tooltip": false
-  },
-
-  // ── modules-center ────────────────────────────────────────────
   "niri/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -76,7 +67,7 @@
   },
 
   "mpris": {
-    "format": "󰐎",
+    "format": "󰐎 ",
     "interval": 1,
     "on-click": "playerctl play-pause",
     "on-click-right": "playerctl next",
@@ -85,7 +76,6 @@
     "tooltip-format": "{title}"
   },
 
-  // ── modules-right ─────────────────────────────────────────────
   "custom/localsend": {
     "format": " ",
     "tooltip": false,
@@ -94,13 +84,7 @@
 
   "network": {
     "format-icons": {
-      "wifi": [
-        "󰤯 ",
-        "󰤟 ",
-        "󰤢 ",
-        "󰤥 ",
-        "󰤨 "
-      ],
+      "wifi": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
       "disabled": "󰤭 ",
       "disconnected": "󰤩 "
     },
@@ -119,9 +103,9 @@
   "bluetooth": {
     "interval": 1,
     "format-on": "󰂯",
-    "format-off": "󰂲",
-    "format-disabled": "󰂲",
-    "format-connected": "󰂱",
+    "format-off": "󰂲 ",
+    "format-disabled": "󰂲 ",
+    "format-connected": "󰂱 ",
     "format-no-controller": "󰂯",
     "tooltip": true,
     "tooltip-format": "{device_enumerate}",
@@ -133,90 +117,30 @@
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "format-source": "󰍬",
-    "format-source-muted": "󰍭",
+    "format-source-muted": "󰍭 ",
     "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
     "on-click-right": "pavucontrol -t 4",
     "tooltip": false
   },
 
-  "group/audio": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 400,
-      "children-class": "audio",
-      "transition-left-to-right": false
-    },
-    "modules": [
-      "pulseaudio",
-      "pulseaudio/slider"
-    ]
-  },
-
-  "pulseaudio": {
+  "custom/audio": {
+    "exec": "$HOME/.config/waybar/scripts/audio.sh",
     "interval": 1,
-    "format": "{icon}",
-    "format-icons": [
-      "󰕿",
-      "󰖀",
-      "󰕾"
-    ],
-    "format-muted": "󰝟",
+    "signal": 3,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+3 waybar",
     "on-click-right": "pavucontrol -t 3",
-    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-    "reverse-scrolling": true,
-    "tooltip": true,
-    "tooltip-format": "Volume: {volume}%\n{desc}",
-    "ignored-sinks": [
-      "Easy Effects Sink"
-    ]
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+3 waybar",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+3 waybar"
   },
 
-  "pulseaudio/slider": {
-    "min": 0,
-    "max": 100,
-    "orientation": "vertical",
-    "size": 8
-  },
-
-  "group/brightness": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 400,
-      "children-class": "brightness",
-      "transition-left-to-right": false
-    },
-    "modules": [
-      "backlight",
-      "backlight/slider"
-    ]
-  },
-
-  "backlight": {
-    "device": "intel_backlight",
-    "format": "{icon}",
-    "format-icons": [
-      "󰃚",
-      "󰃛",
-      "󰃜",
-      "󰃟",
-      "󰃞",
-      "󰃝",
-      "󰃠"
-    ],
-    "on-scroll-up": "brightnessctl --class=backlight set 5%+",
-    "on-scroll-down": "brightnessctl --class=backlight set 5%-",
-    "on-click": "brightnessctl --class=backlight set 10%+",
-    "on-click-right": "brightnessctl --class=backlight set 10%-",
-    "reverse-scrolling": false,
-    "tooltip": false,
-    "smooth-scrolling-threshold": 0.2
-  },
-
-  "backlight/slider": {
-    "min": 0,
-    "max": 100,
-    "orientation": "vertical",
-    "device": "intel_backlight"
+  "custom/brightness": {
+    "exec": "$HOME/.config/waybar/scripts/backlight.sh",
+    "interval": 1,
+    "signal": 3,
+    "on-click": "brightnessctl --class=backlight set 10%+; pkill -RTMIN+3 waybar",
+    "on-click-right": "brightnessctl --class=backlight set 10%-; pkill -RTMIN+3 waybar",
+    "on-scroll-up": "brightnessctl --class=backlight set 5%+; pkill -RTMIN+3 waybar",
+    "on-scroll-down": "brightnessctl --class=backlight set 5%-; pkill -RTMIN+3 waybar"
   },
 
   "battery": {
@@ -226,20 +150,9 @@
       "warning": 30
     },
     "format": "{icon}",
-    "format-icons": [
-      "󰁺",
-      "󰁻",
-      "󰁼",
-      "󰁽",
-      "󰁾",
-      "󰁿",
-      "󰂀",
-      "󰂁",
-      "󰂂",
-      "󰁹"
-    ],
-    "format-charging": "",
-    "format-plugged": "",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "format-charging": " ",
+    "format-plugged": " ",
     "format-critical": "󰂃",
     "tooltip": true,
     "tooltip-format": "Charge: {capacity}%",

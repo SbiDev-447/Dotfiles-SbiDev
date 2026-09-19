@@ -1,11 +1,17 @@
 return {
   {
+    "SbiDev-447/TurtleGlassesNvim",
+    lazy = false,
+    priority = 1000,
+  },
+
+  {
     "rebelot/kanagawa.nvim",
     priority = 1000,
-    lazy = false, -- Se carga bajo demanda
+    lazy = false, -- Activo Antes que todo
     config = function()
       require("kanagawa").setup({
-        compile = false,
+        compile = true,
         undercurl = true,
         commentStyle = { italic = true },
         functionStyle = {},
@@ -54,7 +60,8 @@ return {
   {
     "Gentleman-Programming/gentleman-kanagawa-blur",
     name = "gentleman-kanagawa-blur",
-    priority = 1000,
+    priority = 999,
+    dependencies = { "rebelot/kanagawa.nvim" },
     -- No necesita config propia; solo usa los colores de kanagawa
   },
 

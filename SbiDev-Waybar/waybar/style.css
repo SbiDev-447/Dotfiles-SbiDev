@@ -5,9 +5,10 @@
    ================================ */
 * {
   font-family: "IosevkaTerm Nerd Font";
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 0;
   box-shadow: none;
+  margin: -3px 5px;
 }
 
 window#waybar {
@@ -18,6 +19,8 @@ window#waybar {
    ESTILOS BASE DE MÓDULOS
    ================================ */
 #custom-cachy,
+#custom-audio,
+#custom-brightness,
 #clock,
 #cpu,
 #memory,
@@ -28,12 +31,10 @@ window#waybar {
 #bluetooth,
 #pulseaudio,
 #pulseaudio.microphone,
-#backlight,
 #battery,
 #temperature,
 #custom-localsend,
 #custom-dmenu,
-#custom-idle,
 #custom-power {
   color: @foreground;
   padding: 6px 0;
@@ -55,6 +56,11 @@ window#waybar {
 /* cpu */
 #cpu {
   color: @color7;
+}
+
+/* temperature */
+#temperature.critical {
+  color: @color1;
 }
 
 /* ================================
@@ -114,16 +120,6 @@ window#waybar {
   color: @color1;
 }
 
-/* group/audio */
-#pulseaudio.sink-muted:not(.microphone) {
-  color: @color3;
-}
-
-/* group/brightness */
-#backlight-slider highlight {
-  background: @color3;
-}
-
 /* battery */
 #battery.plugged {
   color: @color4;
@@ -141,14 +137,6 @@ window#waybar {
   color: @color9;
 }
 
-/* temperature */
-#temperature.critical {
-  color: @color1;
-}
-
-/* custom/localsend */
-/* (no tiene color específico, usa @foreground por defecto) */
-
 /* custom/dmenu */
 #custom-dmenu {
   color: @color3;
@@ -163,6 +151,8 @@ window#waybar {
    HOVER DE MÓDULOS
    ================================ */
 #custom-cachy:hover,
+#custom-audio:hover,
+#custom-brightness:hover,
 #cpu:hover,
 #memory:hover,
 #temperature:hover,
@@ -170,10 +160,8 @@ window#waybar {
 #bluetooth:hover,
 #pulseaudio:hover,
 #pulseaudio.microphone:hover,
-#pulseaudio.sink-muted:hover,
 #custom-localsend:hover,
 #custom-dmenu:hover,
-#custom-idle:hover,
 #custom-power:hover {
   opacity: 0.75;
 }
@@ -193,28 +181,6 @@ tooltip * {
 }
 
 /* ================================
-   SLIDERS
-   ================================ */
-#pulseaudio-slider,
-#backlight-slider {
-  min-height: 80px;
-}
-
-#pulseaudio-slider slider,
-#backlight-slider slider {
-  background: transparent;
-}
-
-#pulseaudio-slider trough,
-#backlight-slider trough {
-  min-width: 8px;
-}
-
-#pulseaudio-slider highlight {
-  background: @color4;
-}
-
-/* ================================
    AISLAMIENTO DEL TEMA GTK
    El tema de escritorio (GTK3) es global y se superpone a este CSS en
    todo lo no definido aqui. Cierro los puntos de fuga para que ninguna
@@ -224,28 +190,6 @@ window#waybar button,
 window#waybar button:hover,
 window#waybar button:active {
   background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-#pulseaudio-slider trough,
-#backlight-slider trough {
-  background: transparent;
-  border: none;
-}
-
-/* El tema GTK define scale { min-width:24px } y scale slider { min 16px };
-   eso infla la ranura vertical a ~20px en vez de los 8px pedidos. */
-#pulseaudio-slider scale,
-#backlight-slider scale {
-  min-width: 8px;
-  min-height: 0px;
-}
-
-#pulseaudio-slider slider,
-#backlight-slider slider {
-  min-width: 0px;
-  min-height: 0px;
   border: none;
   box-shadow: none;
 }

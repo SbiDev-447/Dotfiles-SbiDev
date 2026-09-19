@@ -9,3 +9,4 @@ data
 .env
 node_modules
 .atl/
+odd/
