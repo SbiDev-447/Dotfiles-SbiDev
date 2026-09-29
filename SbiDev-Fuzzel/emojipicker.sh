@@ -19,7 +19,7 @@ set -euo pipefail
 
 # --- Configuración ---
 # Verificar dependencias
-for cmd in fuzzel wl-copy; do
+for cmd in fuzzel wl-copy wtype; do
     if ! command -v "$cmd" &>/dev/null; then
         echo "Error: $cmd no está instalado." >&2
         exit 1
@@ -35,14 +35,19 @@ Selector de emojis con fuzzel.
 
 Características:
   - Busca emojis por nombre, descripción o palabras clave
-  - Al seleccionar un emoji con Enter, se copia automáticamente al portapapeles
-  - Usa wl-copy para copiar (Wayland/Niri)
+  - Al seleccionar un emoji con Enter, se copia al portapapeles Y se pega
+    automáticamente en la ventana que tenía el foco
+  - Usa wl-copy para copiar y wtype para escribir (Wayland/Niri)
 
 Búsqueda:
   Escribe en el campo de entrada de fuzzel para filtrar emojis
   Coincide con cualquier palabra en la descripción del emoji
 
-Dependencias: fuzzel, wl-copy
+Atajos:
+  Enter   Copiar y pegar
+  Esc     Cancelar (no toca el portapapeles)
+
+Dependencias: fuzzel, wl-copy, wtype
 EOF
     exit 0
 }
@@ -57,13 +62,19 @@ select_emoji() {
         exit 1
     fi
     
+    local selected
     # Extraer TODO el contenido de la línea (emoji + descripción)
     # y pasarlo a fuzzel para búsqueda por palabras clave
-    tail -n +$((emoji_data_start + 1)) "$0" | \
+    # fuzzel devuelve error al cancelar con Esc: en ese caso no hay nada que
+    # extraer, así que propagamos el fallo y el llamador sale limpiamente.
+    selected=$(tail -n +$((emoji_data_start + 1)) "$0" | \
         fuzzel --match-mode fzf --dmenu --prompt "🔍 Buscar emoji: " \
         --font "IosevkaTerm NF:size=12, Noto Color Emoji:size=16" \
-        --lines 15 --width 50 | \
-        awk '{print $1}' | tr -d '\n'
+        --lines 15 --width 50)
+
+    # La primera palabra de la línea es el emoji, el resto es la descripción.
+    # Se recorta con ${var%% *} en lugar de awk para no depender de la locale.
+    echo "${selected%% *}"
 }
 
 # --- Lógica principal ---
@@ -73,20 +84,37 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
     show_help
 fi
 
-# Seleccionar emoji
-EMOJI=$(select_emoji)
+# Seleccionar emoji.
+# Si el usuario cancela (Esc), fuzzel devuelve error y select_emoji no produce
+# nada: salimos sin tocar el portapapeles ni escribir en ninguna ventana.
+EMOJI=$(select_emoji) || EMOJI=""
 
 # Verificar que se seleccionó algo
 if [[ -z "$EMOJI" ]]; then
-    echo "No se seleccionó ningún emoji." >&2
     exit 0
 fi
 
-# Copiar al portapapeles
+# 1. Copiar al portapapeles. wl-copy queda en segundo plano sirviendo la
+#    selección, así que no hace falta esperar a que termine.
 wl-copy "$EMOJI"
 
-# Confirmación visual
-echo "✅ Copiado al portapapeles: $EMOJI"
+# 2. Pegar en la ventana que tenía el foco.
+#
+#    fuzzel es una layer-shell que toma el foco mientras está abierta. Al
+#    cerrarse, el compositor se lo devuelve a la ventana anterior, pero de
+#    forma asíncrona: sin esta espera el teclado virtual escribiría sobre la
+#    superficie que aún tiene el foco (o se perdería) y el emoji no aparecería.
+#    Ajusta EMOJI_PICKER_FOCUS_DELAY si en tu equipo sigue fallando.
+sleep "${EMOJI_PICKER_FOCUS_DELAY:-0.2}"
+
+#    Se *escribe* el carácter en lugar de simular Ctrl+V porque el atajo de
+#    pegado no es universal: kitty usa Ctrl+Shift+V, y no todas las apps
+#    aceptan Ctrl+V. Escribir el texto funciona en cualquier campo de texto.
+wtype -- "$EMOJI"
+
+# Confirmación visual (solo visible si el script corre desde una terminal;
+# Niri lo lanza sin terminal, así que allí no se ve nada)
+echo "✅ Copiado y pegado: $EMOJI"
 
 exit 0
 

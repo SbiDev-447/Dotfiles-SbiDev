@@ -70,11 +70,13 @@ Características:
 
 #### 5. emojipicker.sh (Selector de Emojis)
 
-Buscador y copiador de emojis.
+Buscador, copiador y pegador de emojis.
 
 Características:
 
     Busca emojis por nombre o descripción
+
+    Al elegir con Enter, pega el emoji en la ventana que tenía el foco (wtype)
 
     Copia automáticamente al portapapeles (wl-copy)
 
@@ -82,11 +84,13 @@ Características:
 
     Más de 1000 emojis disponibles
 
+    Esc cancela sin copiar ni pegar nada
+
 ## ⚙️ Instalación
 ### Requisitos Previos:
 
 - Fuzzel (>= 1.10)
-- wl-copy (para emojis)
+- wl-copy y wtype (para emojis)
 - swaybg (para wallpapers)
 - kitty (para scripts de terminal)
 
@@ -96,7 +100,7 @@ Características:
 
 > - Asegúrate de que swaybg esté instalado para el cambio de wallpapers
 
-> - El selector de emojis usa wl-copy (requiere Wayland)
+> - El selector de emojis usa wl-copy y wtype (requiere Wayland). Espera a que el compositor devuelva el foco a la ventana anterior antes de escribir; si el pegado no es fiable, ajusta EMOJI_PICKER_FOCUS_DELAY (por defecto 0.2s)
 
 > - Los scripts terminal necesitan kitty o modificar el terminal
 
