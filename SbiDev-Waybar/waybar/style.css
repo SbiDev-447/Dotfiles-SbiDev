@@ -50,7 +50,9 @@ window#waybar {
 
 /* clock */
 #clock {
-  color: #f3f6f9;
+  color: @background;
+  background: @color3;
+  padding: 6px 10px;
 }
 
 /* cpu */
