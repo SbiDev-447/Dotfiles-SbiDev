@@ -74,7 +74,7 @@ Incluye personalización de entorno, gestión de energía, lanzadores rápidos c
 | Script | Descripción |
 |--------|-------------|
 | `updateallsystem` | Actualizador completo: apt + flatpak + nix |
-| `low-battery-notify.sh` | Notificaciones en 20%, 10% y 5% de batería (polling cada 60s) |
+| `low-battery-notify.sh` | Avisos de batería al 30%, 20%, 10% y 5% descargando, y al alcanzar el techo de carga. Los dispara Waybar con `battery.events` al cambiar de estado: sin bucle `sleep`, sin `acpi` y sin `spawn-at-startup` |
 | `ufw-help` | Hoja de referencia rápida para comandos UFW |
 
 ---
@@ -84,7 +84,7 @@ Incluye personalización de entorno, gestión de energía, lanzadores rápidos c
 ### Niri (`config.kdl`)
 - **Outputs**: eDP-1 (1920x1080) + HDMI-A-1 (1920x1080, offset 1280,0)
 - **Layout**: gaps 6, focus-ring con gradiente, esquinas redondeadas (radio 8)
-- **Startup**: wlsunset, waybar, wallpaper rotator, swaync, idle daemon, low-battery-notify
+- **Startup**: wlsunset, waybar, wallpaper rotator, swaync, idle daemon (los avisos de batería ya no arrancan desde aquí: Waybar los invoca mediante `battery.events`)
 - **Reglas de ventana**: floating para calculadora, Bluetooth, PuP para Firefox/LibreWolf/Chromium, bloqueo de captura en KeePassXC
 - **Cursor**: Win7OS-cursors (size 40)
 
@@ -185,7 +185,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/ # Config de Fastfetch
 | Fuzzel o Swaylock no abren | Verifica la instalación con `which fuzzel` o `which swaylock` |
 | Los wallpapers no cambian | Revisa la ruta `~/Imágenes/Wallpapers/` y confirma que `swaybg` esté activo: `ps aux \| grep swaybg` |
 | Permisos denegados en scripts | Ejecuta `chmod +x ~/.local/bin/*` |
-| Notificaciones de batería no aparecen | Verifica que `acpi` esté instalado: `sudo apt install acpi` |
+| Avisos de batería no aparecen | Verifica el script y su bit de ejecución: `test -x ~/.local/bin/low-battery-notify.sh`, y confirma los eventos con el log de Waybar: `waybar -l debug` |
 | Emoji picker no carga | Confirma que `wl-copy` esté instalado: `which wl-copy` |
 | Idle daemon no funciona | Verifica `swayidle`: `which swayidle && pgrep swayidle` |
 | Wallpaper rotador no inicia al arrancar | Revisa que `niri_wallpaper.sh` tenga permisos y que la línea de startup esté en `config.kdl` |

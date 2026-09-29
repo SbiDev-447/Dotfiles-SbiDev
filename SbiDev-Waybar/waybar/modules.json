@@ -146,6 +146,8 @@
   "battery": {
     "interval": 5,
     "states": {
+      "empty": 5,
+      "danger": 10,
       "critical": 20,
       "warning": 30
     },
@@ -156,7 +158,16 @@
     "format-critical": "󰂃",
     "tooltip": true,
     "tooltip-format": "Charge: {capacity}%",
-    "tooltip-format-charging": "Charging: {capacity}%"
+    "tooltip-format-charging": "Charging: {capacity}%",
+    "events": {
+      "on-discharging-warning": "$HOME/.local/bin/low-battery-notify.sh warning",
+      "on-discharging-critical": "$HOME/.local/bin/low-battery-notify.sh critical",
+      "on-discharging-danger": "$HOME/.local/bin/low-battery-notify.sh danger",
+      "on-discharging-empty": "$HOME/.local/bin/low-battery-notify.sh empty",
+      "on-charging-79": "$HOME/.local/bin/low-battery-notify.sh full 79",
+      "on-charging-80": "$HOME/.local/bin/low-battery-notify.sh full 80",
+      "on-charging-100": "$HOME/.local/bin/low-battery-notify.sh full 100"
+    }
   },
 
   "custom/dmenu": {
