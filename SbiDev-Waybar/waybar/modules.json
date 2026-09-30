@@ -130,7 +130,8 @@
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+3 waybar",
     "on-click-right": "pavucontrol -t 3",
     "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+3 waybar",
-    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+3 waybar"
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+3 waybar",
+    "tooltip": false
   },
 
   "custom/brightness": {
@@ -140,7 +141,8 @@
     "on-click": "brightnessctl --class=backlight set 10%+; pkill -RTMIN+3 waybar",
     "on-click-right": "brightnessctl --class=backlight set 10%-; pkill -RTMIN+3 waybar",
     "on-scroll-up": "brightnessctl --class=backlight set 5%+; pkill -RTMIN+3 waybar",
-    "on-scroll-down": "brightnessctl --class=backlight set 5%-; pkill -RTMIN+3 waybar"
+    "on-scroll-down": "brightnessctl --class=backlight set 5%-; pkill -RTMIN+3 waybar",
+    "tooltip": false
   },
 
   "battery": {
@@ -151,14 +153,19 @@
       "critical": 20,
       "warning": 30
     },
-    "format": "{icon}",
+    "format": "{capacity}% {icon}",
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    "format-charging": " ",
-    "format-plugged": " ",
-    "format-critical": "󰂃",
+    "format-charging": "{capacity}%  ",
+    "format-plugged": "{capacity}%  ",
+    "format-critical": "{capacity}% 󰂃",
     "tooltip": true,
-    "tooltip-format": "Charge: {capacity}%",
-    "tooltip-format-charging": "Charging: {capacity}%",
+    "tooltip-format": "Batería",
+    "tooltip-format-charging": "Cargando",
+    "tooltip-format-discharging": "Descargando",
+    "tooltip-format-full": "Cargado",
+    "tooltip-format-plugged": "Conectada",
+    "tooltip-format-not charging": "Sin cargar",
+    "tooltip-format-unknown": "Sin datos",
     "events": {
       "on-discharging-warning": "$HOME/.local/bin/low-battery-notify.sh warning",
       "on-discharging-critical": "$HOME/.local/bin/low-battery-notify.sh critical",

@@ -123,21 +123,52 @@ window#waybar {
   color: @color1;
 }
 
-/* battery */
+/* custom/audio */
+#custom-audio {
+  color: @background;
+  background: @color2;
+  padding: 6px 10px;
+}
+
+/* custom/brightness */
+#custom-brightness {
+  color: @background;
+  background: @color9;
+  padding: 6px 10px;
+}
+
+/* battery — el estado de carga define el fondo; el aviso de bateria baja manda */
+#battery {
+  color: @background;
+  background: @color6;
+  padding: 6px 10px;
+}
+
+#battery.discharging {
+  color: @background;
+  background: @color7;
+}
+
 #battery.plugged {
-  color: @color4;
+  color: @background;
+  background: @color4;
 }
 
 #battery.charging {
-  color: @color2;
-}
-
-#battery.critical {
-  color: @color1;
+  color: @background;
+  background: @color2;
 }
 
 #battery.warning {
-  color: @color9;
+  color: @background;
+  background: @color9;
+}
+
+#battery.critical,
+#battery.danger,
+#battery.empty {
+  color: @background;
+  background: @color1;
 }
 
 /* custom/dmenu */
