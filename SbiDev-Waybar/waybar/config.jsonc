@@ -24,13 +24,13 @@
   ],
   "modules-right": [
     "custom/localsend",
+    "custom/dmenu",
     "network",
     "bluetooth",
     "pulseaudio#microphone",
     "custom/audio",
     "custom/brightness",
     "battery",
-    "custom/dmenu",
     "custom/power"
   ]
 }
