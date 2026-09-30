@@ -50,6 +50,7 @@ window#waybar {
 
 /* clock */
 #clock {
+  font-family: "Determination";
   color: @background;
   background: @color3;
   padding: 6px 10px;
