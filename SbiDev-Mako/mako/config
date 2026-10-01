@@ -1,0 +1,36 @@
+# Posición en pantalla (top-right, top-center, top-left, bottom-right, etc.)
+anchor=top-right
+margin=10,10,0,0
+padding=16
+width=400
+height=150
+
+
+# Colores (formato #RRGGBB o #RRGGBBAA)
+background-color=#1e1e2edd
+text-color=#f3f6f9
+border-color=#e0c15a
+
+# Borde y esquinas
+border-size=2
+border-radius=10
+
+# Tiempo que duran las notificaciones (milisegundos)
+default-timeout=5000
+
+# Máximo de notificaciones visibles a la vez
+max-visible=3
+
+# Mostrar iconos
+icons=true
+
+# Fuente (opcional)
+font=IosevkaTerm NF 14
+
+[category=system]
+border-color=#b7cc85
+
+[urgency=critical]
+border-color=#f37ba8
+default-timeout=0
+background-color=#313243
