@@ -22,7 +22,8 @@ default-timeout=5000
 max-visible=3
 
 # Mostrar iconos
-icons=true
+icons=1
+icon-path=/usr/share/icons/hicolor:/usr/share/icons/Adwaita:/usr/share/icons/HighContrast:/usr/share/pixmaps
 
 # Fuente (opcional)
 font=IosevkaTerm NF 14
