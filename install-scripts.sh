@@ -11,6 +11,8 @@ SCRIPT_DIRS=(
   "SbiDev-CLI-Scripts"
   "SbiDev-Fuzzel"
   "SbiDev-Niri"
+  "SbiDev-Kitty/scripts"
+  "SbiDev-Waybar/scripts"
 )
 
 if [[ ! -d "${BIN_DIR}" ]]; then
