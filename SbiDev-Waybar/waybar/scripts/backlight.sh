@@ -1,20 +1,13 @@
 #!/usr/bin/env bash
-# Waybar custom module — volumen del sink por defecto.
+# Waybar custom module — brillo (selecciona el dispositivo por clase backlight).
 # Linea 1: icono y porcentaje, directo en la barra.
-# Al enmudecer muestra solo el icono: un sink muteado sigue reportando su volumen.
 
-vol="$(pactl get-sink-volume @DEFAULT_SINK@ | sed -n 's/.*[[:space:]]\([0-9]*\)%.*/\1/p' | head -n1)"
-[ -z "$vol" ] && vol=0
-muted="$(pactl get-sink-mute @DEFAULT_SINK@ | sed -n 's/^Mute: //p')"
+pct="$(brightnessctl --class=backlight -m 2>/dev/null | head -n1 | awk -F, '{print int($4)}')"
+[ -z "$pct" ] && pct=0
 
-if [ "$muted" = "yes" ]; then
-  label="󰝟"
-elif [ "$vol" -ge 66 ]; then
-  label="$vol% 󰕾"
-elif [ "$vol" -ge 33 ]; then
-  label="$vol% 󰖀"
-else
-  label="$vol% 󰕿"
-fi
+icons=("󰃚" "󰃛" "󰃜" "󰃟" "󰃞" "󰃝" "󰃠")
+idx=$((pct * 6 / 100))
+[ "$idx" -gt 6 ] && idx=6
+icon="${icons[$idx]}"
 
-printf '%s\n' "$label"
+printf '%s\n' "${pct}% ${icon}"
