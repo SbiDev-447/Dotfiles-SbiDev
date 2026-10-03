@@ -10,7 +10,7 @@ case "$selected" in
   kitty btop
   ;;
 "💻 Fastfetch")
-  kitty bash -c 'fastfetch; echo ""; read -p "Presiona Enter para cerrar..."'
+  kitty bash -c 'fastfetch; echo ""; read -p " --- Exit With Enter"'
   ;;
 "🌐 nmtui")
   kitty nmtui

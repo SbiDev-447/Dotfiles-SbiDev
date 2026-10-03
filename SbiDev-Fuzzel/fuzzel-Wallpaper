@@ -63,8 +63,8 @@ select_image() {
   done | fuzzel --dmenu \
     -p "Fondo: " \
     --lines=15 \
-    --width=70 \
-    --font "IosevkaTerm NF:size=14")
+    --width=60 \
+    --font "IosevkaTerm NF:size=12")
 
   echo "$selected"
 }
