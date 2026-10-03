@@ -14,7 +14,7 @@
 ![Foot](https://img.shields.io/badge/Terminal-Foot-8fba58?style=for-the-badge)
 
 **Colección de dotfiles, configuraciones y scripts** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian 13 Trixie**.  
-Incluye personalización de entorno, gestión de energía, lanzadores rápidos con **Fuzzel**, barra de estado **Waybar**, terminal **Kitty** con tema oscuro y claro, terminal **Foot** con el tema claro SbiDev, editor **Neovim** potenciado con **LazyVim** (basado en GentlemanDots), y utilidades CLI propias.
+Cubre personalización de entorno, gestión de energía y ahorro OLED, lanzadores rápidos con **Fuzzel**, barra de estado **Waybar**, terminales **Kitty** (tema oscuro y claro) y **Foot** (tema claro SbiDev), editor **Neovim** con **LazyVim** (basado en GentlemanDots) y utilidades CLI propias.
 </div>
 
 ---
@@ -40,26 +40,37 @@ Incluye personalización de entorno, gestión de energía, lanzadores rápidos c
 
 ### Navegación — modelo de columnas
 
-Niri no organiza las ventanas en un mosaico libre: lasAGRUPa en **columnas**. Cada columna
-es una pila vertical, y la pantalla las coloca una al lado de otra. Entender esto explica
-todos los atajos de navegación.
+Niri no reparte las ventanas en un mosaico libre: las agrupa en **columnas**. Cada columna
+es una pila vertical y la pantalla las coloca una junto a otra. Entender este modelo es lo
+que da sentido a todos los atajos de navegación.
 
 | Atajo | Acción |
 |-------|--------|
-| `Mod+Left` / `Mod+Right` | Foco: columna a la izquierda / derecha |
-| `Mod+Up` / `Mod+Down` | Foco: ventana arriba / abajo **dentro** de la columna |
+| `Mod+Left` / `Mod+Right` | Foco: columna de la izquierda / de la derecha |
+| `Mod+Up` / `Mod+Down` | Foco: ventana de arriba / de abajo **dentro** de la columna |
 | `Mod+H` / `Mod+L` | Igual que `Left` / `Right` (atajos vim) |
 | `Mod+J` / `Mod+K` | Igual que `Down` / `Up` (atajos vim) |
-| `Mod+Ctrl+flechas` | **Mover** la columna o la ventana (igual que el foco, pero desplazando) |
-| `Mod+Shift+flechas` | Foco: monitor a la izquierda / derecha |
-| `Mod+Ctrl+Shift+flechas` | Mover columna a otro monitor |
-| `Mod+1-9` / `Mod+Shift+1-9` | Ir al workspace / mover la columna al workspace |
-| `Mod+Comma` / `Mod+Period` | Absorber ventana en la columna / expulsarla |
-| `Mod+R` / `Mod+Ctrl+R` | Ancho de columna siguiente / resetear alto de ventana |
+| `Mod+Shift+flechas` | Foco: monitor de la izquierda / de la derecha |
+| `Mod+Ctrl+Left` / `Mod+Ctrl+Right` | **Mover** la columna hacia un lado |
+| `Mod+Ctrl+Up` / `Mod+Ctrl+Down` | **Mover** la ventana dentro de su columna |
+| `Mod+Ctrl+Shift+flechas` | Mover la columna a otro monitor |
+| `Mod+1-9` / `Mod+Shift+1-9` | Ir al workspace / mover la columna a ese workspace |
+| `Mod+Comma` / `Mod+Period` | Absorber en la columna la ventana de la derecha / expulsar la de abajo |
+| `Mod+V` / `Mod+Shift+V` | Flotar la ventana / alternar entre flotante y mosaico |
+| `Mod+C` | Centrar la columna en la pantalla |
+| `Mod+Minus` / `Mod+Plus` | Estrechar o ensanchar la columna un 10 % |
+| `Mod+Shift+Minus` / `Mod+Shift+Plus` | Bajar o subir la ventana un 10 % |
+| `Mod+R` / `Mod+Shift+R` | Ancho de columna: preset siguiente / preset anterior |
+| `Mod+Ctrl+Shift+R` | Alto de ventana: preset siguiente |
+| `Mod+Ctrl+R` | Restablecer el alto de la ventana al automático |
 | `Mod+B` | Vista de pestañas dentro de la columna |
-| `Mod+V` / `Mod+Shift+V` | Flotar ventana / cambiar entre flotante y en mosaico |
 | `Mod+O` | Vista general de columnas |
-| `Mod+Q` | Cerrar ventana |
+| `Mod+Q` | Cerrar la ventana |
+
+> 💡 Ojo al reparto: los atajos de **ancho** (`Mod+R`, `Mod+Minus`, `Mod+Plus`) actúan
+> sobre la **columna** entera, mientras que los de **alto** (`Mod+Ctrl+Shift+R`,
+> `Mod+Ctrl+R`, `Mod+Shift+Plus`) actúan solo sobre la **ventana enfocada**. Por eso no
+> existe un `set-column-height`: la columna se ajusta con su ancho.
 
 ### Capturas y sistema
 
@@ -89,11 +100,11 @@ todos los atajos de navegación.
 | Script | Descripción | Dependencias |
 |--------|-------------|--------------|
 | `dmenu` | Hub principal: energía, tema, emojis, utilidades y wallpapers | fuzzel |
-| `fuzzel-custom-launcher` | Menú de utilidades: btop, fastfetch, nmtui (las tres dentro de kitty) | fuzzel, kitty, btop, fastfetch, nmtui |
+| `fuzzel-custom-launcher` | Menú de utilidades: btop, fastfetch y nmtui, las tres dentro de Kitty | fuzzel, kitty, btop, fastfetch, nmtui |
 | `fuzzel-Wallpaper` | Selector de wallpapers WebP con soporte de subcarpetas | fuzzel, swaybg, find |
 | `niri_wallpaper.sh` | Rotador aleatorio de wallpapers con persistencia de shuffle | swaybg, shuf, notify-send |
 | `convertMyBackgrounds` | Conversor recursivo de imágenes a WebP con confirmación | ImageMagick (convert) |
-| `emojipicker.sh` | Selector de ~1500 emojis con búsqueda fuzzy; copia al clipboard y lo escribe en la ventana activa | fuzzel, wl-clipboard, wtype |
+| `emojipicker.sh` | Selector de ~1500 emojis con búsqueda fuzzy; copia al portapapeles y lo escribe en la ventana activa | fuzzel, wl-clipboard, wtype |
 | `toggle-theme-kitty.sh` | Alterna el tema de kitty commenting y descomentando el `include` de `kitty-theme.conf` / `kitty-theme-light.conf` dentro de los marcadores `# BEGIN_KITTY_THEME`. Recarga kitty con `SIGUSR1` | sed, grep, pkill |
 | `toggle-theme-waybar.sh` | Alterna Waybar moviendo el symlink `style.css` entre `styles/dark.css` y `styles/light.css`. Recarga waybar con `SIGUSR2` | sed, ln, pkill |
 
@@ -116,13 +127,13 @@ todos los atajos de navegación.
 - **Tamaños**: anchos de columna en presets de 1/3, 1/2 y 2/3 (por defecto 1/2); alturas de ventana igual
 - **Cursor**: Win7OS-cursors, tamaño 40
 - **Autostart**: solo cuatro procesos — `wlsunset` (curva de temperatura por hora), `waybar`, el rotador de wallpapers y el daemon de inactividad. Los avisos de batería no arrancan desde aquí: Waybar los dispara con `battery.events`
-- **Sin `window-rule`**: este config no define reglas por aplicación. El flotado se controla a mano con `Mod+V` y `Mod+Shift+V`
+- **Sin `window-rule`**: esta configuración no define reglas por aplicación. El flotado se controla a mano con `Mod+V` y `Mod+Shift+V`
 
 ### Fuzzel (`fuzzel.ini`)
 - Fuente: IosevkaTerm Nerd Font 14pt
 - Match mode: fuzzy (fzf-style)
 - Terminal: kitty
-- **Temas**: hay dos paletas en `themes/`, `Turtle47-Light` y `Owl47-Dark`. Ojo: `fuzzel.ini` solo carga `Turtle47-Light`, que es un tema **claro** mientras el resto del escritorio (kitty, waybar) va en oscuro. Para el oscuro, cambia la línea `include=` por `Owl47-Dark.ini`
+- **Temas**: hay dos paletas en `themes/`, `Turtle47-Light` y `Owl47-Dark`. Ojo: `fuzzel.ini` solo carga `Turtle47-Light`, que es un tema **claro** mientras el resto del escritorio (Kitty, Waybar) va en oscuro. Para el oscuro, cambia la línea `include=` por `Owl47-Dark.ini`
 
 ### Neovim (LazyVim)
 - Distribución: LazyVim (basado en GentlemanDots), con `lazyvim.json` declarando 11 extras oficiales
@@ -133,7 +144,7 @@ todos los atajos de navegación.
 
 ### Waybar (`config.jsonc` + `modules.json`)
 - **Posición**: arriba y en capa superior (`position: top`, `layer: top`)
-- **17 módulos**: workspaces de niri, reloj, CPU, memoria, temperatura, privacidad, MPRIS, red, Bluetooth, micrófono, batería, volumen, brillo y cuatro lanzadores de un clic (dmenu, menú de energía, LocalSend y CachyOS)
+- **17 módulos**: workspaces de Niri, reloj, CPU, memoria, temperatura, privacidad, MPRIS, red, Bluetooth, micrófono, batería, volumen, brillo y cuatro lanzadores de un clic (dmenu, menú de energía, LocalSend y CachyOS)
 - **Volumen y brillo**: módulos `custom` con script propio. Muestran `NN%` junto al icono, sobre una píldora de color, y sin tooltip. El brillo se lee con `brightnessctl --class=backlight`
 - **Batería**: el porcentaje va en la barra, no en el tooltip. Waybar lanza `low-battery-notify.sh` mediante `battery.events`, así que no hace falta ningún proceso de avisos aparte
 - **CSS**: `style.css` es un symlink que `toggle-theme-waybar.sh` mueve entre `styles/dark.css` y `styles/light.css`, y cada uno importa su paleta (`styles/colors-dark.css` o `styles/colors-light.css`)
@@ -145,14 +156,15 @@ todos los atajos de navegación.
 - Fuente: IosevkaTerm Nerd Font 14pt
 - **Rendimiento**: `scrollback_lines 10000`, `repaint_delay 10`, `input_delay 3`, `sync_to_monitor yes`
 - **Transparencia**: `background_opacity 0.9`
-- **`allow_remote_control yes`** para poder mandar órdenes desde Neovim. Ojo: no hay `listen_address`, así que el socket remoto no está activado; si lo necesitas, añade `listen_address unix:/tmp/kitty`
+- `allow_remote_control yes` está activo para poder mandar órdenes desde Neovim. Ojo: falta `listen_address`, así que el socket remoto sigue sin habilitarse; si lo necesitas, añade `listen_address unix:/tmp/kitty`
 - Tabs con `cmd+1-9`, copiar/pegar con `ctrl+shift+c/v`
 
 ### Foot (`foot.ini`)
-- Terminal Wayland minimalista con el **tema claro SbiDev** (misma paleta que kitty light)
+- Terminal Wayland minimalista con el **tema claro SbiDev** (la misma paleta que el tema claro de Kitty)
 - Fuente: IosevkaTerm Nerd Font 14pt
-- Paleta SbiDev light: fondo crema `#f5efe6`, texto `#2a2a2a`, `alpha 0.925`, selección azul `#2a3d5c`
-- Cursor bloque mostaza `#d9b45a` con blink, scrollback 10000
+- Paleta: fondo crema `#f5efe6`, texto `#2a2a2a`, `alpha 0.925`, selección azul `#2a3d5c`
+- **Cursor**: bloque mostaza `#d9b45a`, con blink
+- **Rendimiento**: `scrollback_lines 10000`
 
 ### Fastfetch
 - Logos ASCII personalizados (`logoSbiDev.txt`, `logoGengarASCII.txt`, `logoRowlet.txt`, `logoSamurott.txt`, `logoSnorlax.txt`)
@@ -172,7 +184,7 @@ sudo apt install fuzzel swaybg swaylock kitty foot btop fastfetch nmtui brightne
 sudo apt install libnotify-bin imagemagick
 
 # Para el selector de emojis
-# wl-copy pega en el clipboard; wtype escribe el emoji en la ventana activa
+# wl-copy pega en el portapapeles; wtype escribe el emoji en la ventana activa
 sudo apt install wl-clipboard wtype
 
 # Para la gestión de energía
@@ -189,14 +201,18 @@ sudo apt install swayidle wlsunset playerctl
 git clone https://github.com/SbiDev-447/Dotfiles-SbiDev.git
 cd Dotfiles-SbiDev
 
+# Crear ~/.config si no existe; si no, el primer cp no crea la subcarpeta
+mkdir -p ~/.config
+
 # Copiar configuraciones
-cp -r SbiDev-Niri/niri ~/.config/          # Config de Niri
-cp -r SbiDev-Fuzzel/fuzzel ~/.config/      # Config de Fuzzel
-cp -r SbiDev-Kitty/kitty ~/.config/        # Config de Kitty
-cp -r SbiDev-Foot/foot ~/.config/          # Config de Foot
-cp -r SbiDev-Waybar/waybar ~/.config/      # Config de Waybar
-cp -r SbiDev-NVIM/nvim ~/.config/          # Config de Neovim
-cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/ # Config de Fastfetch
+cp -r SbiDev-Niri/niri ~/.config/               # Config de Niri
+cp -r SbiDev-Fuzzel/fuzzel ~/.config/           # Config de Fuzzel
+cp -r SbiDev-Kitty/kitty ~/.config/             # Config de Kitty
+cp -r SbiDev-Foot/foot ~/.config/               # Config de Foot
+cp -r SbiDev-Waybar/waybar ~/.config/           # Config de Waybar
+cp -r SbiDev-NVIM/nvim ~/.config/               # Config de Neovim
+mkdir -p ~/.config/fastfetch                    # Fastfetch usa su propia carpeta
+cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 
 # Enlazar los scripts a ~/.local/bin/
 ./install-scripts.sh
@@ -214,11 +230,13 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/ # Config de Fastfetch
 > | `SbiDev-Waybar/scripts/` | `toggle-theme-waybar.sh` |
 >
 > Los enlaces son **relativos**, así que puedes mover el repo de sitio sin romperlos.
+>
 > - Es **idempotente**: si un symlink ya apunta al repo, lo salta con `OK`.
 > - Si **ya existe un archivo** con el mismo nombre, lo omite con `SKIP` para no sobrescribir nada.
 > - Con `./install-scripts.sh --force` elimina los archivos existentes y los sustituye por symlinks al repo (útil tras migrar de copias a enlaces).
 
 > **Nota**: algunos ficheros llevan rutas absolutas de mi máquina (`/home/sbi/`), y hay que ajustarlas a tu usuario:
+>
 > - `SbiDev-Kitty/kitty/kitty.conf` → `shell /home/sbi/.nix-profile/bin/zsh`
 > - `SbiDev-Niri/niri/config.kdl` → invoca `niri_wallpaper.sh`, `niri-idle.sh`, `emojipicker.sh` y `swaylock-lock-screen` con ruta absoluta
 >
@@ -249,7 +267,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/ # Config de Fastfetch
 
 Este repositorio usa **dos licencias** diferentes:
 
-- **MIT**: Aplica a todos los archivos de configuración (nvim, niri, fuzzel, etc.) y a los scripts que no indiquen lo contrario.
+- **MIT**: Aplica a todos los archivos de configuración (`nvim`, `niri`, `fuzzel`, etc.) y a los scripts que no indiquen lo contrario.
 - **GPL-3.0**: Aplica específicamente a los scripts que incluyan la cabecera GPL en su interior:
   - `convertMyBackgrounds`
   - `dmenu`
@@ -265,7 +283,7 @@ Las contribuciones son bienvenidas.
 
 **Hecho con ❤️ por SbiDev-447**
 
-Inspirado por el queridisimo [Gentleman Programming / Alan Buscaglia](https://github.com/Gentleman-Programming/Gentleman.Dots).
+Inspirado por el queridísimo [Gentleman Programming / Alan Buscaglia](https://github.com/Gentleman-Programming/Gentleman.Dots).
 
 Copyright (c) 2026 SbiDev-447.
 
