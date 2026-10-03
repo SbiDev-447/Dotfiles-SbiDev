@@ -77,7 +77,7 @@
   },
 
   "custom/localsend": {
-    "format": " ",
+    "format": "󰷹 ",
     "tooltip": false,
     "on-click": "flatpak run org.localsend.localsend_app"
   },
@@ -184,7 +184,7 @@
   },
 
   "custom/power": {
-    "format": "󰐥",
+    "format": "⏻ ",
     "tooltip": false,
     "on-click": "$HOME/.local/bin/fuzzel-power-menu"
   }

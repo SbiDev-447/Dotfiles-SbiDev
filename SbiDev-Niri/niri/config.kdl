@@ -79,7 +79,7 @@ layout {
     focus-ring {
         width 2.5
         inactive-color "#505050"
-        active-gradient from="#B0E4CC" to="#8BAE66" angle=45
+        active-gradient from="#FFBF00" to="#9381FF" angle=0
     }
 
     border { off; }
@@ -97,7 +97,7 @@ hotkey-overlay {
 
 screenshot-path "~/Imágenes/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
-spawn-at-startup "wlsunset" "-S" "07:00" "-s" "19:00" "-T" "4000" "-t" "3500"
+spawn-at-startup "wlsunset" "-S" "07:00" "-s" "18:00" "-T" "4000" "-t" "3200"
 spawn-at-startup "waybar"
 spawn-at-startup "/home/sbi/.local/bin/niri_wallpaper.sh"
 spawn-at-startup "/home/sbi/.local/bin/niri-idle.sh"
@@ -131,7 +131,7 @@ binds {
 
     // Utilidades
     Mod+Shift+T             hotkey-overlay-title="Toggle ON/OFF AutoSuspend" { spawn "~/.local/bin/toggle-idle.sh"; }
-    Mod+N                   hotkey-overlay-title="Toggle ON/OFF Visual Protect" { spawn "sh" "-c" "pgrep wlsunset && pkill wlsunset || wlsunset -S 07:00 -s 19:00 -T 4000 -t 3500"; }
+    Mod+N                   hotkey-overlay-title="Toggle ON/OFF Visual Protect" { spawn "sh" "-c" "pgrep wlsunset && pkill wlsunset || wlsunset -S 07:00 -s 19:00 -T 4000 -t 3200"; }
     Mod+W                   hotkey-overlay-title="Open Wallpaper Change Menu" { spawn "/home/sbi/.local/bin/fuzzel-Wallpaper"; }
     Mod+Shift+W             hotkey-overlay-title="Change Wallpaper Randomly" { spawn "sh" "-c" "rm -f /tmp/niri_wallpaper.lock; /home/sbi/.local/bin/niri_wallpaper.sh"; }
 
