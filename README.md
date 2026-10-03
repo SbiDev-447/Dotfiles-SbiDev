@@ -221,9 +221,10 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/ # Config de Fastfetch
 > **Nota**: algunos ficheros llevan rutas absolutas de mi máquina (`/home/sbi/`), y hay que ajustarlas a tu usuario:
 > - `SbiDev-Kitty/kitty/kitty.conf` → `shell /home/sbi/.nix-profile/bin/zsh`
 > - `SbiDev-Niri/niri/config.kdl` → invoca `niri_wallpaper.sh`, `niri-idle.sh`, `emojipicker.sh` y `swaylock-lock-screen` con ruta absoluta
-> - `SbiDev-Waybar/waybar/style.css` → es un symlink a `/home/sbi/.config/waybar/styles/dark.css`. Al clonarlo en otra máquina queda roto; ejecuta `./install-scripts.sh` y luego `ln -sfn ~/.config/waybar/styles/dark.css ~/.config/waybar/style.css`
 >
 > La alternativa más limpia para el `kitty.conf` y el `config.kdl` es sustituir las rutas por `~/.local/bin/...`, que es justo donde `install-scripts.sh` deja los enlaces.
+>
+> El symlink `SbiDev-Waybar/waybar/style.css` **sí es relativo** (`styles/dark.css`), a propósito: así sobrevive a un `git clone` en otra máquina. `toggle-theme-waybar.sh` lo mantiene relativo al cambiar de tema.
 
 ---
 
