@@ -5,7 +5,7 @@ options="  Bloquear y 󰒲  Suspender\n󰑓 Reiniciar\n⏻ Apagar"
 selected=$(echo -e "$options" | fuzzel --dmenu -l 5 -p "⚡ Energía: ")
 
 case "$selected" in
-"  Bloquear y 󰒲  Suspender") ~/.local/bin/lock-screen ;;
+"  Bloquear y 󰒲  Suspender") ~/.local/bin/swaylock-lock-screen ;;
 "󰑓 Reiniciar") systemctl reboot ;;
 "⏻ Apagar") systemctl poweroff ;;
 esac

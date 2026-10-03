@@ -127,7 +127,7 @@ binds {
     Mod+E                   hotkey-overlay-title="Emoji Picker" { spawn "/home/sbi/.local/bin/emojipicker.sh"; }
 
     // Seguridad
-    Mod+Shift+Q             hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/lock-screen"; }
+    Mod+Shift+Q             hotkey-overlay-title="Lock the Screen: swaylock" { spawn "/home/sbi/.local/bin/swaylock-lock-screen"; }
 
     // Utilidades
     Mod+Shift+T             hotkey-overlay-title="Toggle ON/OFF AutoSuspend" { spawn "~/.local/bin/toggle-idle.sh"; }
