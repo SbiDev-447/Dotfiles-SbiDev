@@ -106,6 +106,7 @@ que da sentido a todos los atajos de navegación.
 | `convertMyBackgrounds` | Conversor recursivo de imágenes a WebP con confirmación | ImageMagick (convert) |
 | `emojipicker.sh` | Selector de ~1500 emojis con búsqueda fuzzy; copia al portapapeles y lo escribe en la ventana activa | fuzzel, wl-clipboard, wtype |
 | `toggle-theme-kitty.sh` | Alterna el tema de kitty commenting y descomentando el `include` de `kitty-theme.conf` / `kitty-theme-light.conf` dentro de los marcadores `# BEGIN_KITTY_THEME`. Recarga kitty con `SIGUSR1` | sed, grep, pkill |
+| `toggle-theme-alacritty.sh` | Alterna el tema de Alacritty commenting y descomentando el `import` de `alacritty-theme.toml` / `alacritty-theme-light.toml` dentro de los marcadores `# BEGIN_ALACRITTY_THEME`. Recarga Alacritty con `SIGHUP` | sed, grep, pkill |
 | `toggle-theme-waybar.sh` | Alterna Waybar moviendo el symlink `style.css` entre `styles/dark.css` y `styles/light.css`. Recarga waybar con `SIGUSR2` | sed, ln, pkill |
 
 ### Utilidades CLI
@@ -159,6 +160,13 @@ que da sentido a todos los atajos de navegación.
 - `allow_remote_control yes` está activo para poder mandar órdenes desde Neovim. Ojo: falta `listen_address`, así que el socket remoto sigue sin habilitarse; si lo necesitas, añade `listen_address unix:/tmp/kitty`
 - Tabs con `cmd+1-9`, copiar/pegar con `ctrl+shift+c/v`
 
+### Alacritty (`alacritty.toml`)
+- Tema SbiDev con dos variantes: `alacritty-theme.toml` (oscuro) y `alacritty-theme-light.toml` (claro), elegidas por la línea `import` dentro de los marcadores `# BEGIN_ALACRITTY_THEME` (solo una puede estar activa: TOML no admite claves duplicadas)
+- La paleta vive en los archivos importados y **no** en `alacritty.toml`: Alacritty da prioridad al archivo que importa, así que cualquier `[colors.*]` en el principal anularía el tema. Lo mismo pasa con `[font]`, que se queda en `alacritty.toml`
+- Fuente: IosevkaTerm NF 14
+- El tema claro es la misma paleta que el tema claro de Kitty y el de Foot: fondo crema `#f5efe6`, texto `#2a2a2a`, cursor mostaza `#d9b45a`, selección azul `#2a3d5c`
+- **Lo que no se traduce**: el `url_color` de Kitty y los colores de sus tabs no tienen equivalente en Alacritty 0.15, así que los temas solo definen `primary`, `cursor`, `selection` y los 16 colores ANSI
+
 ### Foot (`foot.ini`)
 - Terminal Wayland minimalista con el **tema claro SbiDev** (la misma paleta que el tema claro de Kitty)
 - Fuente: IosevkaTerm Nerd Font 14pt
@@ -208,6 +216,7 @@ mkdir -p ~/.config
 cp -r SbiDev-Niri/niri ~/.config/               # Config de Niri
 cp -r SbiDev-Fuzzel/fuzzel ~/.config/           # Config de Fuzzel
 cp -r SbiDev-Kitty/kitty ~/.config/             # Config de Kitty
+cp -r SbiDev-Alacritty/alacritty ~/.config/     # Config de Alacritty
 cp -r SbiDev-Foot/foot ~/.config/               # Config de Foot
 cp -r SbiDev-Waybar/waybar ~/.config/           # Config de Waybar
 cp -r SbiDev-NVIM/nvim ~/.config/               # Config de Neovim
@@ -219,7 +228,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 ```
 
 > **¿Cómo funciona `install-scripts.sh`?**
-> Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/` (que crea si no existe), para que los scripts se actualicen solos al hacer `git pull` sin recapiar nada. Cubre 15 scripts de cinco carpetas:
+> Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/` (que crea si no existe), para que los scripts se actualicen solos al hacer `git pull` sin recapiar nada. Cubre 16 scripts de seis carpetas:
 >
 > | Carpeta | Qué aporta |
 > |---------|------------|
@@ -227,6 +236,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 > | `SbiDev-Fuzzel/` | `dmenu`, `emojipicker.sh`, `fuzzel-custom-launcher`, `fuzzel-power-menu`, `fuzzel-Wallpaper` |
 > | `SbiDev-Niri/` | `swaylock-lock-screen`, `toggle-idle.sh`, `niri-idle.sh`, `niri_wallpaper.sh` |
 > | `SbiDev-Kitty/scripts/` | `toggle-theme-kitty.sh` |
+> | `SbiDev-Alacritty/scripts/` | `toggle-theme-alacritty.sh` |
 > | `SbiDev-Waybar/scripts/` | `toggle-theme-waybar.sh` |
 >
 > Los enlaces son **relativos**, así que puedes mover el repo de sitio sin romperlos.
@@ -257,6 +267,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 | Avisos de batería no aparecen | Verifica el script y su bit de ejecución: `test -x ~/.local/bin/low-battery-notify.sh`, y confirma los eventos con el log de Waybar: `waybar -l debug` |
 | Emoji picker no carga | Necesita las dos herramientas: `which wl-copy && which wtype` |
 | La temperatura sale vacía | El módulo fija `hwmon-path` a un `hwmon` concreto. Busca el tuyo con `ls /sys/class/hwmon/` y corrígelo en `modules.json` |
+| Alacritty no cambia de tema | Comprueba el script (`test -x ~/.local/bin/toggle-theme-alacritty.sh`) y que en `~/.config/alacritty/` estén los tres `.toml`: el principal, `alacritty-theme.toml` y `alacritty-theme-light.toml`. Si el toggle no marca error pero no se ve el cambio, mira que quede **una sola** línea `import` sin comentar dentro de los marcadores `# BEGIN_ALACRITTY_THEME` y que `alacritty.toml` no tenga ningún bloque `[colors.*]` propio (ganaría al archivo importado) |
 | Idle daemon no funciona | Verifica `swayidle`: `which swayidle && pgrep swayidle` |
 | Wallpaper rotador no inicia al arrancar | Revisa que `niri_wallpaper.sh` tenga permisos y que la línea de startup esté en `config.kdl` |
 | Conversor de imágenes falla | ImageMagick debe estar instalado: `which convert` |

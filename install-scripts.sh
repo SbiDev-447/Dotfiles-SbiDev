@@ -12,6 +12,7 @@ SCRIPT_DIRS=(
   "SbiDev-Fuzzel"
   "SbiDev-Niri"
   "SbiDev-Kitty/scripts"
+  "SbiDev-Alacritty/scripts"
   "SbiDev-Waybar/scripts"
 )
 

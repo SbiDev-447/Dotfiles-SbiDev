@@ -1,0 +1,70 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                         GENTLEMAN DOTS - ALACRITTY                           ║
+# ║                          Optimized for Neovim                                ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  THEME                                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+#
+# Alacritty da prioridad al archivo que importa, así que la paleta NO puede
+# estar aquí: si [colors.*] estuviera definido en este archivo, ganaría él y los
+# importados no cambiarían nada. Solo una línea import activa a la vez (TOML no
+# admite claves duplicadas); toggle-theme-alacritty.sh las intercambia.
+# Las rutas son relativas al directorio de este archivo.
+
+# BEGIN_ALACRITTY_THEME
+import = ["alacritty-theme.toml"]
+#import = ["alacritty-theme-light.toml"]
+# END_ALACRITTY_THEME
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                   FONT                                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+#
+# La fuente se queda aquí a propósito: un [font] en el tema importado lo
+# sobrescribiría en silencio.
+
+[font]
+size = 14
+
+[font.normal]
+family = "IosevkaTerm NF"
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  WINDOW                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+[window]
+opacity = 0.95
+blur = true
+option_as_alt = "Both"
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  CURSOR                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+[cursor]
+style = "Block"
+blink_interval = 500
+unfocused_hollow = true
+vi_mode_style = "Block"
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                 TERMINAL                                     │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+[terminal]
+# For best Neovim compatibility, install alacritty terminfo:
+# sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+
+[env]
+TERM = "xterm-256color"
+
+[hints]
+enabled = []
