@@ -10,6 +10,7 @@ BIN_DIR="${HOME}/.local/bin"
 SCRIPT_DIRS=(
   "SbiDev-CLI-Scripts"
   "SbiDev-Fuzzel"
+  "SbiDev-Fuzzel/scripts"
   "SbiDev-Niri"
   "SbiDev-Kitty/scripts"
   "SbiDev-Alacritty/scripts"

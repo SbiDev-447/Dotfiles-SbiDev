@@ -107,6 +107,7 @@ que da sentido a todos los atajos de navegación.
 | `emojipicker.sh` | Selector de ~1500 emojis con búsqueda fuzzy; copia al portapapeles y lo escribe en la ventana activa | fuzzel, wl-clipboard, wtype |
 | `toggle-theme-kitty.sh` | Alterna el tema de kitty commenting y descomentando el `include` de `kitty-theme.conf` / `kitty-theme-light.conf` dentro de los marcadores `# BEGIN_KITTY_THEME`. Recarga kitty con `SIGUSR1` | sed, grep, pkill |
 | `toggle-theme-alacritty.sh` | Alterna el tema de Alacritty comentando y descomentando el `general.import` de `alacritty-theme.toml` / `alacritty-theme-light.toml` dentro de los marcadores `# BEGIN_ALACRITTY_THEME`. Recarga Alacritty con `SIGHUP` | sed, grep, pkill |
+| `toggle-theme-fuzzel.sh` | Alterna el tema de Fuzzel comentando y descomentando el `include=` de `Owl47-Dark.ini` / `Turtle47-Light.ini` dentro de los marcadores `# BEGIN_FUZZEL_THEME`. No recarga nada: Fuzzel relee la config en cada invocación | sed, grep |
 | `toggle-theme-waybar.sh` | Alterna Waybar moviendo el symlink `style.css` entre `styles/dark.css` y `styles/light.css`. Recarga waybar con `SIGUSR2` | sed, ln, pkill |
 
 ### Utilidades CLI
@@ -134,7 +135,7 @@ que da sentido a todos los atajos de navegación.
 - Fuente: IosevkaTerm Nerd Font 14pt
 - Match mode: fuzzy (fzf-style)
 - Terminal: kitty
-- **Temas**: hay dos paletas en `themes/`, `Turtle47-Light` y `Owl47-Dark`. Ojo: `fuzzel.ini` solo carga `Turtle47-Light`, que es un tema **claro** mientras el resto del escritorio (Kitty, Waybar) va en oscuro. Para el oscuro, cambia la línea `include=` por `Owl47-Dark.ini`
+- **Temas**: hay dos paletas en `themes/`, `Owl47-Dark` y `Turtle47-Light`. `toggle-theme-fuzzel.sh` alterna la línea `include=` entre ambas dentro de los marcadores `# BEGIN_FUZZEL_THEME`. `Owl47-Dark.ini` queda activa por defecto. La ruta del `include` es absoluta (`~/`) por necesidad: Fuzzel la resuelve tal cual, así que hay que copiar la carpeta a `~/.config/fuzzel/` en lugar de usar una ruta relativa
 
 ### Neovim (LazyVim)
 - Distribución: LazyVim (basado en GentlemanDots), con `lazyvim.json` declarando 11 extras oficiales
@@ -228,12 +229,13 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 ```
 
 > **¿Cómo funciona `install-scripts.sh`?**
-> Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/` (que crea si no existe), para que los scripts se actualicen solos al hacer `git pull` sin recapiar nada. Cubre 16 scripts de seis carpetas:
+> Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/` (que crea si no existe), para que los scripts se actualicen solos al hacer `git pull` sin recapiar nada. Cubre 17 scripts de siete carpetas:
 >
 > | Carpeta | Qué aporta |
 > |---------|------------|
 > | `SbiDev-CLI-Scripts/` | `updateallsystem`, `ufw-help`, `low-battery-notify.sh`, `convertMyBackgrounds` |
 > | `SbiDev-Fuzzel/` | `dmenu`, `emojipicker.sh`, `fuzzel-custom-launcher`, `fuzzel-power-menu`, `fuzzel-Wallpaper` |
+> | `SbiDev-Fuzzel/scripts/` | `toggle-theme-fuzzel.sh` |
 > | `SbiDev-Niri/` | `swaylock-lock-screen`, `toggle-idle.sh`, `niri-idle.sh`, `niri_wallpaper.sh` |
 > | `SbiDev-Kitty/scripts/` | `toggle-theme-kitty.sh` |
 > | `SbiDev-Alacritty/scripts/` | `toggle-theme-alacritty.sh` |
@@ -268,6 +270,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 | Emoji picker no carga | Necesita las dos herramientas: `which wl-copy && which wtype` |
 | La temperatura sale vacía | El módulo fija `hwmon-path` a un `hwmon` concreto. Busca el tuyo con `ls /sys/class/hwmon/` y corrígelo en `modules.json` |
 | Alacritty no cambia de tema | Comprueba el script (`test -x ~/.local/bin/toggle-theme-alacritty.sh`) y que en `~/.config/alacritty/` estén los tres `.toml`: el principal, `alacritty-theme.toml` y `alacritty-theme-light.toml`. Si el toggle no marca error pero no se ve el cambio, mira que quede **una sola** línea `general.import` sin comentar dentro de los marcadores `# BEGIN_ALACRITTY_THEME` (si pierde el prefijo `general.`, el import desaparece del todo y el toggle se congela) y que `alacritty.toml` no tenga ningún bloque `[colors.*]` propio (ganaría al archivo importado) |
+| Fuzzel no cambia de tema | Comprueba el script (`test -x ~/.local/bin/toggle-theme-fuzzel.sh`) y que los dos `.ini` existan en `~/.config/fuzzel/themes/` (`Owl47-Dark.ini` y `Turtle47-Light.ini`). Ojo: un valor de color que no sea **exactamente 8 dígitos hex** no rompe Fuzzel; solo hace que registre `err: config.c:611: ... not a valid color value` y caiga al color por defecto, así que la paleta se degrada en silencio |
 | Idle daemon no funciona | Verifica `swayidle`: `which swayidle && pgrep swayidle` |
 | Wallpaper rotador no inicia al arrancar | Revisa que `niri_wallpaper.sh` tenga permisos y que la línea de startup esté en `config.kdl` |
 | Conversor de imágenes falla | ImageMagick debe estar instalado: `which convert` |
