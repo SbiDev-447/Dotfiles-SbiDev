@@ -118,7 +118,8 @@ binds {
 
     // Terminales
     Mod+Return              hotkey-overlay-title="Open a Terminal: Kitty" { spawn "kitty"; }
-    Mod+BackSpace           hotkey-overlay-title="Open nvim in WORKDIR" { spawn "kitty" "-d" "~/turtleShell" "-e" "tmux" "new" "-s" "turtleShell" "nvim"; }
+    Mod+BackSpace           hotkey-overlay-title="Open a Terminal: Alacritty" { spawn "alacritty"; }
+    // Actually I Don't Use This // Mod+BackSpace           hotkey-overlay-title="Open nvim in WORKDIR" { spawn "kitty" "-d" "~/turtleShell" "-e" "tmux" "new" "-s" "turtleShell" "nvim"; }
 
     // Lanzadores
     Mod+D                   hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }

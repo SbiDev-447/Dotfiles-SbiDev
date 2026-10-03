@@ -15,8 +15,8 @@
 # Las rutas son relativas al directorio de este archivo.
 
 # BEGIN_ALACRITTY_THEME
-import = ["alacritty-theme.toml"]
-#import = ["alacritty-theme-light.toml"]
+general.import = ["alacritty-theme.toml"]
+#general.import = ["alacritty-theme-light.toml"]
 # END_ALACRITTY_THEME
 
 

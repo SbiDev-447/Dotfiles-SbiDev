@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# guarda como ~/.config/kitty/toggle_kitty_theme.sh
 
 set -euo pipefail
 
