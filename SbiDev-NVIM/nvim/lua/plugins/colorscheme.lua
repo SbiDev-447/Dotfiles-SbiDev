@@ -1,11 +1,5 @@
 return {
   {
-    "SbiDev-447/TurtleGlassesNvim",
-    lazy = false,
-    priority = 1000,
-  },
-
-  {
     "rebelot/kanagawa.nvim",
     priority = 1000,
     lazy = false, -- Activo Antes que todo
