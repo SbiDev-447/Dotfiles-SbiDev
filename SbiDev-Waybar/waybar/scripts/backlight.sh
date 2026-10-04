@@ -5,7 +5,7 @@
 pct="$(brightnessctl --class=backlight -m 2>/dev/null | head -n1 | awk -F, '{print int($4)}')"
 [ -z "$pct" ] && pct=0
 
-icons=("󰃚" "󰃛" "󰃜" "󰃟" "󰃞" "󰃝" "󰃠")
+icons=("󰃚 " "󰃛 " "󰃜 " "󰃟 " "󰃞 " "󰃝 " "󰃠 ")
 idx=$((pct * 6 / 100))
 [ "$idx" -gt 6 ] && idx=6
 icon="${icons[$idx]}"

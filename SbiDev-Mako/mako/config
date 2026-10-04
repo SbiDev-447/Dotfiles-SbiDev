@@ -23,7 +23,7 @@ max-visible=3
 
 # Mostrar iconos
 icons=1
-icon-path=/usr/share/icons/hicolor:/usr/share/icons/Adwaita:/usr/share/icons/HighContrast:/usr/share/pixmaps
+icon-path=/usr/share/icons/Gruvbox-Plus-Dark:/usr/share/icons/hicolor:/usr/share/icons/Adwaita:/usr/share/icons/HighContrast:/usr/share/pixmaps
 
 # Fuente (opcional)
 font=IosevkaTerm NF 14

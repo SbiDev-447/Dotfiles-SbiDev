@@ -11,3 +11,6 @@ flatpak update
 echo "UPGRADING NIX PACKAGES:"
 sleep 1
 nix profile upgrade --all
+
+sleep 1
+echo "  ALL SYSTEM IS UPGRADING  "

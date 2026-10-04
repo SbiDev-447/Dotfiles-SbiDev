@@ -230,7 +230,9 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 ```
 
 > **¿Cómo funciona `install-scripts.sh`?**
-> Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/` (que crea si no existe), para que los scripts se actualicen solos al hacer `git pull` sin recapiar nada. Cubre 17 scripts de siete carpetas:
+> Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/`
+(que crea si no existe), para que los scripts se actualicen solos al hacer
+`git pull` sin recapiar nada. Cubre 17 scripts de siete carpetas:
 >
 > | Carpeta | Qué aporta |
 > |---------|------------|
@@ -262,7 +264,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 ## 🐛 Solución de Problemas
 
 | Problema | Solución |
-|----------|----------|
+|---|---|
 | Fuzzel o Swaylock no abren | Verifica la instalación con `which fuzzel` o `which swaylock` |
 | Los wallpapers no cambian | Revisa la ruta `~/Imágenes/Wallpapers/` y confirma que `swaybg` esté activo: `ps aux \| grep swaybg` |
 | Permisos denegados en scripts | Ejecuta `chmod +x ~/.local/bin/*` |
@@ -300,7 +302,7 @@ Las contribuciones son bienvenidas.
 
 Inspirado por el queridísimo [Gentleman Programming / Alan Buscaglia](https://github.com/Gentleman-Programming/Gentleman.Dots).
 
-Copyright (c) 2026 SbiDev-447.
+Copyright (c) 2026 SbiDev.
 
 </div>
 

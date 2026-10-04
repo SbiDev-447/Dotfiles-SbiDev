@@ -4,15 +4,18 @@
 
 </div>
 
-<br>
+---
+---
 
 ## 📖 Descripción General
 
-Colección de scripts y configuraciones para **Fuzzel**, un lanzador de aplicaciones para Wayland, diseñados para mejorar la productividad y personalización en entornos como Niri y Sway.
+Colección de scripts y configuraciones para **Fuzzel**,
+un lanzador de aplicaciones para Wayland, diseñados
+para mejorar la productividad y personalización en entornos como Niri y Sway.
 
 ## 🛠️ Scripts Disponibles
 
-#### 1. fuzzel-launcher (Lanzador Principal)
+### 1. fuzzel-launcher (Lanzador Principal)
 
 Lanzador principal que ofrece acceso rápido a todas las funcionalidades.
 
@@ -87,7 +90,8 @@ Características:
     Esc cancela sin copiar ni pegar nada
 
 ## ⚙️ Instalación
-### Requisitos Previos:
+
+### Requisitos Previos
 
 - Fuzzel (>= 1.10)
 - wl-copy y wtype (para emojis)
@@ -97,11 +101,8 @@ Características:
 ## 📝 Notas Importantes
 
 > - Los scripts están diseñados para Wayland
-
 > - Asegúrate de que swaybg esté instalado para el cambio de wallpapers
-
-> - El selector de emojis usa wl-copy y wtype (requiere Wayland). Espera a que el compositor devuelva el foco a la ventana anterior antes de escribir; si el pegado no es fiable, ajusta EMOJI_PICKER_FOCUS_DELAY (por defecto 0.2s)
-
+> - El selector de emojis usa wl-copy y wtype (requiere Wayland).
+Espera a que el compositor devuelva el foco a la ventana anterior antes de escribir;
+si el pegado no es fiable, ajusta EMOJI_PICKER_FOCUS_DELAY (por defecto 0.2s)
 > - Los scripts terminal necesitan kitty o modificar el terminal
-
-

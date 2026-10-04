@@ -23,7 +23,8 @@ imprime una única línea con el número delante y el icono detrás:
 86% 󰕾
 ```
 
-El orden es porcentaje y después icono: el número a la izquierda, el glifo a la derecha.
+El orden es porcentaje y después icono: el número a la izquierda,
+el glifo a la derecha.
 
 Si el sink está muteado, `audio.sh` imprime **solo el icono**. Un sink muteado sigue
 reportando su volumen, así que `86% 󰝟` se leería como "sonando al 86%".
@@ -103,13 +104,13 @@ El `padding: 6px 10px` no es decorativo: la barra mide 26px y el margen global
 queda en 25px, igual que el bloque del reloj. Si cambias el `padding`, la geometría
 deja de cuadrar y el bloque se desborda de la barra.
 
-Si las quieres completamente redondeadas, añade `border-radius: 12px`, porque el `*`
-selector fuerza `border-radius: 0` a todo.
+Si las quieres completamente redondeadas, añade `border-radius: 12px`,
+porque el `*` selector fuerza `border-radius: 0` a todo.
 
 ## La batería sigue la misma regla
 
-El módulo `battery` no es un custom, así que no usa scripts: se configura entero en
-`modules.json`. Se le aplicó la misma idea que a volumen y brillo.
+El módulo `battery` no es un custom, así que no usa scripts: se configura
+entero en `modules.json`. Se le aplicó la misma idea que a volumen y brillo.
 
 ```json
 "format": "{capacity}% {icon}",
@@ -118,12 +119,12 @@ El módulo `battery` no es un custom, así que no usa scripts: se configura ente
 "format-critical": "{capacity}% 󰂃"
 ```
 
-**El porcentaje va ahora dentro de la barra, no en el tooltip.** Antes vivía solo en
-el tooltip (`"Charge: {capacity}%"`) y la barra pintaba únicamente el icono. Al pasar
+**El porcentaje va dentro de la barra.** Antes vivía solo en el
+tooltip (`"Charge: {capacity}%"`) y la barra pintaba únicamente el icono. Al pasar
 el tooltip a mostrar solo el estado, el número habría desaparecido de los dos sitios,
-así que se movió al label. Por eso los cuatro formatos llevan `{capacity}` delante: los
-formatos por estado **sustituyen** al `format` base, no lo completan, así que si
-añades uno nuevo tienes que repetir el `{capacity}% ` en él.
+así que se movió al label. Por eso los cuatro formatos llevan `{capacity}`
+delante: los formatos por estado **sustituyen** al `format` base, no lo completan,
+así que si añades uno nuevo tienes que repetir el `{capacity}%` en él.
 
 ### El tooltip dice solo el estado
 
@@ -200,8 +201,8 @@ color de descarga. Si añades un estado, decide en qué punto lo colocas.
 
 ## Recuperar el tooltip
 
-Si algún día quieres la barra de bloques otra vez, basta con imprimir una línea más.
-El script no necesita más cambios:
+Si algún día quieres la barra de bloques otra vez, basta con imprimir una
+línea más. El script no necesita más cambios:
 
 ```bash
 filled=$(( (vol + 5) / 10 ))
@@ -225,17 +226,18 @@ printf '%s\n%s %s%%\n' "$label" "$bar" "$vol"
 
 ## Advertencia sobre las pruebas ⚠
 
-Estos módulos tienen manejadores de clic y rueda **con efectos reales**: cambian el
-volumen, el brillo, abren `pavucontrol` o lanzan el apagado.
+Estos módulos tienen manejadores de clic y rueda **con efectos reales**: cambian
+el volumen, el brillo, abren `pavucontrol` o lanzan el apagado.
 
-No pruebes cambios en la barra lanzando una segunda instancia de Waybar por encima de
-la que ya está corriendo:
+No pruebes cambios en la barra lanzando una segunda instancia de Waybar por
+encima de la que ya está corriendo:
 
 ```bash
 waybar -c ~/.config/waybar/config.jsonc   # NO hacer esto con módulos interactivos
 ```
 
-Esa instancia temporal se queda encima, intercepta los clics y la rueda que apuntan
-a la barra real y **ejecuta los handlers dos veces**: el brillo da saltos de 5% en 5%, el
-volumen se mueve solo. Para validar el CSS o la configuración usa un `config.json`
-temporal sin los módulos interactivos, o `niri msg` para inspeccionar el estado.
+Esa instancia temporal se queda encima, intercepta los clics y la rueda
+que apuntan a la barra real y **ejecuta los handlers dos veces**: el brillo
+da saltos de 5% en 5%, el volumen se mueve solo. Para validar el CSS o
+la configuración usa un `config.json` temporal sin los módulos interactivos,
+o `niri msg` para inspeccionar el estado.
