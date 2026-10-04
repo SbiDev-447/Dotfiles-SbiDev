@@ -1,0 +1,53 @@
+# Comportamiento
+daemonize
+show-failed-attempts
+ignore-empty-password
+
+# Imagen y fondo
+image=/home/sbi/Imágenes/Wallpapers/SbiDev/SbiDev-AlchemistOwl.webp
+scaling=fill
+color=06080f
+
+# Tipografía
+font=IosevkaTerm NF
+# font-size=18
+
+# Indicador
+indicator-radius=100
+indicator-thickness=10
+line-uses-ring
+
+# Colores base (idle)
+text-color=f3f6f9
+ring-color=263356
+key-hl-color=7fb4ca
+inside-color=06080f
+separator-color=06080f
+line-color=06080f
+
+# Verificando
+ring-ver-color=7aa89f
+inside-ver-color=1a2a3a
+text-ver-color=f3f6f9
+line-ver-color=06080f
+
+# Contraseña incorrecta
+ring-wrong-color=cb7c94
+inside-wrong-color=2a1218
+text-wrong-color=f3f6f9
+line-wrong-color=06080f
+
+# Campo limpio (Escape)
+ring-clear-color=7aa89f
+inside-clear-color=1a2a3a
+text-clear-color=f3f6f9
+line-clear-color=06080f
+
+# Caps Lock (agregado)
+ring-caps-lock-color=cb7c94
+inside-caps-lock-color=2a1218
+text-caps-lock-color=f3f6f9
+line-caps-lock-color=06080f
+
+# Backspace highlight (agregado)
+bs-hl-color=cb7c94
