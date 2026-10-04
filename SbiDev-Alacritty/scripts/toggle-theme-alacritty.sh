@@ -41,9 +41,13 @@ else
   echo "Tema cambiado a: DARK"
 fi
 
-# Recarga alacritty si está corriendo
-# Envía SIGHUP a todas las instancias de alacritty para recargar la config
-if pgrep -x alacritty >/dev/null; then
-  pkill -SIGHUP -x alacritty || true
-  echo "Alacritty recargado."
-fi
+# No se envía ninguna señal a propósito.
+#
+# Alacritty vigila su propia configuración (ConfigMonitor, con inotify y un
+# fallback de sondeo) y se recarga solo cuando el fichero cambia, aplicando el
+# cambio a todas las ventanas. Por eso no hace falta nada más aquí.
+#
+# El detalle importante: alacritty solo instala handler para SIGINT y SIGTERM.
+# SIGHUP y SIGUSR1 no tienen handler, así que la señal aplica su acción por
+# defecto sobre un proceso vivo -> lo mata. Enviar cualquiera de las dos
+# cerraba todas las terminales abiertas en lugar de recargar.
