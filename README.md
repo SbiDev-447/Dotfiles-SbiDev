@@ -108,7 +108,7 @@ que da sentido a todos los atajos de navegación.
 | `toggle-theme-kitty.sh` | Alterna el tema de kitty commenting y descomentando el `include` de `kitty-theme.conf` / `kitty-theme-light.conf` dentro de los marcadores `# BEGIN_KITTY_THEME`. Recarga kitty con `SIGUSR1` | sed, grep, pkill |
 | `toggle-theme-alacritty.sh` | Alterna el tema de Alacritty comentando y descomentando el `general.import` de `alacritty-theme.toml` / `alacritty-theme-light.toml` dentro de los marcadores `# BEGIN_ALACRITTY_THEME`. No envía ninguna señal: Alacritty se recarga solo al detectar el cambio | sed, grep |
 | `toggle-theme-fuzzel.sh` | Alterna el tema de Fuzzel comentando y descomentando el `include=` de `Owl47-Dark.ini` / `Turtle47-Light.ini` dentro de los marcadores `# BEGIN_FUZZEL_THEME`. No recarga nada: Fuzzel relee la config en cada invocación | sed, grep |
-| `toggle-theme-waybar.sh` | Alterna Waybar moviendo el symlink `style.css` entre `styles/dark.css` y `styles/light.css`. Recarga waybar con `SIGUSR2` | sed, ln, pkill |
+| `toggle-theme-waybar.sh` | Alterna Waybar moviendo el symlink `style.css` entre `styles/dark.css` y `styles/light.css` y recarga la barra con `SIGUSR2` | sed, ln, readlink, pkill |
 
 ### Utilidades CLI
 
@@ -150,6 +150,7 @@ que da sentido a todos los atajos de navegación.
 - **Volumen y brillo**: módulos `custom` con script propio. Muestran `NN%` junto al icono, sobre una píldora de color, y sin tooltip. El brillo se lee con `brightnessctl --class=backlight`
 - **Batería**: el porcentaje va en la barra, no en el tooltip. Waybar lanza `low-battery-notify.sh` mediante `battery.events`, así que no hace falta ningún proceso de avisos aparte
 - **CSS**: `style.css` es un symlink que `toggle-theme-waybar.sh` mueve entre `styles/dark.css` y `styles/light.css`, y cada uno importa su paleta (`styles/colors-dark.css` o `styles/colors-light.css`)
+- **`setsid` en los `on-click` que lanzan terminales**: `custom/cachy` y `cpu` lanzan `kitty` y `alacritty` con `setsid`, así que cada terminal abre su propia sesión y se desprende de la de Waybar. Sin esto, `toggle-theme-waybar.sh` recarga la barra con `pkill -SIGUSR2 waybar` y esa señal alcanza también a los procesos hijos de Waybar: las terminales lanzadas desde la barra morían con `SIGTERM` al alternar el tema
 
 > ⚠️ **El módulo de temperatura fija `hwmon-path` a `/sys/class/hwmon/hwmon5/temp1_input`**, que es específico de esta máquina. En otro equipo hay que apuntarlo al `hwmon` correcto o el módulo se queda en blanco. Umbrales: aviso a 70 °C, crítico a 80 °C.
 

@@ -2,8 +2,8 @@
   "custom/cachy": {
     "format": " ",
     "tooltip": false,
-    "on-click": "kitty",
-    "on-click-right": "alacritty"
+    "on-click": "setsid kitty",
+    "on-click-right": "setsid alacritty"
   },
 
   "clock": {
@@ -18,8 +18,8 @@
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
-    "on-click": "kitty -e btop",
-    "on-click-right": "kitty -e btm"
+    "on-click": "setsid kitty -e btop",
+    "on-click-right": "setsid kitty -e btm"
   },
 
   "memory": {
