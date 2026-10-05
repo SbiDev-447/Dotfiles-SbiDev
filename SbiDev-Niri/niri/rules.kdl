@@ -1,14 +1,23 @@
-// ============================================================================
-//                         REGLAS DE VENTANAS
-// ============================================================================
+// ██     ██ ██ ███    ██ ██████   ██████  ██     ██     ██████  ██    ██ ██      ███████ ███████
+// ██     ██ ██ ████   ██ ██   ██ ██    ██ ██     ██     ██   ██ ██    ██ ██      ██      ██
+// ██  █  ██ ██ ██ ██  ██ ██   ██ ██    ██ ██  █  ██     ██████  ██    ██ ██      █████   ███████
+// ██ ███ ██ ██ ██  ██ ██ ██   ██ ██    ██ ██ ███ ██     ██   ██ ██    ██ ██      ██           ██
+//  ███ ███  ██ ██   ████ ██████   ██████   ███ ███      ██   ██  ██████  ███████ ███████ ███████
 
-// -- Esquinas redondeadas (global) --
+// -- Global: esquinas redondeadas --
 window-rule {
     geometry-corner-radius 8
     clip-to-geometry true
 }
 
-// -- Qalculate! (Calculadora) --
+// -- Alacritty --
+window-rule {
+    match app-id="Alacritty"
+    default-column-width { fixed 1270; }
+    default-window-height { fixed 1042; }
+}
+
+// -- Qalculate! --
 window-rule {
     match app-id=r#"^qalculate-gtk$"#
     open-floating true
@@ -19,66 +28,47 @@ window-rule {
 
 // -- Diálogos GTK (Abrir/Salvar) --
 window-rule {
-    match app-id=r#"xdg-desktop-portal-gtk"#
+    match app-id="xdg-desktop-portal-gtk"
+    open-floating true
+    open-focused true
     default-column-width { fixed 900; }
     default-window-height { fixed 900; }
-    open-floating true
-    open-focused true
 }
 
-// -- Pavucontrol (Audio) --
+// -- Pavucontrol --
 window-rule {
     match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
-    default-column-width { fixed 950; }
-    default-window-height { fixed 700; }
     open-floating true
     open-focused true
+    default-column-width { fixed 950; }
+    default-window-height { fixed 700; }
 }
 
-// -- Blueman (Bluetooth) --
+// -- Blueman --
 window-rule {
     match app-id=r#"^blueman-manager$"#
     open-floating true
+    open-focused true
     default-column-width { fixed 745; }
     default-window-height { fixed 745; }
-    open-focused true
 }
 
-// -- Thunar: diálogos de propiedades --
+// -- Thunar: diálogos --
 window-rule {
     match app-id=r#"^thunar$"# title="^Properties$"
     match app-id=r#"^thunar$"# title="^Compress$"
     match app-id=r#"^thunar$"# title="^Rename$"
     match app-id=r#"^thunar$"# title="^Bulk Rename$"
     open-floating true
-}
-
-// -- Thunar: progreso de copiar/mover --
-window-rule {
-    match app-id=r#"^thunar$"# title="^File Operation Progress$"
-    open-floating true
-    default-column-width { proportion 0.4; }
-}
-
-// -- Picture-in-Picture (navegadores) --
-window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="librewolf$" title="^Picture-in-Picture$"
-    match app-id="org.mozilla.firefox" title="^Picture-in-Picture$"
-    match app-id="org.librewolf.LibreWolf" title="^Picture-in-Picture$"
-    match app-id="com.github.Eloston.UngoogledChromium" title="^Picture-in-Picture$"
-    match app-id="org.chromium.Chromium" title="^Picture-in-Picture$"
-    match title="^LibreWolf - Seleccione un perfil$"
-    match title="LibreWolf - Choose a profile"
-    match title="^Catálogo$"
-    open-floating true
     open-focused true
 }
 
-// -- Privacidad: bloquear capturas de KeePassXC --
+// -- Thunar: progreso de operaciones --
 window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    block-out-from "screen-capture"
+    match app-id=r#"^thunar$"# title="^File Operation Progress$"
+    open-floating true
+    open-focused true
+    default-column-width { proportion 0.4; }
 }
 
 // -- Diálogos de impresión --
@@ -89,3 +79,44 @@ window-rule {
     open-focused true
 }
 
+// -- Picture-in-Picture (navegadores) --
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="librewolf$" title="^Picture-in-Picture$"
+    match app-id="org.mozilla.firefox" title="^Picture-in-Picture$"
+    match app-id="org.librewolf.LibreWolf" title="^Picture-in-Picture$"
+    match app-id="com.github.Eloston.UngoogledChromium" title="^Picture-in-Picture$"
+    match app-id="org.chromium.Chromium" title="^Picture-in-Picture$"
+    open-floating true
+    open-focused true
+}
+
+// -- Selectores de perfil de LibreWolf --
+window-rule {
+    match app-id=r#"librewolf"# title="^LibreWolf - Seleccione un perfil$"
+    match app-id=r#"librewolf"# title="LibreWolf - Choose a profile"
+    open-floating true
+    open-focused true
+}
+
+// -- KeePassXC: bloquear capturas --
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    block-out-from "screen-capture"
+}
+
+// -- Obsidian: ventana principal --
+window-rule {
+    match app-id=r#"md\.obsidian\.Obsidian"#
+    open-focused true
+    open-maximized true
+}
+
+// -- Obsidian: preferencias --
+window-rule {
+    match app-id=r#"md\.obsidian\.Obsidian"# title="^Preferencias - .*"
+    open-floating true
+    open-focused true
+    default-column-width { fixed 900; }
+    default-window-height { fixed 900; }
+}

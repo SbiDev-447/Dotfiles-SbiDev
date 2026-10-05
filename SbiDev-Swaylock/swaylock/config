@@ -4,7 +4,7 @@ show-failed-attempts
 ignore-empty-password
 
 # Imagen y fondo
-image=/home/sbi/Imágenes/Wallpapers/SbiDev/SbiDev-AlchemistOwl.webp # Reemplazar por imagen que tengas
+image=/home/sbi/Imágenes/Wallpapers/SbiDev/SbiDev-AlchemistOwl.webp
 scaling=fill
 color=06080f
 

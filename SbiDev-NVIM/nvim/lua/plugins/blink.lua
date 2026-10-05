@@ -1,38 +1,18 @@
 return {
   "saghen/blink.cmp",
-  lazy = true,
-  dependencies = { "saghen/blink.compat" },
+  event = "InsertEnter",
   opts = {
-    sources = {
-      default = {},
+    keymap = {
+      preset = "enter", -- Enter sigue aceptando la sugerencia
+      -- Tab: si el menú está abierto, salta a la siguiente sugerencia.
+      -- Si no, salta al siguiente hueco del snippet.
+      ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+      -- Shift+Tab: lo mismo pero hacia atrás.
+      ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
     },
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer" },
+    },
+    fuzzy = { implementation = "prefer_rust_with_warning" },
   },
 }
-
--- default = { "avante_commands", "avante_mentions", "avante_files" },
---       compat = {
---         "avante_commands",
---         "avante_mentions",
---         "avante_files",
---       },
---       -- LSP score_offset is typically 60
---       providers = {
---         avante_commands = {
---           name = "avante_commands",
---           module = "blink.compat.source",
---           score_offset = 90,
---           opts = {},
---         },
---         avante_files = {
---           name = "avante_files",
---           module = "blink.compat.source",
---           score_offset = 100,
---           opts = {},
---         },
---         avante_mentions = {
---           name = "avante_mentions",
---           module = "blink.compat.source",
---           score_offset = 1000,
---           opts = {},
---         },
---       },

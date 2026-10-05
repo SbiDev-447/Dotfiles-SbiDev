@@ -18,8 +18,8 @@
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
-    "on-click": "setsid kitty -e btop",
-    "on-click-right": "setsid kitty -e btm"
+    "on-click": "setsid alacritty -e btop",
+    "on-click-right": "setsid alacritty -e btm"
   },
 
   "memory": {
@@ -102,11 +102,11 @@
 
   "bluetooth": {
     "interval": 1,
-    "format-on": "󰂯",
+    "format-on": "󰂯 ",
     "format-off": "󰂲 ",
     "format-disabled": "󰂲 ",
     "format-connected": "󰂱 ",
-    "format-no-controller": "󰂯",
+    "format-no-controller": "󰂯 ",
     "tooltip": true,
     "tooltip-format": "{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_address}",
@@ -116,7 +116,7 @@
 
   "pulseaudio#microphone": {
     "format": "{format_source}",
-    "format-source": "󰍬",
+    "format-source": "󰍬 ",
     "format-source-muted": "󰍭 ",
     "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
     "on-click-right": "pavucontrol -t 4",

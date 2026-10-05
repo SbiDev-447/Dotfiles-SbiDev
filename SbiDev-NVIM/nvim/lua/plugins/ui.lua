@@ -24,24 +24,6 @@ local mode = {
   end,
 }
 
--- local function codecompanion_adapter_name()
---   local chat = require("codecompanion").buf_get_chat(vim.api.nvim_get_current_buf())
---   if not chat then
---     return nil
---   end
---
---   return " " .. chat.adapter.formatted_name
--- end
---
--- local function codecompanion_current_model_name()
---   local chat = require("codecompanion").buf_get_chat(vim.api.nvim_get_current_buf())
---   if not chat then
---     return nil
---   end
---
---   return chat.settings.model
--- end
-
 -- This file contains the configuration for various UI-related plugins in Neovim.
 return {
   -- Plugin: folke/todo-comments.nvim
@@ -144,39 +126,6 @@ return {
             },
           },
         },
-        -- {
-        --   filetypes = { "codecompanion" },
-        --   sections = {
-        --     lualine_a = {
-        --       mode,
-        --     },
-        --     lualine_b = {
-        --       codecompanion_adapter_name,
-        --     },
-        --     lualine_c = {
-        --       codecompanion_current_model_name,
-        --     },
-        --     lualine_x = {},
-        --     lualine_y = {
-        --       "progress",
-        --     },
-        --     lualine_z = {
-        --       "location",
-        --     },
-        --   },
-        --   inactive_sections = {
-        --     lualine_a = {},
-        --     lualine_b = {
-        --       codecompanion_adapter_name,
-        --     },
-        --     lualine_c = {},
-        --     lualine_x = {},
-        --     lualine_y = {
-        --       "progress",
-        --     },
-        --     lualine_z = {},
-        --   },
-        -- },
       },
     },
   },
@@ -243,7 +192,6 @@ return {
       image = {
         enabled = true,
         doc = {
-          enabled = false,
           max_width = 30, -- 👈 REDUCIDO (antes 80)
           max_height = 15, -- 👈 REDUCIDO (antes 40)
           inline = true,
@@ -284,24 +232,26 @@ return {
         preset = {
           header = [[
 
-     ▆▆▆▆▆▆▆▆▆▆▆▆▆▆           
-    █              █          
-   █                █ ░░░░░   
-   █                █░░░░░░░  
-░░░▓██            ██░░░░░ ░░  
- ░░░▓▓████    ████▓▓▓░░░░░░   
-     ▓▓▓▓▓████▓▓▓▓▓░▓░░░░     
-    ░░░▓▓▓▓▓▓▓▓▓▓░░░░         
-  ░░░░░░       ░░░░░░         
-  ░░░░░     ░░░░░░░░          
-             ░░░░░░           
+     ▆▆▆▆▆▆▆▆▆▆▆▆▆▆          
+    █              █         
+   █                █  ░░░░░░
+   █                █ ░░░ ░░░
+░░░▓██            ██░░░░░░░░░
+ ░░░▓▓████    ████▓▓▓░░░░░░░ 
+     ▓▓▓▓▓████▓▓▓▓░░▓░░░░    
+    ░░░▓▓▓▓▓▓▓▓▓░░░░░        
+  ░░░░░░       ░░░░░░        
+ ░░░░░░     ░░░░░░░░         
+             ░░░░░░          
 
-     ███████╗██████╗ ██╗  ██████╗ ███████╗██╗   ██╗      
-     ██╔════╝██╔══██╗██║  ██╔══██╗██╔════╝██║   ██║      
-     ███████╗██████╔╝██║  ██║  ██║█████╗  ██║   ██║      
-     ╚════██║██╔══██╗██║  ██║  ██║██╔══╝  ╚██╗ ██╔╝      
-     ███████║██████╔╝██║  ██████╔╝███████╗ ╚████╔╝       
-     ╚══════╝╚═════╝ ╚═╝  ╚═════╝ ╚══════╝  ╚═══╝        
+   ▄████████ ▀█████████▄   ▄█  ████████▄     ▄████████  ▄█    █▄
+  ███    ███   ███    ███ ███  ███   ▀███   ███    ███ ███    ███
+  ███    █▀    ███    ███ ███▌ ███    ███   ███    █▀  ███    ███
+  ███         ▄███▄▄▄██▀  ███▌ ███    ███  ▄███▄▄▄     ███    ███
+▀███████████ ▀▀███▀▀▀██▄  ███▌ ███    ███ ▀▀███▀▀▀     ███    ███
+         ███   ███    ██▄ ███  ███    ███   ███    █▄  ███    ███
+   ▄█    ███   ███    ███ ███  ███   ▄███   ███    ███ ███    ███
+ ▄████████▀  ▄█████████▀  █▀   ████████▀    ██████████  ▀██████▀
 ]],
           -- stylua: ignore
           ---@type snacks.dashboard.Item[]
