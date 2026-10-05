@@ -13,28 +13,9 @@ end
 -- Soporte para variable de entorno LAZY
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
--- Node.js configuration - always use latest stable version
-vim.g.node_host_prog = vim.fn.exepath("node") or "/usr/local/bin/node"
-
 -- Spell-checking
 vim.opt.spell = false -- activa spell checker
 vim.opt.spelllang = { "en" }
-
-vim.opt.clipboard = "unnamedplus"
-if vim.env.SSH_CONNECTION then
-  local osc52 = require("vim.ui.clipboard.osc52")
-  vim.g.clipboard = {
-    name = "OSC 52",
-    copy = {
-      ["+"] = osc52.copy("+"),
-      ["*"] = osc52.copy("*"),
-    },
-    paste = {
-      ["+"] = osc52.paste("+"),
-      ["*"] = osc52.paste("*"),
-    },
-  }
-end
 
 require("lazy").setup({
   spec = {
