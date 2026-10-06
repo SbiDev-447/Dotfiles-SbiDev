@@ -7,12 +7,6 @@
 # ┌──────────────────────────────────────────────────────────────────────────────┐
 # │                                  THEME                                       │
 # └──────────────────────────────────────────────────────────────────────────────┘
-#
-# Alacritty da prioridad al archivo que importa, así que la paleta NO puede
-# estar aquí: si [colors.*] estuviera definido en este archivo, ganaría él y los
-# importados no cambiarían nada. Solo una línea import activa a la vez (TOML no
-# admite claves duplicadas); toggle-theme-alacritty.sh las intercambia.
-# Las rutas son relativas al directorio de este archivo.
 
 # BEGIN_ALACRITTY_THEME
 general.import = ["alacritty-theme.toml"]
