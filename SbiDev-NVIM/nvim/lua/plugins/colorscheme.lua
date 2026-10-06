@@ -1,5 +1,32 @@
 return {
   {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000, -- Carga antes que LazyVim
+    lazy = false, -- Asegura que esté disponible siempre
+    opts = {
+      contrast = "soft", -- "hard", "soft" o vacío
+      italic = {
+        strings = true,
+        comments = true,
+        folds = true,
+        operators = false,
+      },
+      bold = true,
+      underline = true,
+      undercurl = true,
+      transparent_mode = false,
+      overrides = {
+        LineNr = { bg = "none" },
+        NormalFloat = { bg = "none" },
+        FloatBorder = { bg = "none" },
+        FloatTitle = { bg = "none" },
+        TelescopeNormal = { bg = "none" },
+        TelescopeBorder = { bg = "none" },
+        LspInfoBorder = { bg = "none" },
+      },
+    },
+  },
+  {
     "rebelot/kanagawa.nvim",
     priority = 1000,
     lazy = false, -- Activo Antes que todo
