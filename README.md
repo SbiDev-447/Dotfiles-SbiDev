@@ -109,6 +109,7 @@ que da sentido a todos los atajos de navegación.
 | `toggle-theme-alacritty.sh` | Alterna el tema de Alacritty comentando y descomentando el `general.import` de `alacritty-theme.toml` / `alacritty-theme-light.toml` dentro de los marcadores `# BEGIN_ALACRITTY_THEME`. No envía ninguna señal: Alacritty se recarga solo al detectar el cambio | sed, grep |
 | `toggle-theme-fuzzel.sh` | Alterna el tema de Fuzzel comentando y descomentando el `include=` de `Owl47-Dark.ini` / `Turtle47-Light.ini` dentro de los marcadores `# BEGIN_FUZZEL_THEME`. No recarga nada: Fuzzel relee la config en cada invocación | sed, grep |
 | `toggle-theme-waybar.sh` | Alterna Waybar moviendo el symlink `style.css` entre `styles/dark.css` y `styles/light.css` y recarga la barra con `SIGUSR2` | sed, ln, readlink, pkill |
+| `toggle-theme-nvim.sh` | Alterna el tema de Neovim comentando y descomentando el par `background` + `colorscheme` (`gentleman-kanagawa-blur` / `gruvbox`) dentro de los marcadores `-- BEGIN_NVIM_THEME` de `colorscheme.lua`. No recarga nada: Neovim lee su configuración en el arranque, así que el cambio se aplica en la próxima instancia | sed, grep |
 
 ### Utilidades CLI
 
@@ -232,7 +233,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 > **¿Cómo funciona `install-scripts.sh`?**
 > Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/`
 (que crea si no existe), para que los scripts se actualicen solos al hacer
-`git pull` sin recapiar nada. Cubre 17 scripts de siete carpetas:
+`git pull` sin recapiar nada. Cubre 18 scripts de ocho carpetas:
 >
 > | Carpeta | Qué aporta |
 > |---------|------------|
@@ -243,6 +244,7 @@ cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
 > | `SbiDev-Kitty/scripts/` | `toggle-theme-kitty.sh` |
 > | `SbiDev-Alacritty/scripts/` | `toggle-theme-alacritty.sh` |
 > | `SbiDev-Waybar/scripts/` | `toggle-theme-waybar.sh` |
+> | `SbiDev-NVIM/scripts/` | `toggle-theme-nvim.sh` |
 >
 > Los enlaces son **relativos**, así que puedes mover el repo de sitio sin romperlos.
 >

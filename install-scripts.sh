@@ -15,6 +15,7 @@ SCRIPT_DIRS=(
   "SbiDev-Kitty/scripts"
   "SbiDev-Alacritty/scripts"
   "SbiDev-Waybar/scripts"
+  "SbiDev-NVIM/scripts"
 )
 
 if [[ ! -d "${BIN_DIR}" ]]; then

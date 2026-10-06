@@ -60,10 +60,20 @@ return {
   },
 
   -- LazyVim establece el colorscheme final
+  -- El bloque BEGIN_NVIM_THEME lo commuta toggle-theme-nvim.sh.
+  -- background debe fijarse ANTES del colorscheme: gruvbox lee vim.o.background
+  -- al cargar y usa esa misma paleta para light y dark.
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gentleman-kanagawa-blur",
+      colorscheme = function()
+        -- BEGIN_NVIM_THEME
+        vim.o.background = "dark"
+        vim.cmd.colorscheme("gentleman-kanagawa-blur")
+        -- vim.o.background = "light"
+        -- vim.cmd.colorscheme("gruvbox")
+        -- END_NVIM_THEME
+      end,
     },
   },
 }
