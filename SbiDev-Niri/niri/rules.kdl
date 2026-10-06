@@ -1,8 +1,8 @@
-// ██     ██ ██ ███    ██ ██████   ██████  ██     ██     ██████  ██    ██ ██      ███████ ███████
-// ██     ██ ██ ████   ██ ██   ██ ██    ██ ██     ██     ██   ██ ██    ██ ██      ██      ██
-// ██  █  ██ ██ ██ ██  ██ ██   ██ ██    ██ ██  █  ██     ██████  ██    ██ ██      █████   ███████
-// ██ ███ ██ ██ ██  ██ ██ ██   ██ ██    ██ ██ ███ ██     ██   ██ ██    ██ ██      ██           ██
-//  ███ ███  ██ ██   ████ ██████   ██████   ███ ███      ██   ██  ██████  ███████ ███████ ███████
+// ██     ██ ██ ███    ██ ██████   ██████  ██     ██   ██████  ██    ██ ██      ███████ ███████
+// ██     ██ ██ ████   ██ ██   ██ ██    ██ ██     ██   ██   ██ ██    ██ ██      ██      ██
+// ██  █  ██ ██ ██ ██  ██ ██   ██ ██    ██ ██  █  ██   ██████  ██    ██ ██      █████   ███████
+// ██ ███ ██ ██ ██  ██ ██ ██   ██ ██    ██ ██ ███ ██   ██   ██ ██    ██ ██      ██           ██
+//  ███ ███  ██ ██   ████ ██████   ██████   ███ ███    ██   ██  ██████  ███████ ███████ ███████
 
 // -- Global: esquinas redondeadas --
 window-rule {
@@ -99,6 +99,12 @@ window-rule {
     open-focused true
 }
 
+window-rule {
+    match app-id=r#"librewolf"# title="^Catálogo"
+    open-floating true
+    open-focused true
+}
+
 // -- KeePassXC: bloquear capturas --
 window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
@@ -119,4 +125,13 @@ window-rule {
     open-focused true
     default-column-width { fixed 900; }
     default-window-height { fixed 900; }
+}
+
+// -- Obsidian: temas/plugins --
+window-rule {
+  match app-id=r#"md\.obsidian\.Obsidian"# title="^Temas de la comunidad - .*"
+  open-focused true
+  open-floating true
+  default-column-width { fixed 900;}
+  default-window-height { fixed 900; }
 }

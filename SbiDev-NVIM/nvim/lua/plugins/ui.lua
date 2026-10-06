@@ -67,7 +67,7 @@ return {
     requires = { "nvim-tree/nvim-web-devicons", opt = true }, -- Optional dependency for icons
     opts = {
       options = {
-        theme = "gentleman-kanagawa-blur", -- Set the theme for lualine
+        theme = "auto", -- Set the theme for lualine
         icons_enabled = true, -- Enable icons in the statusline
       },
       sections = {
@@ -78,19 +78,19 @@ return {
             color = function()
               local mode = vim.api.nvim_get_mode().mode
               if mode == "n" then
-                return { bg = "#2d4f67", fg = "#f3f6f9", gui = "bold" } -- NORMAL: Azul oscuro
+                return { bg = "#4A7BA7", fg = "#f3f6f9", gui = "bold" } -- NORMAL: Azul oscuro
               elseif mode == "i" then
-                return { bg = "#2d6a4f", fg = "#f3f6f9", gui = "bold" } -- INSERT: Verde oscuro
+                return { bg = "#4A9D6F", fg = "#f3f6f9", gui = "bold" } -- INSERT: Verde oscuro
               elseif mode == "v" or mode == "V" or mode == "" then
-                return { bg = "#5a3d7a", fg = "#f3f6f9", gui = "bold" } -- VISUAL: Púrpura oscuro
+                return { bg = "#8A6BB0", fg = "#f3f6f9", gui = "bold" } -- VISUAL: Púrpura oscuro
               elseif mode == "R" then
-                return { bg = "#6a2d2d", fg = "#f3f6f9", gui = "bold" } -- REPLACE: Rojo oscuro
+                return { bg = "#B85C5C", fg = "#f3f6f9", gui = "bold" } -- REPLACE: Rojo oscuro
               elseif mode == "c" or mode == "!" then
-                return { bg = "#6a4f2d", fg = "#f3f6f9", gui = "bold" } -- COMMAND: Naranja oscuro
+                return { bg = "#C68A4A", fg = "#1A1A1A", gui = "bold" } -- COMMAND: Naranja oscuro
               elseif mode == "t" then
-                return { bg = "#1a5a6a", fg = "#f3f6f9", gui = "bold" } -- TERMINAL: Cian oscuro
+                return { bg = "#4A9DA8", fg = "#f3f6f9", gui = "bold" } -- TERMINAL: Cian oscuro
               else
-                return { bg = "#2d2d3a", fg = "#f3f6f9", gui = "bold" } -- Otros: Gris oscuro
+                return { bg = "#5C5C6E", fg = "#f3f6f9", gui = "bold" } -- Otros: Gris oscuro
               end
             end,
           },
@@ -231,28 +231,28 @@ return {
         },
         preset = {
           header = [[
+                                  
+        ▒▒▒▒▒▒▒▒▒▒▒      ░░░░░░░  
+      ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒   ░░░░ █░░░ 
+     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒  ░░░░  ░░░ 
+ ░░░█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█░░░░░░░░░░ 
+  ░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒██▓░░░░░░░░   
+     ▓▓███▒▒▒▒▒▒████▓▓▓░░░        
+      ▓▓▓▓██████▓▓▓▓░░▓▓░         
+     ░░░░▓▓▓▓▓▓▓▓▓░░░░░▓          
+  ░░░░░░░░        ░░░░░░          
+   ░░░░░░       ░░░░░░░           
+              ░░░░░░░░            
 
-     ▆▆▆▆▆▆▆▆▆▆▆▆▆▆          
-    █              █         
-   █                █  ░░░░░░
-   █                █ ░░░ ░░░
-░░░▓██            ██░░░░░░░░░
- ░░░▓▓████    ████▓▓▓░░░░░░░ 
-     ▓▓▓▓▓████▓▓▓▓░░▓░░░░    
-    ░░░▓▓▓▓▓▓▓▓▓░░░░░        
-  ░░░░░░       ░░░░░░        
- ░░░░░░     ░░░░░░░░         
-             ░░░░░░          
-
-   ▄████████ ▀█████████▄   ▄█  ████████▄     ▄████████  ▄█    █▄
-  ███    ███   ███    ███ ███  ███   ▀███   ███    ███ ███    ███
-  ███    █▀    ███    ███ ███▌ ███    ███   ███    █▀  ███    ███
-  ███         ▄███▄▄▄██▀  ███▌ ███    ███  ▄███▄▄▄     ███    ███
-▀███████████ ▀▀███▀▀▀██▄  ███▌ ███    ███ ▀▀███▀▀▀     ███    ███
-         ███   ███    ██▄ ███  ███    ███   ███    █▄  ███    ███
-   ▄█    ███   ███    ███ ███  ███   ▄███   ███    ███ ███    ███
- ▄████████▀  ▄█████████▀  █▀   ████████▀    ██████████  ▀██████▀
-]],
+   ▄████████ ▀█████████▄   ▄█  ████████▄     ▄████████  ▄█    █▄  
+  ███    ███   ███    ███ ███  ███   ▀███   ███    ███ ███    ███ 
+  ███    █▀    ███    ███ ███▌ ███    ███   ███    █▀  ███    ███ 
+  ███         ▄███▄▄▄██▀  ███▌ ███    ███  ▄███▄▄▄     ███    ███ 
+▀███████████ ▀▀███▀▀▀██▄  ███▌ ███    ███ ▀▀███▀▀▀     ███    ███ 
+         ███   ███    ██▄ ███  ███    ███   ███    █▄  ███    ███ 
+   ▄█    ███   ███    ███ ███  ███   ▄███   ███    ███ ███    ███ 
+ ▄████████▀  ▄█████████▀  █▀   ████████▀    ██████████  ▀██████▀  
+══════════════════════════════════════════════════════════════════]],
           -- stylua: ignore
           ---@type snacks.dashboard.Item[]
           keys = {
