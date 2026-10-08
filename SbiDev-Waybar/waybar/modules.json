@@ -126,18 +126,17 @@
 
   "custom/audio": {
     "exec": "$HOME/.config/waybar/scripts/audio.sh",
-    "interval": 1,
-    "signal": 3,
-    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+3 waybar",
+    "restart-interval": 5,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "on-click-right": "pavucontrol -t 3",
-    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+3 waybar",
-    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+3 waybar",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
     "tooltip": false
   },
 
   "custom/brightness": {
     "exec": "$HOME/.config/waybar/scripts/backlight.sh",
-    "interval": 1,
+    "interval": 3,
     "signal": 3,
     "on-click": "brightnessctl --class=backlight set 10%+; pkill -RTMIN+3 waybar",
     "on-click-right": "brightnessctl --class=backlight set 10%-; pkill -RTMIN+3 waybar",

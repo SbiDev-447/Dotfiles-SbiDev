@@ -37,17 +37,16 @@ Los módulos se declaran como un objeto `nombre → definición` en
 ```json
 "custom/audio": {
   "exec": "$HOME/.config/waybar/scripts/audio.sh",
-  "interval": 1,
-  "signal": 3,
-  "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+3 waybar",
+  "restart-interval": 5,
+  "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
   "on-click-right": "pavucontrol -t 3",
-  "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+3 waybar",
-  "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+3 waybar",
+  "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+  "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
   "tooltip": false
 },
 "custom/brightness": {
   "exec": "$HOME/.config/waybar/scripts/backlight.sh",
-  "interval": 1,
+  "interval": 3,
   "signal": 3,
   "on-click": "brightnessctl --class=backlight set 10%+; pkill -RTMIN+3 waybar",
   "on-click-right": "brightnessctl --class=backlight set 10%-; pkill -RTMIN+3 waybar",
@@ -71,13 +70,33 @@ Después, en `waybar/config.jsonc`, colócalos donde quieras:
 ]
 ```
 
-### Por qué `interval` y `signal`
+### Por qué `audio` no lleva `interval` y `brightness` sí
 
-- `interval: 1` refresca el módulo **cada segundo**, para que el número siga a los
-  cambios hechos con las teclas de volumen o brillo del teclado.
-- `signal: 3` hace que cada acción de ratón mande `pkill -RTMIN+3 waybar` para que el
-  módulo se re-ejecute **al instante**, sin esperar al siguiente tick. Sin esa parte,
-  la barra se sentiría lenta aunque `interval` fuese 1.
+Waybar elige el worker del módulo a partir de las claves declaradas
+(`src/modules/custom.cpp`), y la elección no es cosmética:
+
+| Declaración | Worker | Comportamiento |
+|---|---|---|
+| `interval` | `delayWorker` | ejecuta, espera a que muera, duerme `interval`, repite |
+| `signal` sin `interval` | `waitingWorker` | ejecuta solo cuando llega la señal |
+| ni `interval` ni `signal` | `continuousWorker` | proceso vivo; **cada línea de stdout actualiza** |
+
+- **`custom/audio` es continuo.** `audio.sh` imprime el estado una vez y se queda
+  bloqueado en `pactl subscribe`; cada evento `change` del sink (volumen, mute, cambios
+  hechos por otras apps o por teclas) imprime una línea nueva y la barra se pinta al
+  instante en los dos sentidos. Por eso **no lleva `interval` ni `signal`**: cualquiera
+  de las dos cambiaría el worker y sacaría el módulo del modo continuo. Los handlers
+  tampoco mandan `pkill -RTMIN+3` — el propio `pactl` del handler ya genera el evento
+  que refresca la barra. `restart-interval: 5` revive el script a los 5 s si PipeWire
+  se reinicia y el subscribe muere; waybar reintenta con cualquier código de salida,
+  no solo con fallo.
+- **`custom/brightness` sondea a 3 s con señal.** El sysfs de backlight no emite
+  eventos observables (comprobado: `inotifywait` sobre
+  `/sys/class/backlight/*/brightness` no captura nada mientras `brightnessctl`
+  escribe), así que solo queda sondear — y hay escritores externos que reflejar
+  (swayidle). `interval: 3` + `signal: 3` + `pkill -RTMIN+3` en los handlers: los
+  cambios externos se ven en ≤3 s, y los tuyos desde la barra al instante porque la
+  señal interrumpe el sleep del worker.
 
 ## Estilos en `style.css`
 
