@@ -13,6 +13,7 @@ fi
 
 # Construir PATH
 export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$HOME/.config/carapace/bin:$HOME/.local/kitty.app/bin:$HOME/.cargo/bin:/usr/local/bin:/usr/bin:/bin"
+
 # NVM (Node Version Manager) — lazy load
 # El PATH del alias default se monta a mano (lee ~/.nvm/alias/default: milisegundos)
 # y nvm.sh solo se sourcea en la primera llamada real a `nvm` (~0.3 s menos por shell).
