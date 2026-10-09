@@ -54,3 +54,21 @@ for dir in "${SCRIPT_DIRS[@]}"; do
     echo "LINK ${name}"
   done
 done
+
+# --- Bluetooth: desactivar el tray de blueman --------------------------------
+# El applet (blueman-applet) lanza 'blueman-tray' a traves del plugin StatusIcon,
+# pero no hay ninguna bandeja donde mostrarlo: niri no tiene tray bar y la barra
+# de XFCE tampoco trae plugin systray/statusnotifier. El tray queda huerfano,
+# ocupando RAM, en ambas sesiones. Desactivar StatusIcon no rompe nada:
+# blueman-applet sigue activo (org.blueman.Applet) y blueman-manager sigue
+# abriendo rapido. En XFCE el bluetooth sigue funcionando con normalidad.
+if command -v gsettings >/dev/null 2>&1 && [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+  if gsettings get org.blueman.general plugin-list 2>/dev/null | grep -q "'!StatusIcon'"; then
+    echo "OK blueman (StatusIcon ya desactivado)"
+  else
+    gsettings set org.blueman.general plugin-list "['!StatusIcon']"
+    echo "FIX blueman: StatusIcon desactivado (sin blueman-tray)"
+  fi
+else
+  echo "SKIP blueman (sin sesion D-Bus; StatusIcon intacto)"
+fi
