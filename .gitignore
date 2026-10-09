@@ -1,4 +1,5 @@
 tt.*
+.AGENTS/
 .tests
 doc/tags
 debug
