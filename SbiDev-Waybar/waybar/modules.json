@@ -102,7 +102,6 @@
   },
 
   "bluetooth": {
-    "interval": 1,
     "format-on": "󰂯 ",
     "format-off": "󰂲 ",
     "format-disabled": "󰂲 ",
