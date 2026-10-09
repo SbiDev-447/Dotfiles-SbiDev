@@ -12,7 +12,7 @@
 # Deberías haber recibido una copia de la GPLv3 junto con este programa.
 # Si no, consulta <https://www.gnu.org/licenses/gpl-3.0.html>
 
-option=$(echo -e "  Menú PowerSession\n󰔎  Toggle Theme\n😀 EmojiPicker\n📜 ScriptsTerminal\n  Wallpapers Swaybg\nSalir" | fuzzel --dmenu -l 5 -p "Niri: ")
+option=$(echo -e "  Menú PowerSession\n󰔎  Toggle Theme\n😀 EmojiPicker\n📜 ScriptsTerminal\n  Wallpapers Swaybg\n🔑 KEY\nSalir" | fuzzel --dmenu -l 5 -p "Niri: ")
 
 case "$option" in
 "  Menú PowerSession")
@@ -33,6 +33,10 @@ case "$option" in
   ;;
 "  Wallpapers Swaybg")
   ~/.local/bin/fuzzel-Wallpaper
+  ;;
+"🔑 KEY")
+  #THIS IS ONLY MINE NOT IMPORTANT FOR OTHER USERS
+  swayimg ~/turtleShell/Master.webp
   ;;
 "Salir")
   exit 0

@@ -135,3 +135,14 @@ window-rule {
   default-column-width { fixed 900;}
   default-window-height { fixed 900; }
 }
+
+// Key
+window-rule {
+  match app-id=r#"swayimg"# title="^swayimg: Master.webp"
+  open-floating true
+  default-floating-position x=900 y=-300 relative-to="bottom-left"
+  min-width 760
+  max-width 760
+  min-height 308
+  max-height 308
+}
