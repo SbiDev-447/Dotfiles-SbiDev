@@ -4,6 +4,15 @@
 // ██ ███ ██ ██ ██  ██ ██ ██   ██ ██    ██ ██ ███ ██   ██   ██ ██    ██ ██      ██           ██
 //  ███ ███  ██ ██   ████ ██████   ██████   ███ ███    ██   ██  ██████  ███████ ███████ ███████
 
+debug {
+  honor-xdg-activation-with-invalid-serial
+}
+
+layer-rule {
+    match namespace="mako-notification-window"
+    block-out-from "screen-capture"
+}
+
 // -- Global: esquinas redondeadas --
 window-rule {
     geometry-corner-radius 8
@@ -105,9 +114,25 @@ window-rule {
     open-focused true
 }
 
+window-rule {
+    match app-id=r#"^.*$"# title="^File Upload*"
+    match app-id=r#"^.*$"# title="^Select Folder to Upload*"
+    min-width 800
+    max-width 1176
+    min-height 900
+    max-height 900
+    open-floating true
+}
+
 // -- KeePassXC: bloquear capturas --
 window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    block-out-from "screen-capture"
+}
+
+window-rule {
+    match app-id="polkit-gnome-authentication-agent-1"
+    match app-id="Bitwarden"
     block-out-from "screen-capture"
 }
 
