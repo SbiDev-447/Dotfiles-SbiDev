@@ -12,9 +12,10 @@
 ![Waybar](https://img.shields.io/badge/Bar-Waybar-blueviolet?style=for-the-badge)
 ![Kitty](https://img.shields.io/badge/Terminal-Kitty-000000?style=for-the-badge)
 ![Foot](https://img.shields.io/badge/Terminal-Foot-8fba58?style=for-the-badge)
+![Alacritty](https://img.shields.io/badge/Terminal-Alacritty-e0c3c8?style=for-the-badge)
 
 **Colección de dotfiles, configuraciones y scripts** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian 13 Trixie**.  
-Cubre personalización de entorno, gestión de energía y ahorro OLED, lanzadores rápidos con **Fuzzel**, barra de estado **Waybar**, terminales **Kitty** (tema oscuro y claro) y **Foot** (tema claro SbiDev), editor **Neovim** con **LazyVim** (basado en GentlemanDots) y utilidades CLI propias.
+Cubre personalización de entorno, gestión de energía y ahorro OLED, lanzadores rápidos con **Fuzzel**, barra de estado **Waybar**, terminales **Kitty** & **Alacritty** (tema oscuro y claro) y **Foot** (tema claro SbiDev), editor **Neovim** con **LazyVim** (basado en GentlemanDots) y utilidades CLI propias.
 </div>
 
 ---
@@ -46,7 +47,7 @@ Este repositorio usa doble licencia: MIT (configuraciones) y GPL-3.0 (scripts es
 
 <div align="center">
 
-**Hecho con ❤️ por SbiDev-447**
+**Hecho con ❤️ y 🐢 por SbiDev-447**
 
 Inspirado por el queridísimo [Gentleman Programming / Alan Buscaglia](https://github.com/Gentleman-Programming/Gentleman.Dots).
 
