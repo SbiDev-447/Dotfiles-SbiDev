@@ -131,10 +131,10 @@ setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 
 # ============================================
-# 5. ALIASES (Tus aliases de siempre)
+# 5. ALIASES
 # ============================================
 
-# Git (los más usados primero)
+# Git
 alias g='git'
 alias gs='git status'
 alias gss='git status -s'
@@ -153,7 +153,7 @@ alias gst='git stash'
 alias gstp='git stash pop'
 alias gstl='git stash list'
 
-# Utilidades (herramientas modernas de Nix)
+# Utilidades (herramientas Nix)
 alias ls='eza'
 alias ll='eza -l'
 alias la='eza -la'
@@ -172,6 +172,8 @@ alias nix-clean='nix profile wipe-history --older-than 30d && nix-collect-garbag
 alias nix-list='nix profile list'
 alias nix-count='nix profile list | grep -c "^Name:"'
 alias nix-info='echo "📦 Paquetes: $(nix profile list | grep -c "^Name:")" && echo "💾 Espacio: $(du -sh /nix/store | cut -f1)"'
+alias dnix-s='determinate-nixd status'
+alias dnix-upd='sudo determinate-nixd upgrade'
 
 # Alias para WOFF2
 alias wofcom='woff2_compress'
@@ -218,8 +220,6 @@ npm() {
         command npm "$@"
     fi
 }
-
-
 
 # ========== AGREGADOS =================
 

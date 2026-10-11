@@ -41,7 +41,7 @@
 - Tabs con `cmd+1-9`, copiar/pegar con `ctrl+shift+c/v`
 
 ### Alacritty (`alacritty.toml`)
-- Tema SbiDev con dos variantes: `alacritty-theme.toml` (oscuro) y `alacritty-theme-light.toml` (claro), elegidas por la línea `general.import` dentro de los marcadores `# BEGIN_ALACRITTY_THEME` (solo una puede estar activa: TOML no admite claves duplicadas). Se usa `general.import` y no `import` a secas porque Alacritty 0.15 ya deprecó la forma corta y avisa por log
+- Tema SbiDev con dos variantes: `alacritty-theme.toml` (oscuro) y `alacritty-theme-light.toml` (claro), elegidas por la línea `general.import` dentro de los marcadores `# BEGIN_ALACRITTY_THEME` (solo una puede estar activa: TOML no admite claves duplicadas).
 - La paleta vive en los archivos importados y **no** en `alacritty.toml`: Alacritty da prioridad al archivo que importa, así que cualquier `[colors.*]` en el principal anularía el tema. Lo mismo pasa con `[font]`, que se queda en `alacritty.toml`
 - Fuente: IosevkaTerm NF 14
 - El tema claro es la misma paleta que el tema claro de Kitty y el de Foot: fondo crema `#f5efe6`, texto `#2a2a2a`, cursor mostaza `#d9b45a`, selección azul `#2a3d5c`
