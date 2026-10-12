@@ -47,7 +47,7 @@ Este repositorio usa doble licencia: MIT (configuraciones) y GPL-3.0 (scripts es
 
 <div align="center">
 
-**Hecho con ❤️ y 🐢 por SbiDev-447**
+**Hecho con ❤️ y 🐢 por SbiDev**
 
 Inspirado por el queridísimo [Gentleman Programming / Alan Buscaglia](https://github.com/Gentleman-Programming/Gentleman.Dots).
 
