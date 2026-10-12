@@ -1,4 +1,5 @@
 # Waybar Config
+    "niri/workspaces",
 
 Para la configuración de Waybar la adapte a mi flujo y mis herramientas que pueden encontrar en mis scripts y en el resto de las Dotfiles
 
