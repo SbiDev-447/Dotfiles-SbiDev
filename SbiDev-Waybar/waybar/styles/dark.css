@@ -19,7 +19,6 @@ window#waybar {
    ESTILOS BASE DE MÓDULOS
    ================================ */
 #custom-cachy,
-#custom-audio,
 #custom-brightness,
 #clock,
 #cpu,
@@ -123,8 +122,8 @@ window#waybar {
   color: @color1;
 }
 
-/* custom/audio */
-#custom-audio {
+/* pulseaudio#sink (módulo nativo) */
+#pulseaudio.sink {
   color: @background;
   background: @color2;
   padding: 6px 10px;
@@ -185,7 +184,6 @@ window#waybar {
    HOVER DE MÓDULOS
    ================================ */
 #custom-cachy:hover,
-#custom-audio:hover,
 #custom-brightness:hover,
 #cpu:hover,
 #memory:hover,

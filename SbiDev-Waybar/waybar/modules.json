@@ -123,9 +123,10 @@
     "tooltip": false
   },
 
-  "custom/audio": {
-    "exec": "$HOME/.config/waybar/scripts/audio.sh",
-    "restart-interval": 5,
+  "pulseaudio#sink": {
+    "format": "{volume}% {icon}",
+    "format-muted": "󰝟",
+    "format-icons": ["󰕿", "󰖀", "󰕾"],
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "on-click-right": "pavucontrol -t 3",
     "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",

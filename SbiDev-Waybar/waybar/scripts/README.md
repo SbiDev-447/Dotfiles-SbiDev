@@ -1,12 +1,15 @@
 # Scripts de Waybar
 
-Estos scripts son **módulos custom de Waybar** para el volumen y el brillo. No se
-limitan a imprimir un icono: también son los que muestran el porcentaje en la
-propia barra, sin necesidad de pasar el ratón por encima.
+Este directorio queda con un único módulo custom: el **brillo**. El volumen del sink
+pasó al módulo **nativo `pulseaudio`** de Waybar, que es event-driven (escucha los
+eventos de PulseAudio) y por tanto ya no necesita script. El resto de módulos de la
+barra también son nativos.
+
+`backlight.sh` no se limita a imprimir un icono: también es el que muestra el
+porcentaje en la propia barra, sin necesidad de pasar el ratón por encima.
 
 | Script | Módulo | Depende de |
 |---|---|---|
-| `audio.sh` | `custom/audio` | `pactl` (PipeWire/PulseAudio) |
 | `backlight.sh` | `custom/brightness` | `brightnessctl` |
 
 ## Cómo funciona el contrato de salida
@@ -16,18 +19,15 @@ Un módulo custom de Waybar interpreta la salida del script así:
 - **Línea 1** → lo que se ve en la barra.
 - **Líneas 2+** → el tooltip.
 
-Ese contrato es todo el truco. Para mostrar el porcentaje en la barra, el script
+Ese contrato es todo el truco. Para mostrar el porcentaje en la barra, `backlight.sh`
 imprime una única línea con el número delante y el icono detrás:
 
 ```
-86% 󰕾
+86% 󰃝
 ```
 
 El orden es porcentaje y después icono: el número a la izquierda,
 el glifo a la derecha.
-
-Si el sink está muteado, `audio.sh` imprime **solo el icono**. Un sink muteado sigue
-reportando su volumen, así que `86% 󰝟` se leería como "sonando al 86%".
 
 ## Integración en `modules.json`
 
@@ -35,9 +35,10 @@ Los módulos se declaran como un objeto `nombre → definición` en
 `waybar/modules.json`, y luego se enumeran en `config.jsonc`:
 
 ```json
-"custom/audio": {
-  "exec": "$HOME/.config/waybar/scripts/audio.sh",
-  "restart-interval": 5,
+"pulseaudio#sink": {
+  "format": "{volume}% {icon}",
+  "format-muted": "󰝟",
+  "format-icons": ["󰕿", "󰖀", "󰕾"],
   "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
   "on-click-right": "pavucontrol -t 3",
   "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
@@ -56,24 +57,35 @@ Los módulos se declaran como un objeto `nombre → definición` en
 }
 ```
 
-El `"tooltip": false` es explícito a propósito. Los módulos custom traen tooltip
-activado por defecto y, aunque aquí el script solo imprime una línea (y por tanto no
-hay segunda línea que se muestre), dejarlo declarado evita que un tooltip vacío o un
-cambio futuro en el script muestre un cuadro vacío al pasar el ratón.
+El `"tooltip": false` es explícito a propósito en ambos casos. El módulo nativo
+`pulseaudio#sink` trae un tooltip con información del sink que aquí no queremos, así
+que se desactiva. En el custom `custom/brightness` pasa algo parecido: los módulos
+custom traen tooltip activado por defecto y, aunque el script solo imprime una línea,
+dejarlo declarado evita un tooltip vacío o un cambio futuro que muestre un cuadro al
+pasar el ratón.
 
 Después, en `waybar/config.jsonc`, colócalos donde quieras:
 
 ```json
 "modules-right": [
-  "custom/audio",
+  "pulseaudio#sink",
   "custom/brightness"
 ]
 ```
 
-### Por qué `audio` no lleva `interval` y `brightness` sí
+### Por qué `pulseaudio#sink` no lleva `interval` y `brightness` sí
 
-Waybar elige el worker del módulo a partir de las claves declaradas
-(`src/modules/custom.cpp`), y la elección no es cosmética:
+El volumen del sink **ya no es un módulo custom**: es el módulo **nativo `pulseaudio`**
+de Waybar, que se suscribe directamente a los eventos de PulseAudio. Por eso **no
+necesita script, ni `interval`, ni `signal`**: cada cambio de volumen o mute (hecho
+desde la barra, desde otra app o con las teclas) llega como evento y la barra se
+repinta al instante en los dos sentidos. Antes de esta migración eso mismo lo
+simulaba un script a mano con `pactl subscribe`; ahora lo aporta el propio módulo
+nativo.
+
+El brillo, en cambio, sigue siendo un módulo custom y la elección del worker —
+gestionada por Waybar a partir de las claves declaradas (`src/modules/custom.cpp`) —
+no es cosmética:
 
 | Declaración | Worker | Comportamiento |
 |---|---|---|
@@ -81,15 +93,6 @@ Waybar elige el worker del módulo a partir de las claves declaradas
 | `signal` sin `interval` | `waitingWorker` | ejecuta solo cuando llega la señal |
 | ni `interval` ni `signal` | `continuousWorker` | proceso vivo; **cada línea de stdout actualiza** |
 
-- **`custom/audio` es continuo.** `audio.sh` imprime el estado una vez y se queda
-  bloqueado en `pactl subscribe`; cada evento `change` del sink (volumen, mute, cambios
-  hechos por otras apps o por teclas) imprime una línea nueva y la barra se pinta al
-  instante en los dos sentidos. Por eso **no lleva `interval` ni `signal`**: cualquiera
-  de las dos cambiaría el worker y sacaría el módulo del modo continuo. Los handlers
-  tampoco mandan `pkill -RTMIN+3` — el propio `pactl` del handler ya genera el evento
-  que refresca la barra. `restart-interval: 5` revive el script a los 5 s si PipeWire
-  se reinicia y el subscribe muere; waybar reintenta con cualquier código de salida,
-  no solo con fallo.
 - **`custom/brightness` sondea a 3 s con señal.** El sysfs de backlight no emite
   eventos observables (comprobado: `inotifywait` sobre
   `/sys/class/backlight/*/brightness` no captura nada mientras `brightnessctl`
@@ -97,16 +100,19 @@ Waybar elige el worker del módulo a partir de las claves declaradas
   (swayidle). `interval: 3` + `signal: 3` + `pkill -RTMIN+3` en los handlers: los
   cambios externos se ven en ≤3 s, y los tuyos desde la barra al instante porque la
   señal interrumpe el sleep del worker.
+- **`pulseaudio#sink` es nativo.** No aparece en la tabla anterior porque no pasa por
+  el worker de los módulos custom: su refresco es interno y dirigido por eventos, así
+  que declarar `interval` o `signal` aquí no tendría sentido.
 
 ## Estilos en `style.css`
 
 Las píldoras reutilizan la paleta del tema, sin colores literales nuevos:
 
 ```css
-/* custom/audio */
-#custom-audio {
-  color: @background;
-  background: @color2;   /* #A6E3A1 */
+/* pulseaudio#sink (módulo nativo) */
+#pulseaudio.sink {
+  color: @background;    /* en light.css es @foreground */
+  background: @color2;   /* dark.css; en light.css es @color13 */
   padding: 6px 10px;
 }
 
@@ -220,25 +226,15 @@ color de descarga. Si añades un estado, decide en qué punto lo colocas.
 
 ## Recuperar el tooltip
 
-Si algún día quieres la barra de bloques otra vez, basta con imprimir una
-línea más. El script no necesita más cambios:
-
-```bash
-filled=$(( (vol + 5) / 10 ))
-bar=""
-i=0
-while [ "$i" -lt 10 ]; do
-  if [ "$i" -lt "$filled" ]; then bar+="▰"; else bar+="▱"; fi
-  i=$(( i + 1 ))
-done
-
-printf '%s\n%s %s%%\n' "$label" "$bar" "$vol"
-```
+El módulo nativo `pulseaudio#sink` trae su propio tooltip, pero aquí está desactivado
+con `"tooltip": false`. Para volver a mostrarlo basta con poner `"tooltip": true` en
+`modules.json`: Waybar mostrará el estado del sink y su volumen por defecto, sin tocar
+ningún script.
 
 ## Requisitos
 
 - `pactl` y `brightnessctl` en el `PATH`.
-- Los scripts con bit ejecutable: `chmod +x audio.sh backlight.sh`.
+- El script con bit ejecutable: `chmod +x backlight.sh`.
 - Una **Nerd Font** para los iconos (aquí `IosevkaTerm Nerd Font`). Los glifos están
   en el rango de uso privado de Unicode, así que con una fuente normal verás
   caracteres en blanco o ilegibles.

@@ -28,7 +28,7 @@
     "network",
     "bluetooth",
     "pulseaudio#microphone",
-    "custom/audio",
+    "pulseaudio#sink",
     "custom/brightness",
     "battery",
     "custom/power"
