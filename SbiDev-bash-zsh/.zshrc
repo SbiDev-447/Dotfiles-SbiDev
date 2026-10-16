@@ -1,25 +1,48 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # ============================================
-# ZSH CONFIGURACIÓN - Gentleman Style (Optimizado)
+#                     ZSH
 # ============================================
 
 # ============================================
 # 1. PATH Y ENTORNO (lo más importante primero)
 # ============================================
 
+typeset -U path PATH
+
+# Definir PNPM
+export PNPM_HOME="$HOME/.local/share/pnpm"
+
 # Cargar el entorno de Nix (Determinate Nix)
 if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix.sh ]; then
     . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
 fi
 
-# Construir PATH
-export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$HOME/.config/carapace/bin:$HOME/.local/kitty.app/bin:$HOME/.cargo/bin:/usr/local/bin:/usr/bin:/bin"
+# Construir PATH como array (typeset -U deduplica)
+path=(
+    "$HOME/.nix-profile/bin"
+    /nix/var/nix/profiles/default/bin
+    "$HOME/.config/carapace/bin"
+    "$HOME/.local/kitty.app/bin"
+    "$HOME/.cargo/bin"
+    "$HOME/.local/bin"
+    "$PNPM_HOME/bin"
+    "$HOME/.opencode/bin"
+    /usr/local/bin /usr/bin /bin /sbin
+    $path
+)
+export PATH
 
 # NVM (Node Version Manager) — lazy load
-# El PATH del alias default se monta a mano (lee ~/.nvm/alias/default: milisegundos)
-# y nvm.sh solo se sourcea en la primera llamada real a `nvm` (~0.3 s menos por shell).
-# Si el alias es raro ("lts/jod", "system") o el directorio no existe, carga completa.
+
 export NVM_DIR="$HOME/.nvm"
 _nvm_bin=""
+
 if [ -r "$NVM_DIR/alias/default" ]; then
     _nvm_alias=$(tr -d '[:space:]' <"$NVM_DIR/alias/default")
     case "$_nvm_alias" in
@@ -30,38 +53,28 @@ if [ -r "$NVM_DIR/alias/default" ]; then
     esac
     unset _nvm_alias _nvm_pat
 fi
+
 if [ -n "$_nvm_bin" ]; then
-    PATH="$NVM_DIR/versions/node/$_nvm_bin/bin:$PATH"
+    path=("$NVM_DIR/versions/node/$_nvm_bin/bin" $path)
     unset _nvm_bin
 else
     unset _nvm_bin
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 fi
+
 nvm() {
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    nvm "$@"
+    unset -f nvm
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+        \. "$NVM_DIR/nvm.sh"
+        nvm "$@"
+    else
+        echo "nvm: $NVM_DIR/nvm.sh no encontrado" >&2
+        return 127
+    fi
 }
 
-export PATH="$HOME/.local/bin:$PATH"
 export EDITOR="nvim"
 export VISUAL="nvim"
-
-# pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
-# pnpm end
-
-# Cargar powerlevel10k desde Nix (SIEMPRE primero)
-if [ -f "$HOME/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" ]; then
-    source "$HOME/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme"
-fi
-
-# Cargar configuración de Powerlevel10k (si existe)
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 
 # ============================================
 # 2. OH-MY-ZSH Y PLUGINS (desde Nix)
@@ -79,13 +92,20 @@ plugins=(
     copyfile
     copypath
     colored-man-pages
-    history
     docker
     docker-compose
 )
 
+# Cargar powerlevel10k desde Nix (SIEMPRE primero)
+if [ -f "$HOME/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" ]; then
+    source "$HOME/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme"
+fi
+
 # Cargar Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
+
+# Cargar configuración de Powerlevel10k (si existe)
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Plugins adicionales (desde Nix)
 # Zsh Syntax Highlighting
@@ -112,7 +132,7 @@ command -v atuin &>/dev/null && eval "$(atuin init zsh)"
 if command -v carapace &>/dev/null; then
     export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
     zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-    source <(carapace _carapace)
+    eval "$(carapace _carapace)"
 fi
 
 # ============================================
@@ -125,10 +145,13 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Historial
 HISTSIZE=50000
-SAVEHIST=10000
+SAVEHIST=100000
 HISTFILE="$HOME/.zsh_history"
 setopt HIST_IGNORE_DUPS
-setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY
+#setopt SHARE_HISTORY
 
 # ============================================
 # 5. ALIASES
@@ -154,14 +177,12 @@ alias gstp='git stash pop'
 alias gstl='git stash list'
 
 # Utilidades (herramientas Nix)
-alias ls='eza'
-alias ll='eza -l'
-alias la='eza -la'
-alias lt='eza --tree'
+alias ls='eza --icons --group-directories-first'
+alias ll='eza -l --icons --group-directories-first'
+alias la='eza -la --icons --group-directories-first'
+alias lt='eza --tree --icons --level=2'
 alias tree='eza --tree'
 alias treedir='eza -l --icons --tree --level 1'
-alias cat='bat'
-alias diff='delta'
 
 # Kitty
 alias kssh='kitty +kitten ssh'
@@ -209,29 +230,5 @@ extracton() {
 }
 
 # Buscar archivos y directorios
-ff() { find . -type f -name "*$1*" 2>/dev/null; }
-fdir() { find . -type d -name "*$1*" 2>/dev/null; }
-
-# npm inteligente (usa pnpm si existe)
-npm() {
-    if command -v pnpm &>/dev/null; then
-        pnpm "$@"
-    else
-        command npm "$@"
-    fi
-}
-
-# ========== AGREGADOS =================
-
-# opencode
-export PATH="$HOME/.opencode/bin:$PATH"
-
-# ============================================
-# 8. FIN - Mensaje de éxito (solo si no está en script)
-# ============================================
-
-# Si es una terminal interactiva, mostrar mensaje
-if [[ -o interactive ]]; then
-    echo "󰏒  ZSH IS ONLINE FROM NIX 󰏒 "
-fi
-export PATH="$PATH:/sbin"
+ff() { find . -type f -iname "*$1*" 2>/dev/null; }
+fdir() { find . -type d -iname "*$1*" 2>/dev/null; }

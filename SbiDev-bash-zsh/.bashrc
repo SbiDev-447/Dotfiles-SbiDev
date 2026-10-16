@@ -1,5 +1,5 @@
 # ============================================
-# BASHRC - Gentleman Style
+#                  BASHRC
 # ============================================
 
 # ============================================
@@ -10,24 +10,26 @@
 [[ $- != *i* ]] && return
 
 # ============================================
-# 2. PATH Y ENTORNO (lo más importante)
+# 2. PATH Y ENTORNO
 # ============================================
 
 # Nix (prioritario)
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
+# LOCAL
 export PATH="$HOME/.local/bin:$PATH"
+
+# NVIM
 export EDITOR="nvim"
 export VISUAL="nvim"
+
 # Rust (via rustup)
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # NVM (Node Version Manager) — lazy load
-# El PATH del alias default se monta a mano (lee ~/.nvm/alias/default: milisegundos)
-# y nvm.sh solo se sourcea en la primera llamada real a `nvm` (~0.18 s menos por shell).
-# Si el alias es raro ("lts/jod", "system") o el directorio no existe, carga completa.
 export NVM_DIR="$HOME/.nvm"
 _nvm_bin=""
+
 if [ -r "$NVM_DIR/alias/default" ]; then
   _nvm_alias=$(tr -d '[:space:]' <"$NVM_DIR/alias/default")
   case "$_nvm_alias" in
@@ -38,6 +40,7 @@ if [ -r "$NVM_DIR/alias/default" ]; then
   esac
   unset _nvm_alias _nvm_pat
 fi
+
 if [ -n "$_nvm_bin" ]; then
   PATH="$NVM_DIR/versions/node/$_nvm_bin/bin:$PATH"
   unset _nvm_bin
@@ -45,21 +48,44 @@ else
   unset _nvm_bin
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 fi
+
 nvm() {
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  nvm "$@"
+  unset -f nvm
+  if [ -s "$NVM_DIR/nvm.sh" ]; then
+    \. "$NVM_DIR/nvm.sh"
+    nvm "$@"
+  else
+    echo "nvm: $NVM_DIR/nvm.sh no encontrado" >&2
+    return 127
+  fi
 }
+
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# PNPM
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+*":$PNPM_HOME/bin:"*) ;;
+*) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+
+# OPENCODE
+case ":$PATH:" in
+*":$HOME/.opencode/bin:"*) ;;
+*) export PATH="$HOME/.opencode/bin:$PATH" ;;
+esac
 
 # ============================================
 # 3. HISTORIAL
 # ============================================
 
-HISTCONTROL=ignoreboth # No duplicados ni líneas con espacio
-HISTSIZE=1000          # Historial en memoria
-HISTFILESIZE=2000      # Historial en archivo
-shopt -s histappend    # Añadir en lugar de sobrescribir
-shopt -s checkwinsize  # Actualizar tamaño de ventana
+HISTCONTROL=ignoreboth      # No duplicados ni líneas con espacio
+HISTSIZE=50000              # Historial en memoria
+HISTFILESIZE=100000         # Historial en archivo
+HISTTIMEFORMAT='%F %T '     # timestamps
+HISTIGNORE='ls:cd:pwd:exit' # no guardar PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+PROMPT_COMMAND="history -a"
+shopt -s checkwinsize # Actualizar tamaño de ventana
 
 # ============================================
 # 4. PROMPT (simple pero informativo)
@@ -128,10 +154,6 @@ alias gl='git log --oneline --decorate --graph'
 alias gp='git push'
 alias gpl='git pull'
 
-# Utilidades
-command -v bat &>/dev/null && alias cat='bat'
-command -v delta &>/dev/null && alias diff='delta'
-
 # Alias para WOFF2
 alias wofcom='woff2_compress'
 alias wofdecom='woff2_decompress'
@@ -140,23 +162,14 @@ alias wofdecom='woff2_decompress'
 # 7. FUNCIONES ÚTILES
 # ============================================
 
-# npm inteligente (usa pnpm si existe)
-npm() {
-  if command -v pnpm &>/dev/null; then
-    pnpm "$@"
-  else
-    command npm "$@"
-  fi
-}
-
 # Crear directorio y entrar
 mkcd() {
   mkdir -p "$1" && cd "$1"
 }
 
 # Buscar archivos y directorios
-ff() { find . -type f -name "*$1*" 2>/dev/null; }
-fd() { find . -type d -name "*$1*" 2>/dev/null; }
+ffile() { [ -n "$1" ] && find . -type f -iname "*$1*" 2>/dev/null; }
+fdir() { [ -n "$1" ] && find . -type d -iname "*$1*" 2>/dev/null; }
 
 # Extraer archivos comprimidos
 extracton() {
@@ -185,14 +198,3 @@ extracton() {
 # ============================================
 
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
-
-# pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-*":$PNPM_HOME/bin:"*) ;;
-*) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
-# pnpm end
-
-# opencode
-export PATH="$HOME/.opencode/bin:$PATH"
