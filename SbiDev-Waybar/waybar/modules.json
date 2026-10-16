@@ -110,8 +110,8 @@
     "tooltip": true,
     "tooltip-format": "{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_address}",
-    "on-click": "setsid blueman-manager",
-    "on-click-right": "sh -c 'if bluetoothctl show | grep -q \"Powered: yes\"; then bluetoothctl power off; else bluetoothctl power on; fi'"
+    "on-click-right": "setsid blueman-manager",
+    "on-click": "sh -c 'if bluetoothctl show | grep -q \"Powered: yes\"; then bluetoothctl power off; else bluetoothctl power on; fi'"
   },
 
   "pulseaudio#microphone": {
