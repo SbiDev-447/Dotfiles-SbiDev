@@ -160,14 +160,14 @@ window#waybar {
 
 #battery.warning {
   color: @foreground;
-  background: @color9;
+  background: @alert-warning;
 }
 
 #battery.critical,
 #battery.danger,
 #battery.empty {
   color: @foreground;
-  background: @color1;
+  background: @alert-critical;
 }
 
 /* custom/dmenu */

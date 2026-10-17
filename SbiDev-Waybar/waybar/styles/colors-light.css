@@ -3,7 +3,7 @@
 @define-color foreground #06080f;
 @define-color color0  #45475A;
 @define-color color1  #700000;
-@define-color color2  #007000;
+@define-color color2  #006C00;
 @define-color color3  #e0c15a;
 @define-color color4  #004D88;
 @define-color color5  #3C00A4;
@@ -16,3 +16,5 @@
 @define-color color12 #9381FF;
 @define-color color13 #80D195;
 @define-color color14 #7fb4ca;
+@define-color alert-warning #ec7a63;
+@define-color alert-critical #ef5350;
