@@ -12,7 +12,7 @@
 # Deberías haber recibido una copia de la GPLv3 junto con este programa.
 # Si no, consulta <https://www.gnu.org/licenses/gpl-3.0.html>.
 
-# ~/.local/bin/niri-wallpaper-fuzzel
+# ~/.local/bin/fuzzel-Wallpaper
 
 set -euo pipefail
 
@@ -34,76 +34,38 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
   exit 1
 fi
 
-# Formatear nombre para mostrar en fuzzel
-format_name() {
-  local file="$1"
-  local dir="$WALLPAPER_DIR"
+# ==================== SELECCIÓN ====================
 
-  # Obtener ruta relativa
-  local rel_path="${file#$dir/}"
-
-  # Extraer carpeta y nombre
-  local folder=$(dirname "$rel_path")
-  local basename=$(basename "$rel_path")
-
-  if [ "$folder" = "." ]; then
-    echo "$basename"
-  else
-    echo "[$folder] $basename"
-  fi
-}
-
-# Seleccionar imagen con fuzzel
+# Cada línea que recibe fuzzel lleva dos columnas separadas por TAB:
+#   columna 1: nombre visible (lo que se ve en el menú)
+#   columna 2: ruta absoluta  (lo que devuelve fuzzel al elegir)
+# Con --with-nth=1 se muestra solo la primera y con --accept-nth=2 fuzzel
+# devuelve la segunda, así que no hay que reconstruir nada: los espacios, los
+# acentos y las subcarpetas dejan de importar.
 select_image() {
-  local selected
+  local file rel folder base
 
-  # SOLO BUSCA .webp
-  selected=$(find "$WALLPAPER_DIR" -type f -iname "*.webp" -print0 | while IFS= read -r -d '' file; do
-    format_name "$file"
-  done | fuzzel --dmenu \
-    -p "Fondo: " \
-    --lines=15 \
-    --width=70 \
-    --font "IosevkaTerm NF:size=14")
+  while IFS= read -r -d '' file; do
+    rel="${file#"$WALLPAPER_DIR"/}"
+    folder="$(dirname "$rel")"
+    base="$(basename "$rel")"
 
-  echo "$selected"
-}
-
-# Reconstruir ruta completa desde el nombre formateado
-reconstruct_path() {
-  local selected="$1"
-  local full_path
-
-  if [[ "$selected" =~ ^\[([^\]]+)\]\ (.*)$ ]]; then
-    # Tiene formato [carpeta] nombre
-    local folder="${BASH_REMATCH[1]}"
-    local filename="${BASH_REMATCH[2]}"
-
-    # Si el filename tiene barras, hay subcarpetas adicionales
-    if [[ "$filename" == */* ]]; then
-      local file_dir=$(dirname "$filename")
-      local file_base=$(basename "$filename")
-      full_path="$WALLPAPER_DIR/$folder/$file_dir/$file_base"
+    if [ "$folder" = "." ]; then
+      printf '%s\t%s\n' "$base" "$file"
     else
-      full_path="$WALLPAPER_DIR/$folder/$filename"
+      printf '[%s] %s\t%s\n' "$folder" "$base" "$file"
     fi
-  else
-    # Archivo en la raíz
-    full_path="$WALLPAPER_DIR/$selected"
-  fi
-
-  echo "$full_path"
+  done < <(find "$WALLPAPER_DIR" -type f -iname '*.webp' -print0) |
+    fuzzel --dmenu \
+      -p "Fondo: " \
+      --lines=15 \
+      --width=70 \
+      --font "IosevkaTerm NF:size=14" \
+      --with-nth=1 \
+      --accept-nth=2
 }
 
-# Validar imagen
-validate_image() {
-  local image="$1"
-
-  # Solo verificar que existe, es legible y no está vacío
-  [ -f "$image" ] && [ -r "$image" ] && [ -s "$image" ]
-}
-
-# Cambiar wallpaper
+# ==================== CAMBIO DE WALLPAPER ====================
 change_wallpaper() {
   local full_path="$1"
 
@@ -116,28 +78,19 @@ change_wallpaper() {
   # Lanzar nuevo wallpaper
   nohup swaybg -i "$full_path" -m "$RENDER_MODE" >/dev/null 2>&1 &
   disown
-
-  # Guardar último wallpaper
-  echo "$full_path" >"/tmp/last_wallpaper.txt"
-
 }
 
 # ==================== EJECUCIÓN PRINCIPAL ====================
 
-# Seleccionar imagen
-selected=$(select_image)
-
-# Si no se seleccionó nada, salir
+# Elegir imagen. fuzzel devuelve error al cancelar con Esc: en ese caso no hay
+# nada que validar ni nada que lanzar, así que se sale limpiamente.
+selected="$(select_image)" || selected=""
 [ -z "$selected" ] && exit 0
 
-# Reconstruir ruta
-full_path=$(reconstruct_path "$selected")
-
-# Verificar que la imagen existe y es válida
-if ! validate_image "$full_path"; then
+# Verificar que la imagen existe, es legible y no está vacía
+if [ ! -f "$selected" ] || [ ! -r "$selected" ] || [ ! -s "$selected" ]; then
   notify-send "Error" "La imagen no es válida o está corrupta"
   exit 1
 fi
 
-# Cambiar wallpaper
-change_wallpaper "$full_path"
+change_wallpaper "$selected"
