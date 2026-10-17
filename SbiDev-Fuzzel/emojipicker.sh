@@ -1640,4 +1640,4 @@ exit 0
 🇧🇻 flag bouvet island norway
 🇧🇼 flag botswana bw flag nation country banner botswana
 🇧🇾 flag belarus by flag nation country banner belarus
-🇧🇿 flag belize bz flag natio
+🇧🇿 flag belize bz flag nation country banner belize

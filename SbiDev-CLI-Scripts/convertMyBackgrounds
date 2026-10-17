@@ -19,7 +19,7 @@
 # CLI para convertir recursivamente imágenes a WebP
 # Uso: convertMyBackgrounds [directorio]
 # Si no se especifica directorio, usa el directorio actual.
-# Pregunta si modificar calidad (por defecto: 80).
+# Pregunta si modificar calidad (por defecto: 85).
 
 set -euo pipefail
 
@@ -116,7 +116,6 @@ done < <(find "$TARGET_DIR" -type f \( \
   -iname "*.bmp" -o \
   -iname "*.tiff" -o \
   -iname "*.tif" -o \
-  -iname "*.webp" -o \
   -iname "*.avif" -o \
   -iname "*.heic" -o \
   -iname "*.heif" \) -print0)
