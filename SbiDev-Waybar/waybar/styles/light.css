@@ -19,7 +19,7 @@ window#waybar {
    ESTILOS BASE DE MÓDULOS
    ================================ */
 #custom-cachy,
-#custom-brightness,
+#backlight,
 #clock,
 #cpu,
 #memory,
@@ -129,8 +129,8 @@ window#waybar {
   padding: 6px 10px;
 }
 
-/* custom/brightness */
-#custom-brightness {
+/* backlight (módulo nativo) */
+#backlight {
   color: @foreground;
   background: @color3;
   padding: 6px 10px;
@@ -184,7 +184,7 @@ window#waybar {
    HOVER DE MÓDULOS
    ================================ */
 #custom-cachy:hover,
-#custom-brightness:hover,
+#backlight:hover,
 #cpu:hover,
 #memory:hover,
 #temperature:hover,

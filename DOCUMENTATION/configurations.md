@@ -25,7 +25,7 @@
 ### Waybar (`config.jsonc` + `modules.json`)
 - **Posición**: arriba y en capa superior (`position: top`, `layer: top`)
 - **17 módulos**: workspaces de Niri, reloj, CPU, memoria, temperatura, privacidad, MPRIS, red, Bluetooth, micrófono, batería, volumen, brillo y cuatro lanzadores de un clic (dmenu, menú de energía, LocalSend y CachyOS)
-- **Volumen y brillo**: módulos `custom` con script propio. Muestran `NN%` junto al icono, sobre una píldora de color, y sin tooltip. El brillo se lee con `brightnessctl --class=backlight`
+- **Volumen y brillo**: módulos **nativos** (`pulseaudio#sink` y `backlight`). Muestran `NN%` junto al icono, sobre una píldora de color, y sin tooltip. Ninguno necesita script: el volumen se refresca con los eventos de PulseAudio y el brillo con los eventos udev del subsistema `backlight`. `brightnessctl` se usa solo en los handlers de clic y rueda. Detalles en `SbiDev-Waybar/waybar/README.md`
 - **Batería**: el porcentaje va en la barra, no en el tooltip. Waybar lanza `low-battery-notify.sh` mediante `battery.events`, así que no hace falta ningún proceso de avisos aparte
 - **CSS**: `style.css` es un symlink que `toggle-theme-waybar.sh` mueve entre `styles/dark.css` y `styles/light.css`, y cada uno importa su paleta (`styles/colors-dark.css` o `styles/colors-light.css`)
 - **`setsid` en los `on-click` que lanzan terminales**: `custom/cachy` y `cpu` lanzan `kitty` y `alacritty` con `setsid`, así que cada terminal abre su propia sesión y se desprende de la de Waybar. Sin esto, `toggle-theme-waybar.sh` recarga la barra con `pkill -SIGUSR2 waybar` y esa señal alcanza también a los procesos hijos de Waybar: las terminales lanzadas desde la barra morían con `SIGTERM` al alternar el tema

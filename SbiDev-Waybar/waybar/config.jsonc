@@ -29,7 +29,7 @@
     "bluetooth",
     "pulseaudio#microphone",
     "pulseaudio#sink",
-    "custom/brightness",
+    "backlight",
     "battery",
     "custom/power"
   ]
