@@ -13,4 +13,4 @@ sleep 1
 nix profile upgrade --all
 
 sleep 1
-echo "  ALL SYSTEM IS UPGRADING  "
+echo "---   ALL SYSTEM IS UPGRADING   ---"
