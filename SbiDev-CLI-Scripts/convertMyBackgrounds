@@ -58,9 +58,6 @@ if [[ $REPLY =~ ^[Ss]$ ]]; then
   done
 fi
 
-CONVERTED_COUNT=0
-FAILED_COUNT=0
-TOTAL_IMAGES=0
 ORIGINAL_FILES=()
 
 # Verificar que ImageMagick está instalado
@@ -70,13 +67,25 @@ if ! command -v convert &>/dev/null; then
   exit 1
 fi
 
+# Conversiones simultáneas: una por núcleo. Se puede forzar con JOBS=1 convertMyBackgrounds ...
+JOBS="${JOBS:-$(nproc)}"
+
+# Los workers son subshells: no pueden tocar los contadores del padre, así que
+# cada uno anota su resultado y al final se cuentan los registros.
+SCRATCH_DIR=$(mktemp -d)
+CONVERTED_LIST="$SCRATCH_DIR/converted"
+FAILED_LIST="$SCRATCH_DIR/failed"
+SKIPPED_LIST="$SCRATCH_DIR/skipped"
+trap 'rm -rf "$SCRATCH_DIR"' EXIT
+
 echo -e "${GREEN}=== CONVERSOR RECURSIVO A WEBP ===${NC}"
 echo "Directorio base: $TARGET_DIR"
 echo "Calidad de conversión: $QUALITY"
+echo "Conversiones simultáneas: $JOBS"
 echo "Buscando imágenes... (esto puede tomar un momento)"
 echo ""
 
-# Función para convertir una imagen
+# Función para convertir una imagen (se ejecuta en paralelo, ver xargs abajo)
 convert_image() {
   local input_file="$1"
   local output_file="${input_file%.*}.webp"
@@ -84,31 +93,31 @@ convert_image() {
   # Verificar si ya existe el WebP (para no reconvertir)
   if [ -f "$output_file" ]; then
     echo -e "${YELLOW}⚠  Saltando: $input_file (el WebP ya existe)${NC}"
+    printf '%s\0' "$input_file" >> "$SKIPPED_LIST"
     return 0
   fi
-
-  echo -e "🔄  Convirtiendo: $input_file"
 
   # Intentar convertir con la calidad seleccionada
   if convert "$input_file" -quality "$QUALITY" -strip "$output_file" 2>/dev/null; then
-    echo -e "${GREEN}✓  Convertido: $(basename "$output_file")${NC}"
-    CONVERTED_COUNT=$((CONVERTED_COUNT + 1))
-    ORIGINAL_FILES+=("$input_file")
-    return 0
+    echo -e "${GREEN}✓  Convertido: $output_file${NC}"
+    printf '%s\0' "$input_file" >> "$CONVERTED_LIST"
   else
     echo -e "${RED}✗  Falló: $input_file${NC}"
-    FAILED_COUNT=$((FAILED_COUNT + 1))
-    return 1
+    printf '%s\0' "$input_file" >> "$FAILED_LIST"
   fi
+  return 0
 }
+export -f convert_image
+export QUALITY CONVERTED_LIST FAILED_LIST SKIPPED_LIST RED GREEN YELLOW NC
 
 # Buscar y procesar archivos de imagen
-# Usamos find para buscar recursivamente todas las imágenes comunes
+# Usamos find para buscar recursivamente todas las imágenes comunes.
+# El bucle descarta las entradas que generarían el mismo .webp: en paralelo dos
+# conversiones escribirían el mismo fichero a la vez y luego se borrarían los dos
+# originales, quedando uno solo. Se conserva la primera, igual que en serie.
 echo "Procesando archivos..."
-while IFS= read -r -d '' file; do
-  TOTAL_IMAGES=$((TOTAL_IMAGES + 1))
-  convert_image "$file"
-done < <(find "$TARGET_DIR" -type f \( \
+declare -A seen_outputs=()
+find "$TARGET_DIR" -type f \( \
   -iname "*.jpg" -o \
   -iname "*.jpeg" -o \
   -iname "*.png" -o \
@@ -118,12 +127,42 @@ done < <(find "$TARGET_DIR" -type f \( \
   -iname "*.tif" -o \
   -iname "*.avif" -o \
   -iname "*.heic" -o \
-  -iname "*.heif" \) -print0)
+  -iname "*.heif" \) -print0 |
+  while IFS= read -r -d '' file; do
+    output_key="${file%.*}"
+    if [ -z "${seen_outputs[$output_key]+x}" ]; then
+      seen_outputs["$output_key"]=1
+      printf '%s\0' "$file"
+    else
+      # A stderr: lo que salga por stdout acabaría siendo una entrada de xargs
+      echo -e "${YELLOW}⚠  Saltando: $file (otro archivo produce el mismo WebP)${NC}" >&2
+      printf '%s\0' "$file" >> "$SKIPPED_LIST"
+    fi
+  done |
+  xargs -0 -r -n1 -P"$JOBS" bash -c 'convert_image "$1"' _
+
+count_records() {
+  if [ -s "$1" ]; then
+    tr -cd '\0' < "$1" | wc -c
+  else
+    echo 0
+  fi
+}
+
+CONVERTED_COUNT=$(count_records "$CONVERTED_LIST")
+FAILED_COUNT=$(count_records "$FAILED_LIST")
+SKIPPED_COUNT=$(count_records "$SKIPPED_LIST")
+TOTAL_IMAGES=$((CONVERTED_COUNT + FAILED_COUNT + SKIPPED_COUNT))
+
+if [ -s "$CONVERTED_LIST" ]; then
+  mapfile -d '' -t ORIGINAL_FILES < "$CONVERTED_LIST"
+fi
 
 echo ""
 echo -e "${GREEN}=== RESUMEN ===${NC}"
 echo "Total de imágenes encontradas: $TOTAL_IMAGES"
 echo -e "${GREEN}Conversiones exitosas: $CONVERTED_COUNT${NC}"
+echo -e "${YELLOW}Saltadas (el WebP ya existía): $SKIPPED_COUNT${NC}"
 echo -e "${RED}Fallos: $FAILED_COUNT${NC}"
 
 # Si no hay archivos para eliminar, salir
