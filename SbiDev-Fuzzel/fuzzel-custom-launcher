@@ -10,7 +10,7 @@ case "$selected" in
   alacritty -e btop
   ;;
 "💻 Fastfetch")
-  alacritty -e bash -c 'fastfetch; echo ""; read -p " --- Exit With Enter"'
+  kitty -e bash -c 'fastfetch; echo ""; read -p " --- Exit With Enter"'
   ;;
 "🌐 nmtui")
   alacritty -e nmtui
