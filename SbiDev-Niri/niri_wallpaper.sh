@@ -26,7 +26,7 @@ set -euo pipefail
 readonly WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Imágenes/Wallpapers}"
 readonly QUEUE_FILE="/tmp/niri_wallpaper_queue.txt"
 readonly LOCK_FILE="/tmp/niri_wallpaper.lock"
-readonly RENDER_MODE="${WALLPAPER_RENDER_MODE:-fill}"
+readonly RENDER_MODE="${WALLPAPER_RENDER_MODE:-stretch}"
 
 # ==================== FUNCIONES ====================
 

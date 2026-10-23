@@ -18,7 +18,7 @@ set -euo pipefail
 
 # ==================== CONFIGURACIÓN ====================
 WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Imágenes/Wallpapers}"
-RENDER_MODE="${WALLPAPER_RENDER_MODE:-fill}"
+RENDER_MODE="${WALLPAPER_RENDER_MODE:-stretch}"
 
 # Intentar con tilde y sin tilde (español)
 if [ ! -d "$WALLPAPER_DIR" ]; then
