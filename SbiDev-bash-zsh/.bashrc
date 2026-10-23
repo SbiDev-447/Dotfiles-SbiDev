@@ -158,6 +158,9 @@ alias gpl='git pull'
 alias wofcom='woff2_compress'
 alias wofdecom='woff2_decompress'
 
+# Niri (captura de color de pantalla: RGB o HEX, copiado al portapapeles)
+alias npc='niri-pick-color.sh'
+
 # ============================================
 # 7. FUNCIONES ÚTILES
 # ============================================

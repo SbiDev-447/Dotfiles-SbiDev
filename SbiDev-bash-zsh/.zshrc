@@ -200,6 +200,9 @@ alias dnix-upd='sudo determinate-nixd upgrade'
 alias wofcom='woff2_compress'
 alias wofdecom='woff2_decompress'
 
+# Niri (captura de color de pantalla: RGB o HEX, copiado al portapapeles)
+alias npc='niri-pick-color.sh'
+
 # ============================================
 # 6. FUNCIONES ÚTILES
 # ============================================

@@ -32,3 +32,4 @@
 | `updateallsystem` | Actualizador completo: apt + flatpak + nix |
 | `low-battery-notify.sh` | Avisos de batería al 30%, 20%, 10% y 5% descargando, y al alcanzar el techo de carga. Los dispara Waybar con `battery.events` al cambiar de estado: sin bucle `sleep`, sin `acpi` y sin `spawn-at-startup` |
 | `ufw-help` | Hoja de referencia rápida para comandos UFW |
+| `niri-pick-color.sh` | Captura un color de la pantalla con `niri msg pick-color` y lo entrega como RGB (`rgb(r, g, b)`) o HEX (`#rrggbb`), copiándolo además al portapapeles con `wl-copy`. El formato se elige por menú o con `rgb`/`hex`. Alias: `npc` |
