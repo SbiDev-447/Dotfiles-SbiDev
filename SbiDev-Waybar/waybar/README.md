@@ -30,6 +30,12 @@ Dos detalles del `include` que no son obvios y cuestan un rato descubrir:
   `modules-center`: si lo definiera, cada compositor lo sobreescribiría igual, pero
   tener una sola fuente evita dudas.
 
+Ojo con el arranque desde Niri: `spawn-at-startup` **solo expande `~` en el
+comando (argv[0])**, nunca en los argumentos. Por eso la ruta del `-c` va
+absoluta en `config.kdl`; con `"~/..."` Waybar recibe la ruta literal y muere con
+`Can't open config file` **sin dibujar la barra**. En Sway no pasa, porque `exec`
+se ejecuta con `sh` y ahí el `~` sí se expande.
+
 `style.css` y `styles/` se quedan en `~/.config/waybar/`: Waybar busca la hoja de
 estilos en sus rutas por defecto aunque el `-c` apunte a otro fichero, así que no
 hace falta `-s`.
