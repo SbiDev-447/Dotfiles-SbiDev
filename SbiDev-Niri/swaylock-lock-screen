@@ -9,5 +9,9 @@ swaylock &
 sleep 0.3
 
 # Apaga la pantalla OLED antes de bloquear (protege burn-in)
-niri msg action power-off-monitors &
+if [ -n "${NIRI_SOCKET:-}" ]; then
+  niri msg action power-off-monitors &
+else
+  swaymsg "output * power off" &
+fi
 systemctl suspend

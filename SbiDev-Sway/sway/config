@@ -1,0 +1,266 @@
+# ============================================================================
+#                            ENTORNO Y VARIABLES
+# ============================================================================
+set $mod Mod4
+set $term kitty
+set $menu fuzzel
+
+# Variables de entorno (extraídas de tu Niri)
+exec export ELECTRON_OZONE_PLATFORM_HINT=auto
+exec export EDITOR=nvim
+exec export MOZ_ENABLE_WAYLAND=1
+exec export SDL_VIDEODRIVER=wayland
+exec export PROTON_ENABLE_WAYLAND=1
+
+# ============================================================================
+#                            CURSOR
+# ============================================================================
+seat seat0 xcursor_theme Win7OS-cursors 40
+
+# ============================================================================
+#                              INPUTS
+# ============================================================================
+input "type:keyboard" {
+    # Niri lee /etc/default/keyboard, Sway no: deja las reglas xkb a NULL y
+    # libxkbcommon cae a "us" (XKB_DEFAULT_LAYOUT no esta definido). Sin esto
+    # se pierden ñ, tildes y @.
+    xkb_layout latam
+    xkb_model pc105
+    xkb_numlock enabled
+}
+
+input "type:touchpad" {
+    tap enabled
+    natural_scroll enabled
+    accel_profile adaptive
+    pointer_accel 0.3
+    scroll_method two_finger
+}
+
+# ============================================================================
+#                             OUTPUTS
+# ============================================================================
+output "eDP-1" {
+    mode 1920x1080@60.008Hz
+    scale 1.0
+    pos 0 0
+}
+
+output "HDMI-A-1" {
+    mode 1920x1080@60.000Hz
+    scale 1.0
+    pos 1920 0
+}
+
+# ============================================================================
+#                              LAYOUT Y ESTÉTICA
+# ============================================================================
+# Evitar decoraciones del lado del cliente en apps compatibles
+default_border pixel 2
+default_floating_border pixel 2
+
+# Gaps (espaciados)
+gaps inner 6
+gaps outer 6
+smart_gaps on
+
+# Colores de borde (adaptado de tu gradiente, Sway usa colores sólidos por defecto)
+# active: #FFBF00 (o usa #9381FF si prefieres el otro extremo del gradiente)
+# inactive: #505050
+client.focused          #FFBF00 #FFBF00 #ffffff #FFBF00 #FFBF00
+client.unfocused        #505050 #505050 #888888 #505050 #505050
+client.focused_inactive #505050 #505050 #ffffff #505050 #505050
+client.urgent           #900000 #900000 #ffffff #900000 #900000
+
+# Desactivar sombras (Sway no las tiene por defecto, pero por si acaso)
+
+
+# ============================================================================
+#                         APLICACIONES AL INICIO
+# ============================================================================
+# Portando tus scripts de Niri
+exec wlsunset -S 07:00 -s 18:00 -T 3800 -t 3200
+exec waybar -c ~/.config/waybar/config-sway.jsonc
+exec blueman-applet
+exec /home/sbi/.local/bin/niri_wallpaper.sh
+# La cadena de inactividad vive en un solo script: elige la politica de Sway
+# (bloqueo a los 5 min) cuando NIRI_SOCKET no esta definido. Usar el script
+# y no un swayidle inline mantiene toggle-idle.sh coherente en ambos entornos.
+exec ~/.local/bin/niri-idle.sh
+exec mako
+
+# Prevenir CSD (Client Side Decorations) - Similar a "prefer-no-csd" de Niri
+for_window [app_id=".*"] border pixel 2
+
+# ============================================================================
+#                               BINDS
+# ============================================================================
+
+# --- APLICACIONES ---
+bindsym $mod+Return exec $term
+bindsym $mod+BackSpace exec alacritty
+bindsym $mod+d exec $menu
+bindsym $mod+F1 exec ~/.local/bin/dmenu
+bindsym $mod+a exec thunar
+bindsym $mod+e exec /home/sbi/.local/bin/emojipicker.sh
+
+# --- SEGURIDAD Y UTILIDADES ---
+bindsym $mod+Shift+q exec /home/sbi/.local/bin/swaylock-lock-screen
+bindsym $mod+Shift+t exec ~/.local/bin/toggle-idle.sh
+bindsym $mod+n exec sh -c 'pgrep wlsunset && pkill wlsunset || wlsunset -S 07:00 -s 19:00 -T 3800 -t 3200'
+bindsym $mod+w exec /home/sbi/.local/bin/fuzzel-Wallpaper
+bindsym $mod+Shift+w exec sh -c 'rm -f /tmp/niri_wallpaper.lock; /home/sbi/.local/bin/niri_wallpaper.sh'
+
+# --- VOLUMEN Y MULTIMEDIA ---
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioPause exec playerctl play-pause
+bindsym --locked XF86AudioStop exec playerctl stop
+bindsym --locked XF86AudioPrev exec playerctl previous
+bindsym --locked XF86AudioNext exec playerctl next
+
+# --- BRILLO ---
+bindsym --locked XF86MonBrightnessUp exec brightnessctl --class=backlight set +10%
+bindsym --locked XF86MonBrightnessDown exec brightnessctl --class=backlight set 10%-
+
+# --- NAVEGACIÓN DE VENTANAS (TRADUCCIÓN DE NIRI A SWAY) ---
+# En Sway, H/L mueven el foco horizontalmente entre contenedores, J/K verticalmente.
+bindsym $mod+Left focus left
+bindsym $mod+Right focus right
+bindsym $mod+h focus left
+bindsym $mod+l focus right
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+
+# Mover ventanas (Niri: Move column/window -> Sway: move)
+bindsym $mod+Ctrl+Left move left
+bindsym $mod+Ctrl+Right move right
+bindsym $mod+Ctrl+h move left
+bindsym $mod+Ctrl+l move right
+bindsym $mod+Ctrl+Down move down
+bindsym $mod+Ctrl+Up move up
+bindsym $mod+Ctrl+j move down
+bindsym $mod+Ctrl+k move up
+
+# Cerrar ventana (En Niri es Mod+Q, en Sway el estándar es Mod+Shift+Q, pero lo dejamos como pediste)
+bindsym $mod+q kill
+
+# --- MONITORES ---
+bindsym $mod+Shift+Left focus output left
+bindsym $mod+Shift+Right focus output right
+bindsym $mod+Shift+h focus output left
+bindsym $mod+Shift+l focus output right
+bindsym $mod+Shift+Down focus output down
+bindsym $mod+Shift+Up focus output up
+bindsym $mod+Shift+j focus output down
+bindsym $mod+Shift+k focus output up
+
+bindsym $mod+Shift+Ctrl+Left move container to output left
+bindsym $mod+Shift+Ctrl+Right move container to output right
+bindsym $mod+Shift+Ctrl+h move container to output left
+bindsym $mod+Shift+Ctrl+l move container to output right
+bindsym $mod+Shift+Ctrl+Down move container to output down
+bindsym $mod+Shift+Ctrl+Up move container to output up
+
+# --- WORKSPACES ---
+# Cambiar de workspace (Sway usa números fijos, no scroll infinito)
+bindsym $mod+Page_Down workspace next
+bindsym $mod+Page_Up workspace prev
+bindsym $mod+u workspace next
+bindsym $mod+i workspace prev
+
+bindsym $mod+Ctrl+Page_Down move container to workspace next
+bindsym $mod+Ctrl+Page_Up move container to workspace prev
+bindsym $mod+Ctrl+u move container to workspace next
+bindsym $mod+Ctrl+i move container to workspace prev
+
+# Mover workspace entero (Sway no tiene esta función nativa como Niri, 
+# se logra moviendo todas las ventanas, lo omitimos para evitar fallos)
+
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+
+
+# --- GESTIÓN DE VENTANAS Y LAYOUT ---
+# En Niri consumes/expeles, en Sway usas split (b/v) y layouts (s/w/e)
+bindsym $mod+b split h
+bindsym $mod+v split v
+bindsym $mod+s layout stacking
+bindsym $mod+plus layout tabbed
+bindsym $mod+minus layout toggle split
+
+# Ajuste de tamaños (Niri: Mod+R -> Sway: Mod+r para entrar a modo resize)
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Maximizar / Pantalla completa
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+f fullscreen global
+bindsym $mod+m fullscreen
+
+# Modo flotante
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# --- CAPTURAS DE PANTALLA ---
+bindsym Print exec grim ~/Imágenes/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png
+bindsym Ctrl+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') ~/Imágenes/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png
+bindsym Alt+Print exec grim -g "$(slurp)" ~/Imágenes/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png
+
+# --- SISTEMA ---
+# Sway no recarga el config solo (Niri si): hace falta este bind.
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaynag -t warning -m '¿Seguro que quieres salir de Sway?' -B 'Sí, salir' 'swaymsg exit'
+bindsym Ctrl+Alt+Delete exec swaynag -t warning -m '¿Seguro que quieres salir de Sway?' -B 'Sí, salir' 'swaymsg exit'
+# toggle y no "power off": un solo atajo reversible, nunca te deja sin pantalla.
+bindsym $mod+Shift+p exec swaymsg "output * power toggle"
+
+# ============================================================================
+#                       BARRA DE ESTADO (SWAYBAR)
+# ============================================================================
+# Como usas Waybar, comentamos la swaybar por defecto para que no se superpongan
+# bar {
+#     position top
+#     status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+#     colors {
+#         statusline #ffffff
+#         background #323232
+#         inactive_workspace #32323200 #32323200 #5c5c5c
+#     }
+# }
+
+# Cargar configuraciones del sistema (necesario en Debian)
+include /etc/sway/config.d/*

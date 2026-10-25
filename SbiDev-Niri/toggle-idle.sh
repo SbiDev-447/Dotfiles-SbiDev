@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Usar en NiriWM disponiendo un BIND especifico
+# Alterna la cadena de inactividad en Niri y Sway (niri-idle.sh elige la
+# política segun el compositor activo).
 
 if pgrep -x swayidle >/dev/null; then
   pkill -x swayidle

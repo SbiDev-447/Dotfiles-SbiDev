@@ -4,9 +4,9 @@
 
 | Script | Descripción | Dependencias |
 |--------|-------------|--------------|
-| `swaylock-lock-screen` | Bloqueo con paleta OLED-friendly, apaga monitores y suspende | swaylock, niri, systemctl |
-| `niri-idle.sh` | Daemon de inactividad: 180 s → brillo 30%, 300 s → brillo 10% y apaga monitores, 600 s → suspende. Al bloquear baja el brillo y apaga la pantalla; al desbloquear y al volver de suspender, la enciende y deja el brillo al 50% | swayidle, brightnessctl, niri, systemctl |
-| `toggle-idle.sh` | Alterna swayidle on/off (modo presentación vs ahorro OLED) | pgrep/pkill, notify-send |
+| `swaylock-lock-screen` | Bloqueo con paleta OLED-friendly, apaga monitores y suspende | swaylock, niri/swaymsg, systemctl |
+| `niri-idle.sh` | Cadena de inactividad **compartida por Niri y Sway**; detecta el compositor por `NIRI_SOCKET`. Niri: 180 s → brillo 30%, 300 s → brillo 10% + apaga monitores, 600 s → suspende, sin auto-bloqueo. Sway: 300 s → bloquea, 600 s → apaga monitores, bloquea antes de suspender | swayidle, brightnessctl, niri/swaymsg, systemctl |
+| `toggle-idle.sh` | Alterna swayidle on/off (modo presentación vs ahorro OLED) en ambos compositores | pgrep/pkill, notify-send |
 | `fuzzel-power-menu` | Menú interactivo: bloquear+suspender, reiniciar, apagar | fuzzel, systemctl |
 
 ### Lanzadores y Selector de Wallpapers
