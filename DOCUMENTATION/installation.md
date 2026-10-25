@@ -27,23 +27,40 @@ sudo apt install swayidle wlsunset playerctl
 git clone https://github.com/SbiDev-447/Dotfiles-SbiDev.git
 cd Dotfiles-SbiDev
 
-# Crear ~/.config si no existe; si no, el primer cp no crea la subcarpeta
+# Crear ~/.config si no existe
 mkdir -p ~/.config
 
-# Copiar configuraciones
-cp -r SbiDev-Niri/niri ~/.config/               # Config de Niri
-cp -r SbiDev-Fuzzel/fuzzel ~/.config/           # Config de Fuzzel
-cp -r SbiDev-Kitty/kitty ~/.config/             # Config de Kitty
-cp -r SbiDev-Alacritty/alacritty ~/.config/     # Config de Alacritty
-cp -r SbiDev-Foot/foot ~/.config/               # Config de Foot
-cp -r SbiDev-Waybar/waybar ~/.config/           # Config de Waybar
-cp -r SbiDev-NVIM/nvim ~/.config/               # Config de Neovim
-mkdir -p ~/.config/fastfetch                    # Fastfetch usa su propia carpeta
-cp -r SbiDev-Fastfetch/* ~/.config/fastfetch/   # Config de Fastfetch
+# Enlazar cada configuración. No se copia nada: ~/.config/<nombre> queda como
+# symlink al repo, así que el repo es la fuente de verdad y cualquier `git pull`
+# o edición se ve al instante sin reinstalar.
+ln -s "$PWD/SbiDev-Niri/niri"           ~/.config/niri
+ln -s "$PWD/SbiDev-Sway/sway"           ~/.config/sway
+ln -s "$PWD/SbiDev-Waybar/waybar"       ~/.config/waybar
+ln -s "$PWD/SbiDev-Fuzzel/fuzzel"       ~/.config/fuzzel
+ln -s "$PWD/SbiDev-Kitty/kitty"         ~/.config/kitty
+ln -s "$PWD/SbiDev-Alacritty/alacritty" ~/.config/alacritty
+ln -s "$PWD/SbiDev-Foot/foot"           ~/.config/foot
+ln -s "$PWD/SbiDev-Mako/mako"           ~/.config/mako
+ln -s "$PWD/SbiDev-Swaylock/swaylock"   ~/.config/swaylock
+ln -s "$PWD/SbiDev-NVIM/nvim"           ~/.config/nvim
+ln -s "$PWD/SbiDev-Fastfetch"           ~/.config/fastfetch
 
 # Enlazar los scripts a ~/.local/bin/
 ./install-scripts.sh
 ```
+
+> **Si `ln -s` falla con "File exists"** es porque ya hay una copia de una
+> instalación anterior. Los enlaces no sobrescriben: renombra o borra primero el
+> destino (`mv ~/.config/kitty ~/.config/kitty.old`). Con `--force` **no** se
+> arregla, ese flag es solo de `install-scripts.sh`.
+>
+> Los enlaces son **absolutos** (`$PWD`), así que si mueves el repo hay que
+> rehacerlos. Ese es el precio de que `git status` no ensucie el repo al usar las
+> configuraciones.
+
+> **Waybar necesita el compositor correcto.** Se arranca siempre con `-c` explícito
+> (`config-niri.jsonc` para Niri, `config-sway.jsonc` para Sway); no hay un
+> `config.jsonc` por defecto. Ver `SbiDev-Waybar/waybar/README.md`.
 
 > **¿Cómo funciona `install-scripts.sh`?**
 > Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/`

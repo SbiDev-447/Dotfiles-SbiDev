@@ -1,14 +1,44 @@
 # Waybar — módulos y convenciones
 
 Todos los módulos de la barra son **nativos** de Waybar. No queda ningún `custom/*`
-que dependa de un script de esta carpeta: `config.jsonc` decide el orden y
-`modules.json` define cada módulo.
+que dependa de un script de esta carpeta.
+
+## Estructura: un base compartido + un fichero por compositor
+
+```
+config-common.jsonc   # geometría, modules-left/right y la definición de cada módulo
+config-niri.jsonc     # include del base + modules-center con niri/workspaces
+config-sway.jsonc     # include del base + modules-center con sway/workspaces
+```
+
+Waybar se arranca **siempre con `-c` explícito**, porque no hay un `config.jsonc`
+por defecto:
+
+```bash
+waybar -c ~/.config/waybar/config-niri.jsonc   # Niri
+waybar -c ~/.config/waybar/config-sway.jsonc   # Sway
+```
+
+Dos detalles del `include` que no son obvios y cuestan un rato descubrir:
+
+- El nombre va **pelado**, sin `~` y sin ruta absoluta. Waybar resuelve los includes
+  contra sus directorios de búsqueda (`~/.config/waybar/` entre ellos) pero **no
+  expande `~` ni `$HOME`**: con `"~/.config/waybar/..."` registra
+  `Unable to find resource file` y sigue adelante **sin cargar el fichero y sin
+  romper la barra**, que es el peor fallo posible porque no se nota.
+- **El fichero que incluye gana.** Por eso `config-common.jsonc` no define
+  `modules-center`: si lo definiera, cada compositor lo sobreescribiría igual, pero
+  tener una sola fuente evita dudas.
+
+`style.css` y `styles/` se quedan en `~/.config/waybar/`: Waybar busca la hoja de
+estilos en sus rutas por defecto aunque el `-c` apunte a otro fichero, así que no
+hace falta `-s`.
 
 | Módulo | Refresco |
 |---|---|
 | `pulseaudio#microphone`, `pulseaudio#sink` | eventos de PulseAudio (interno) |
 | `backlight` | eventos udev del subsistema `backlight` |
-| `battery`, `network`, `bluetooth`, `cpu`, `memory`, `temperature`, `clock`, `privacy`, `mpris`, `niri/workspaces` | interno de Waybar |
+| `battery`, `network`, `bluetooth`, `cpu`, `memory`, `temperature`, `clock`, `privacy`, `mpris`, `niri/workspaces`, `sway/workspaces`, `sway/mode` | interno de Waybar |
 | `custom/cachy`, `custom/localsend`, `custom/dmenu`, `custom/power` | lanzadores de un clic: sin estado y **sin ningún proceso** (ver abajo) |
 
 ## Brillo: `backlight`
@@ -96,7 +126,7 @@ org.localsend.localsend_app`) y dos scripts del repo enlazados en `~/.local/bin`
 
 ## Batería
 
-El módulo `battery` no usa scripts: se configura entero en `modules.json`.
+El módulo `battery` no usa scripts: se configura entero en `config-common.jsonc`.
 
 ```json
 "format": "{capacity}% {icon}",
@@ -212,7 +242,7 @@ No pruebes cambios en la barra lanzando una segunda instancia de Waybar por enci
 que ya está corriendo:
 
 ```bash
-waybar -c ~/.config/waybar/config.jsonc   # NO hacer esto con módulos interactivos
+waybar -c ~/.config/waybar/config-niri.jsonc   # NO hacer esto con módulos interactivos
 ```
 
 Esa instancia temporal se queda encima, intercepta los clics y la rueda que apuntan a la

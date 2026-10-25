@@ -1,0 +1,8 @@
+{
+  "include": ["config-common.jsonc"],
+  "modules-center": [
+    "niri/workspaces",
+    "privacy",
+    "mpris"
+  ]
+}

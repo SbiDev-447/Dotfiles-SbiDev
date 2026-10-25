@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# Avisos de batería para Waybar (ver battery.events en SbiDev-Waybar/waybar/modules.json).
+# Avisos de batería para Waybar (ver battery.events en SbiDev-Waybar/waybar/config-common.jsonc).
 # Uso: low-battery-notify.sh {warning|critical|danger|empty|full} [nivel]
 #   warning -> 30%   critical -> 20%   danger -> 10%   empty -> 5%
 #   full <nivel> -> Waybar alcanzó ese porcentaje; solo avisa si es el techo de carga.

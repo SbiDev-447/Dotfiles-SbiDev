@@ -115,7 +115,7 @@ hotkey-overlay {
 screenshot-path "~/Imágenes/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 spawn-at-startup "wlsunset" "-S" "07:00" "-s" "18:00" "-T" "3800" "-t" "3200"
-spawn-at-startup "waybar"
+spawn-at-startup "waybar" "-c" "~/.config/waybar/config-niri.jsonc"
 // Pre-arranca el applet de bluetooth: blueman-manager lo activa por D-Bus al abrir
 // y, en frío, la primera apertura del gestor espera su arranque (varios segundos).
 spawn-at-startup "blueman-applet"

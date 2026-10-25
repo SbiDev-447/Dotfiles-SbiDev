@@ -1,4 +1,31 @@
 {
+  "reload_style_on_change": true,
+  "layer": "bottom",
+  "position": "top",
+  "margin-top": 0,
+  "margin-bottom": 0,
+  "margin-left": 0,
+  "margin-right": 0,
+  "spacing": 0,
+  "modules-left": [
+    "custom/cachy",
+    "clock",
+    "cpu",
+    "memory",
+    "temperature"
+  ],
+  "modules-right": [
+    "custom/localsend",
+    "custom/dmenu",
+    "network",
+    "bluetooth",
+    "pulseaudio#microphone",
+    "pulseaudio#sink",
+    "backlight",
+    "battery",
+    "custom/power"
+  ],
+
   "custom/cachy": {
     "format": " ",
     "tooltip": false,
@@ -40,7 +67,6 @@
     "tooltip": true,
     "tooltip-format": "CPU: {temperatureC}°C"
   },
-
   "niri/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -48,6 +74,31 @@
       "default": "󰄰",
       "active": "󰄯"
     }
+  },
+
+  "sway/workspaces": {
+    "all-outputs": true,
+    "format": "{icon}",
+    "format-icons": {
+      "focused": "󰄯",
+      "urgent": "󰄯",
+      "default": "󰄰"
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": []
+    }
+  },
+
+  "sway/mode": {
+    "format": " >{}"
   },
 
   "privacy": {

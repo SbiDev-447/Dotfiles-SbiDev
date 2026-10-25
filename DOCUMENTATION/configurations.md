@@ -22,9 +22,10 @@
 - `lua/plugins/disabled.lua` desactiva a propósito bufferline, avante, CopilotChat, opencode, codecompanion, precognition, smear-cursor y claudecode
 - Spellcheck: vocabularios personalizados EN/ES en `spell/`
 
-### Waybar (`config.jsonc` + `modules.json`)
-- **Posición**: arriba y en capa superior (`position: top`, `layer: top`)
-- **17 módulos**: workspaces de Niri, reloj, CPU, memoria, temperatura, privacidad, MPRIS, red, Bluetooth, micrófono, batería, volumen, brillo y cuatro lanzadores de un clic (dmenu, menú de energía, LocalSend y CachyOS)
+### Waybar (`config-common.jsonc` + `config-<compositor>.jsonc`)
+- **Estructura**: un base compartido (`config-common.jsonc`) y un fichero mínimo por compositor (`config-niri.jsonc`, `config-sway.jsonc`) que solo aporta `include` + `modules-center`. Niri y Sway comparten el resto: geometría, líneas izquierda/derecha y las 19 definiciones de módulo
+- **Posición**: arriba y en capa inferior (`position: top`, `layer: bottom`)
+- **17 módulos**: workspaces del compositor, reloj, CPU, memoria, temperatura, privacidad, MPRIS, red, Bluetooth, micrófono, batería, volumen, brillo y cuatro lanzadores de un clic (dmenu, menú de energía, LocalSend y CachyOS). En Sway se añade `sway/mode` para el modo `resize`
 - **Volumen y brillo**: módulos **nativos** (`pulseaudio#sink` y `backlight`). Muestran `NN%` junto al icono, sobre una píldora de color, y sin tooltip. Ninguno necesita script: el volumen se refresca con los eventos de PulseAudio y el brillo con los eventos udev del subsistema `backlight`. `brightnessctl` se usa solo en los handlers de clic y rueda. Detalles en `SbiDev-Waybar/waybar/README.md`
 - **Batería**: el porcentaje va en la barra, no en el tooltip. Waybar lanza `low-battery-notify.sh` mediante `battery.events`, así que no hace falta ningún proceso de avisos aparte
 - **CSS**: `style.css` es un symlink que `toggle-theme-waybar.sh` mueve entre `styles/dark.css` y `styles/light.css`, y cada uno importa su paleta (`styles/colors-dark.css` o `styles/colors-light.css`)
