@@ -125,7 +125,35 @@ spawn-at-startup "/home/sbi/.local/bin/niri-idle.sh"
 // ============================================================================
 //                             ANIMACIONES
 // ============================================================================
-animations {}
+animations {
+    workspace-switch {
+        
+    }
+    horizontal-view-movement {
+        off
+    }
+    window-movement {
+        off
+    }
+    window-resize {
+        off
+    }
+    overview-open-close {
+        off
+    }
+    recent-windows-close {
+        off
+    }
+    window-open {
+        off
+    }
+    window-close {
+        off
+    }
+    screenshot-ui-open {
+        off
+    }
+}
 
 // ============================================================================
 //                               BINDS
