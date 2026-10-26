@@ -1,5 +1,4 @@
 ![Wallpapers](./Files/image.webp)
-
 <div align="center">
 
 # Dotfiles by SbiDev-447
@@ -18,6 +17,18 @@
 Cubre personalización de entorno, gestión de energía y ahorro OLED, lanzadores rápidos con **Fuzzel**, barra de estado **Waybar**, terminales **Kitty** & **Alacritty** (tema oscuro y claro) y **Foot** (tema claro SbiDev), editor **Neovim** con **LazyVim** (basado en GentlemanDots) y utilidades CLI propias.
 
 Waybar, Fuzzel, Kitty, Alacritty, Foot, Mako y Neovim son **compartidos**: un solo árbol de configuración sirve a los dos compositores. Solo la configuración del compositor y sus atajos viven aparte, en `SbiDev-Niri/` y `SbiDev-Sway/`.
+</div>
+
+---
+
+<div align="center">
+
+
+### 🖼️ Necesitas Wallpapers? Busca en mi Colección Personal!
+
+
+---> [**Shell-Of-Walls Wallpapers Repo**](https://github.com/SbiDev-447/Shell-Of-Walls) <---
+
 </div>
 
 ---
