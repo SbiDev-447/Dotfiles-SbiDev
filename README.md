@@ -5,7 +5,7 @@
 # Dotfiles by SbiDev-447
 
 ![Debian](https://img.shields.io/badge/Debian-13%20Trixie-blue?logo=debian&style=for-the-badge)
-![Wayland](https://img.shields.io/badge/Wayland-Niri-brightgreen?logo=wayland&style=for-the-badge)
+![Wayland](https://img.shields.io/badge/Wayland-Niri%20%7C%20Sway-brightgreen?logo=wayland&style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT%20%26%20GPLv3-blue?style=for-the-badge)
 ![Neovim](https://img.shields.io/badge/Neovim-LazyVim-57A143?logo=neovim&style=for-the-badge)
 ![Fuzzel](https://img.shields.io/badge/Launcher-Fuzzel-orange?style=for-the-badge)
@@ -14,8 +14,10 @@
 ![Foot](https://img.shields.io/badge/Terminal-Foot-8fba58?style=for-the-badge)
 ![Alacritty](https://img.shields.io/badge/Terminal-Alacritty-e0c3c8?style=for-the-badge)
 
-**Colección de dotfiles, configuraciones y scripts** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian 13 Trixie**.  
+**Colección de dotfiles, configuraciones y scripts** diseñados para el compositor [Niri](https://github.com/YaLTeR/niri) en **Debian 13 Trixie**, con soporte secundario para [Sway](https://swaywm.org/).  
 Cubre personalización de entorno, gestión de energía y ahorro OLED, lanzadores rápidos con **Fuzzel**, barra de estado **Waybar**, terminales **Kitty** & **Alacritty** (tema oscuro y claro) y **Foot** (tema claro SbiDev), editor **Neovim** con **LazyVim** (basado en GentlemanDots) y utilidades CLI propias.
+
+Waybar, Fuzzel, Kitty, Alacritty, Foot, Mako y Neovim son **compartidos**: un solo árbol de configuración sirve a los dos compositores. Solo la configuración del compositor y sus atajos viven aparte, en `SbiDev-Niri/` y `SbiDev-Sway/`.
 </div>
 
 ---
