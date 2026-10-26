@@ -60,8 +60,8 @@ default_border pixel 2
 default_floating_border pixel 2
 
 # Gaps (espaciados)
-gaps inner 6
-gaps outer 6
+gaps inner 3
+gaps outer 3
 smart_gaps on
 
 # Colores de borde (adaptado de tu gradiente, Sway usa colores sólidos por defecto)
@@ -81,7 +81,6 @@ client.urgent           #900000 #900000 #ffffff #900000 #900000
 # Portando tus scripts de Niri
 exec wlsunset -S 07:00 -s 18:00 -T 3800 -t 3200
 exec waybar -c ~/.config/waybar/config-sway.jsonc
-exec blueman-applet
 exec /home/sbi/.local/bin/niri_wallpaper.sh
 # La cadena de inactividad vive en un solo script: elige la politica de Sway
 # (bloqueo a los 5 min) cuando NIRI_SOCKET no esta definido. Usar el script
@@ -101,7 +100,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+BackSpace exec alacritty
 bindsym $mod+d exec $menu
 bindsym $mod+F1 exec ~/.local/bin/dmenu
-bindsym $mod+a exec thunar
+bindsym $mod+Escape exec thunar
 bindsym $mod+e exec /home/sbi/.local/bin/emojipicker.sh
 
 # --- SEGURIDAD Y UTILIDADES ---
@@ -229,7 +228,6 @@ mode "resize" {
 # Maximizar / Pantalla completa
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+f fullscreen global
-bindsym $mod+m fullscreen
 
 # Modo flotante
 bindsym $mod+Shift+space floating toggle
