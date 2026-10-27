@@ -4,7 +4,7 @@ Este repositorio usa **dos licencias** diferentes:
 
 - **MIT**: Aplica a todos los archivos de configuración (`nvim`, `niri`, `fuzzel`, etc.) y a los scripts que no indiquen lo contrario.
 - **GPL-3.0**: Aplica específicamente a los scripts que incluyan la cabecera GPL en su interior:
-  - `convertMyBackgrounds`
+  - `convertToWebp`
   - `dmenu`
   - `emojipicker.sh`
   - `fuzzel-Wallpaper`

@@ -65,11 +65,11 @@ ln -s "$PWD/SbiDev-Fastfetch"           ~/.config/fastfetch
 > **¿Cómo funciona `install-scripts.sh`?**
 > Crea **enlaces simbólicos** de todos los ejecutables hacia `~/.local/bin/`
 (que crea si no existe), para que los scripts se actualicen solos al hacer
-`git pull` sin recapiar nada. Cubre 18 scripts de ocho carpetas:
+`git pull` sin recapiar nada. Cubre 20 scripts de ocho carpetas:
 >
 > | Carpeta | Qué aporta |
 > |---------|------------|
-> | `SbiDev-CLI-Scripts/` | `updateallsystem`, `ufw-help`, `low-battery-notify.sh`, `convertMyBackgrounds` |
+> | `SbiDev-CLI-Scripts/` | `updateallsystem`, `ufw-help`, `low-battery-notify.sh`, `convertToWebp`, `niri-pick-color.sh`, `toggle-theme-gtk.sh` |
 > | `SbiDev-Fuzzel/` | `dmenu`, `emojipicker.sh`, `fuzzel-custom-launcher`, `fuzzel-power-menu`, `fuzzel-Wallpaper` |
 > | `SbiDev-Fuzzel/scripts/` | `toggle-theme-fuzzel.sh` |
 > | `SbiDev-Niri/` | `swaylock-lock-screen`, `toggle-idle.sh`, `niri-idle.sh`, `niri_wallpaper.sh` |
