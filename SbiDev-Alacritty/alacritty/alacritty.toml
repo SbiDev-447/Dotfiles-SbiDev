@@ -33,7 +33,6 @@ family = "IosevkaTerm NF"
 # └──────────────────────────────────────────────────────────────────────────────┘
 
 [window]
-opacity = 0.95
 blur = true
 option_as_alt = "Both"
 

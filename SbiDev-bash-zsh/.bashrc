@@ -154,6 +154,12 @@ alias gl='git log --oneline --decorate --graph'
 alias gp='git push'
 alias gpl='git pull'
 
+# Docker
+alias docker-start='sudo systemctl start docker containerd'
+alias docker-stop='sudo systemctl stop docker containerd'
+alias docker-restart='sudo systemctl restart docker containerd'
+alias docker-status='sudo systemctl status docker containerd'
+
 # Alias para WOFF2
 alias wofcom='woff2_compress'
 alias wofdecom='woff2_decompress'

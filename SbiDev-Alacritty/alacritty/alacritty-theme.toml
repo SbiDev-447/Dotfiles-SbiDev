@@ -15,7 +15,7 @@
 # └──────────────────────────────────────────────────────────────────────────────┘
 
 [colors.primary]
-background = "#06080f"
+background = "#1a1c24"
 foreground = "#f3f6f9"
 
 [colors.cursor]
@@ -28,22 +28,25 @@ text = "#f3f6f9"
 
 # --- Normal Colors ---
 [colors.normal]
-black   = "#06080f"
-red     = "#cb7c94"
-green   = "#b7cc85"
-yellow  = "#ffe066"
-blue    = "#7fb4ca"
+black = "#06080f"
+red = "#cb7c94"
+green = "#b7cc85"
+yellow = "#ffe066"
+blue = "#7fb4ca"
 magenta = "#ff8dd7"
-cyan    = "#7aa89f"
-white   = "#f3f6f9"
+cyan = "#7aa89f"
+white = "#f3f6f9"
 
 # --- Bright Colors ---
 [colors.bright]
-black   = "#8a8fa3"
-red     = "#de8fa8"
-green   = "#d1e8a9"
-yellow  = "#fff7b1"
-blue    = "#a3d4d5"
+black = "#8a8fa3"
+red = "#de8fa8"
+green = "#d1e8a9"
+yellow = "#fff7b1"
+blue = "#a3d4d5"
 magenta = "#ffaeea"
-cyan    = "#7fb4ca"
-white   = "#f3f6f9"
+cyan = "#7fb4ca"
+white = "#f3f6f9"
+
+[window]
+opacity = 0.95

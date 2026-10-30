@@ -28,23 +28,25 @@ text = "#f8f6f0"
 
 # --- Normal Colors ---
 [colors.normal]
-black = "#1e1e1e"
-red = "#98425f"
-green = "#4f6632"
-yellow = "#765b1b"
-blue = "#366576"
-magenta = "#9d3c67"
-cyan = "#3b6660"
-white = "#5e5e5e"
+black = "#2a2a2a"
+red = "#af2526"
+green = "#427b58"
+yellow = "#b57614"
+blue = "#076678"
+magenta = "#8f3f71"
+cyan = "#008080"
+white = "#7c6f64"
 
 # --- Bright Colors ---
 [colors.bright]
-black = "#555555"
-red = "#a9315a"
-green = "#486812"
-yellow = "#755600"
-blue = "#006180"
-magenta = "#a91f66"
-cyan = "#366576"
+black = "#928374"
+red = "#9d0006"
+green = "#538d32"
+yellow = "#d65f0e"
+blue = "#205ea6"
+magenta = "#b16286"
+cyan = "#008080"
 white = "#4a4a4a"
 
+[window]
+opacity = 1

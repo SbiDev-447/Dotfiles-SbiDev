@@ -176,6 +176,12 @@ alias gst='git stash'
 alias gstp='git stash pop'
 alias gstl='git stash list'
 
+# Docker
+alias docker-start='sudo systemctl start docker containerd'
+alias docker-stop='sudo systemctl stop docker containerd'
+alias docker-restart='sudo systemctl restart docker containerd'
+alias docker-status='sudo systemctl status docker containerd'
+
 # Utilidades (herramientas Nix)
 alias ls='eza --icons --group-directories-first'
 alias ll='eza -l --icons --group-directories-first'

@@ -113,9 +113,6 @@ hotkey-overlay {
 }
 screenshot-path "~/Imágenes/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 spawn-at-startup "wlsunset" "-S" "07:00" "-s" "18:00" "-T" "3800" "-t" "3200"
-// Ruta absoluta obligatoria: spawn-at-startup solo expande `~` en el comando
-// (argv[0]), nunca en los argumentos. Con "~/..." Waybar recibe la ruta literal
-// y muere con "Can't open config file".
 spawn-at-startup "waybar" "-c" "/home/sbi/.config/waybar/config-niri.jsonc"
 spawn-at-startup "/home/sbi/.local/bin/niri_wallpaper.sh"
 spawn-at-startup "/home/sbi/.local/bin/niri-idle.sh"

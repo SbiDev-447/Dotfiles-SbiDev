@@ -24,6 +24,7 @@ case "$option" in
   ~/.local/bin/toggle-theme-alacritty.sh
   ~/.local/bin/toggle-theme-fuzzel.sh
   ~/.local/bin/toggle-theme-nvim.sh
+  ~/.local/bin/toggle-theme-gtk.sh
   ;;
 "😀 EmojiPicker")
   ~/.local/bin/emojipicker.sh
