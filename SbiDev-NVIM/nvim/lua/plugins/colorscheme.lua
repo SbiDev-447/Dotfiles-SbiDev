@@ -95,10 +95,10 @@ return {
     opts = {
       colorscheme = function()
         -- BEGIN_NVIM_THEME
-        vim.o.background = "dark"
-        vim.cmd.colorscheme("gentleman-kanagawa-blur")
-        -- vim.o.background = "light"
-        -- vim.cmd.colorscheme("gruvbox")
+        -- vim.o.background = "dark"
+        -- vim.cmd.colorscheme("gentleman-kanagawa-blur")
+        vim.o.background = "light"
+        vim.cmd.colorscheme("gruvbox")
         -- END_NVIM_THEME
       end,
     },

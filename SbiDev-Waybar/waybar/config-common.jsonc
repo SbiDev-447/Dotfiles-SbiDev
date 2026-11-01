@@ -7,37 +7,32 @@
   "margin-left": 0,
   "margin-right": 0,
   "spacing": 0,
-  "modules-left": [
-    "custom/cachy",
-    "clock",
-    "cpu",
-    "memory",
-    "temperature"
-  ],
+  "modules-left": ["clock", "cpu", "memory", "temperature"],
   "modules-right": [
     "custom/localsend",
     "custom/dmenu",
+    "custom/cachy",
     "network",
     "bluetooth",
     "pulseaudio#microphone",
     "pulseaudio#sink",
     "backlight",
     "battery",
-    "custom/power"
+    "custom/power",
   ],
 
   "custom/cachy": {
     "format": " ",
     "tooltip": false,
     "on-click": "setsid kitty",
-    "on-click-right": "setsid alacritty"
+    "on-click-right": "setsid alacritty",
   },
 
   "clock": {
     "interval": 1,
-    "format": "{:%H:%M}",
-    "format-alt": "{:%d-%m-%y}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    "format": "TIME: {:%H:%M}",
+    "format-alt": "DATE: {:%d-%m-%y}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
   },
 
   "cpu": {
@@ -46,14 +41,14 @@
     "tooltip": true,
     "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
     "on-click": "setsid alacritty -e btop",
-    "on-click-right": "setsid alacritty -e btm"
+    "on-click-right": "setsid alacritty -e btm",
   },
 
   "memory": {
     "format": "󰍛 ",
     "interval": 5,
     "tooltip": true,
-    "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB ({percentage}%)"
+    "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB ({percentage}%)",
   },
 
   "temperature": {
@@ -65,15 +60,15 @@
     "warning-threshold": 70,
     "critical-threshold": 80,
     "tooltip": true,
-    "tooltip-format": "CPU: {temperatureC}°C"
+    "tooltip-format": "CPU: {temperatureC}°C",
   },
   "niri/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
       "default": "󰄰",
-      "active": "󰄯"
-    }
+      "active": "󰄯",
+    },
   },
 
   "sway/workspaces": {
@@ -82,7 +77,7 @@
     "format-icons": {
       "focused": "󰄯",
       "urgent": "󰄯",
-      "default": "󰄰"
+      "default": "󰄰",
     },
     "persistent-workspaces": {
       "1": [],
@@ -93,12 +88,12 @@
       "6": [],
       "7": [],
       "8": [],
-      "9": []
-    }
+      "9": [],
+    },
   },
 
   "sway/mode": {
-    "format": " >{}"
+    "format": " >{}",
   },
 
   "privacy": {
@@ -107,15 +102,15 @@
     "modules": [
       {
         "type": "screenshare",
-        "tooltip": false
-      }
+        "tooltip": false,
+      },
     ],
     "ignore": [
       {
         "type": "screenshare",
-        "name": "obs"
-      }
-    ]
+        "name": "obs",
+      },
+    ],
   },
 
   "mpris": {
@@ -125,20 +120,20 @@
     "on-click-right": "playerctl next",
     "on-click-middle": "playerctl previous",
     "tooltip": true,
-    "tooltip-format": "{title}"
+    "tooltip-format": "{title}",
   },
 
   "custom/localsend": {
-    "format": "󰷹 ",
+    "format": " ",
     "tooltip": false,
-    "on-click": "flatpak run org.localsend.localsend_app"
+    "on-click": "flatpak run org.localsend.localsend_app",
   },
 
   "network": {
     "format-icons": {
       "wifi": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
       "disabled": "󰤭 ",
-      "disconnected": "󰤩 "
+      "disconnected": "󰤩 ",
     },
     "format-wifi": "{icon}",
     "format-ethernet": "{icon}",
@@ -149,7 +144,7 @@
     "on-click": "/usr/sbin/rfkill toggle wifi",
     "on-click-right": "nm-connection-editor",
     "tooltip": true,
-    "max-length": 20
+    "max-length": 20,
   },
 
   "bluetooth": {
@@ -162,7 +157,7 @@
     "tooltip-format": "{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_address}",
     "on-click-right": "setsid blueman-manager",
-    "on-click": "sh -c 'if bluetoothctl show | grep -q \"Powered: yes\"; then bluetoothctl power off; else bluetoothctl power on; fi'"
+    "on-click": "sh -c 'if bluetoothctl show | grep -q \"Powered: yes\"; then bluetoothctl power off; else bluetoothctl power on; fi'",
   },
 
   "pulseaudio#microphone": {
@@ -171,7 +166,7 @@
     "format-source-muted": "󰍭 ",
     "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
     "on-click-right": "pavucontrol -t 4",
-    "tooltip": false
+    "tooltip": false,
   },
 
   "pulseaudio#sink": {
@@ -182,7 +177,7 @@
     "on-click-right": "pavucontrol -t 3",
     "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
     "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
-    "tooltip": false
+    "tooltip": false,
   },
 
   "backlight": {
@@ -192,7 +187,7 @@
     "on-click": "brightnessctl --class=backlight set 10%+",
     "on-click-right": "brightnessctl --class=backlight set 10%-",
     "on-scroll-up": "brightnessctl --class=backlight set 5%+",
-    "on-scroll-down": "brightnessctl --class=backlight set 5%-"
+    "on-scroll-down": "brightnessctl --class=backlight set 5%-",
   },
 
   "battery": {
@@ -201,7 +196,7 @@
       "empty": 5,
       "danger": 10,
       "critical": 20,
-      "warning": 30
+      "warning": 30,
     },
     "format": "{capacity}% {icon}",
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
@@ -223,19 +218,19 @@
       "on-discharging-empty": "$HOME/.local/bin/low-battery-notify.sh empty",
       "on-charging-79": "$HOME/.local/bin/low-battery-notify.sh full 79",
       "on-charging-80": "$HOME/.local/bin/low-battery-notify.sh full 80",
-      "on-charging-100": "$HOME/.local/bin/low-battery-notify.sh full 100"
-    }
+      "on-charging-100": "$HOME/.local/bin/low-battery-notify.sh full 100",
+    },
   },
 
   "custom/dmenu": {
     "format": "󰏒 ",
     "on-click": "$HOME/.local/bin/dmenu",
-    "tooltip": false
+    "tooltip": false,
   },
 
   "custom/power": {
     "format": "⏻ ",
     "tooltip": false,
-    "on-click": "$HOME/.local/bin/fuzzel-power-menu"
-  }
+    "on-click": "$HOME/.local/bin/fuzzel-power-menu",
+  },
 }
