@@ -226,10 +226,15 @@ Dos cosas importantes:
 - Para esquinas completamente redondeadas hay que añadir `border-radius: 12px`, porque el
   selector `*` fuerza `border-radius: 0` a todo.
 
-`styles/dark.css` y `styles/light.css` reciben además `@import "./styles/colors-*.css"`.
-`style.css` es un symlink versionado que `toggle-theme-waybar.sh` mueve entre los dos,
-y las rutas del `@import` se resuelven contra el directorio del `style.css` (no del
-destino del symlink), por eso el link relativo funciona.
+`styles/dark.css` y `styles/light.css` importan su paleta con
+`@import "./colors-*.css"`, relativo a `styles/`: GTK resuelve los imports anidados
+contra el directorio del fichero que los contiene (no contra el entry).
+
+`style.css` es un fichero real con una única línea `@import` que
+`toggle-theme-waybar.sh` reescribe in situ. Waybar lo vigila
+(`reload_style_on_change: true`) y recarga **solo el CSS**, sin recrear la barra.
+No usar `pkill -SIGUSR2 waybar`: en Waybar SIGUSR2 es un RELOAD completo
+(`Client::reset`) que destruye y recrea la layer-surface y reinicializa los módulos.
 
 ## Requisitos
 

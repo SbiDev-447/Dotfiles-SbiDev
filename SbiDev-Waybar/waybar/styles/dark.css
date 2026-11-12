@@ -1,4 +1,4 @@
-@import "./styles/colors-dark.css";
+@import "./colors-dark.css";
 
 /* ================================
    CONFIGURACIÓN GLOBAL
@@ -8,7 +8,7 @@
   font-size: 18px;
   border-radius: 0;
   box-shadow: none;
-  margin: -2.5px 5px;
+  margin: -2.5px 4px;
 }
 
 window#waybar {
@@ -23,6 +23,7 @@ window#waybar {
 #clock,
 #cpu,
 #memory,
+#mode,
 #workspaces,
 #mpris,
 #privacy,
@@ -50,7 +51,7 @@ window#waybar {
 /* clock */
 #clock {
   font-family: "Determination";
-  color: @background;
+  color: @foreground;
   background: @color3;
   padding: 6px 10px;
 }
@@ -61,6 +62,10 @@ window#waybar {
 }
 
 /* temperature */
+#temperature.warning {
+  color: @alert-warning;
+}
+
 #temperature.critical {
   color: @color1;
 }
@@ -75,9 +80,20 @@ window#waybar {
   margin: 0;
 }
 
-#workspaces button.active {
+#workspaces button.active,
+#workspaces button.focused {
   color: @color3;
 }
+
+#workspaces button.urgent {
+  color: @color1;
+}
+
+/* sway/mode */
+#mode {
+  color: @color1;
+}
+
 /* privacy */
 #privacy {
   color: @color3;
@@ -93,6 +109,10 @@ window#waybar {
    ================================ */
 /* network */
 #network.disabled {
+  color: @color1;
+}
+
+#network.disconnected {
   color: @color1;
 }
 
@@ -113,7 +133,9 @@ window#waybar {
   color: @color4;
 }
 
-#bluetooth.off {
+#bluetooth.off,
+#bluetooth.disabled,
+#bluetooth.no-controller {
   color: @color1;
 }
 
@@ -127,6 +149,11 @@ window#waybar {
   color: @background;
   background: @color2;
   padding: 6px 10px;
+}
+
+#pulseaudio.sink.muted,
+#pulseaudio.sink.sink-muted {
+  color: @color1;
 }
 
 /* backlight (módulo nativo) */
@@ -158,16 +185,31 @@ window#waybar {
   background: @color2;
 }
 
+#battery.full {
+  color: @background;
+  background: @color2;
+}
+
+#battery.not-charging {
+  color: @background;
+  background: @color4;
+}
+
+#battery.unknown {
+  color: @background;
+  background: @color7;
+}
+
 #battery.warning {
   color: @background;
-  background: @color9;
+  background: @alert-warning;
 }
 
 #battery.critical,
 #battery.danger,
 #battery.empty {
   color: @background;
-  background: @color1;
+  background: @alert-critical;
 }
 
 /* custom/dmenu */

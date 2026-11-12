@@ -91,4 +91,4 @@ ln -s "$PWD/SbiDev-Fastfetch"           ~/.config/fastfetch
 >
 > La alternativa más limpia para el `kitty.conf` y el `config.kdl` es sustituir las rutas por `~/.local/bin/...`, que es justo donde `install-scripts.sh` deja los enlaces.
 >
-> El symlink `SbiDev-Waybar/waybar/style.css` **sí es relativo** (`styles/dark.css`), a propósito: así sobrevive a un `git clone` en otra máquina. `toggle-theme-waybar.sh` lo mantiene relativo al cambiar de tema.
+> `SbiDev-Waybar/waybar/style.css` es un fichero real con una sola línea `@import`; `toggle-theme-waybar.sh` la reescribe in situ y Waybar recarga solo el CSS. Los imports de `styles/dark.css`/`styles/light.css` usan `./colors-*.css` (relativo a `styles/`) porque GTK resuelve los imports anidados contra el directorio del fichero que los contiene.

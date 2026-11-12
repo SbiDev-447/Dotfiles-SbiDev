@@ -7,12 +7,12 @@ selected=$(echo -e "$opciones" | fuzzel --dmenu -l 4 -p "🚀 Comando: ")
 
 case "$selected" in
 "📊 Btop")
-  alacritty -e btop
+  kitty -e btop
   ;;
 "💻 Fastfetch")
   kitty -e bash -c 'fastfetch; echo ""; read -p " --- Exit With Enter"'
   ;;
 "🌐 nmtui")
-  alacritty -e nmtui
+  kitty -e nmtui
   ;;
 esac

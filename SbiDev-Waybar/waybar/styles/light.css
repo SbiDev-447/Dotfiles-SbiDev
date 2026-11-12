@@ -1,4 +1,4 @@
-@import "./styles/colors-light.css";
+@import "./colors-light.css";
 
 /* ================================
    CONFIGURACIÓN GLOBAL
@@ -8,7 +8,7 @@
   font-size: 18px;
   border-radius: 0;
   box-shadow: none;
-  margin: -2.5px 5px;
+  margin: -2.5px 4px;
 }
 
 window#waybar {
@@ -23,6 +23,7 @@ window#waybar {
 #clock,
 #cpu,
 #memory,
+#mode,
 #workspaces,
 #mpris,
 #privacy,
@@ -61,6 +62,10 @@ window#waybar {
 }
 
 /* temperature */
+#temperature.warning {
+  color: @alert-warning;
+}
+
 #temperature.critical {
   color: @color1;
 }
@@ -75,9 +80,20 @@ window#waybar {
   margin: 0;
 }
 
-#workspaces button.active {
+#workspaces button.active,
+#workspaces button.focused {
   color: @color5;
 }
+
+#workspaces button.urgent {
+  color: @color1;
+}
+
+/* sway/mode */
+#mode {
+  color: @color1;
+}
+
 /* privacy */
 #privacy {
   color: @color5;
@@ -93,6 +109,10 @@ window#waybar {
    ================================ */
 /* network */
 #network.disabled {
+  color: @color1;
+}
+
+#network.disconnected {
   color: @color1;
 }
 
@@ -113,7 +133,9 @@ window#waybar {
   color: @color4;
 }
 
-#bluetooth.off {
+#bluetooth.off,
+#bluetooth.disabled,
+#bluetooth.no-controller {
   color: @color1;
 }
 
@@ -127,6 +149,11 @@ window#waybar {
   color: @foreground;
   background: @color13;
   padding: 6px 10px;
+}
+
+#pulseaudio.sink.muted,
+#pulseaudio.sink.sink-muted {
+  color: @color1;
 }
 
 /* backlight (módulo nativo) */
@@ -156,6 +183,21 @@ window#waybar {
 #battery.charging {
   color: @foreground;
   background: @color13;
+}
+
+#battery.full {
+  color: @foreground;
+  background: @color13;
+}
+
+#battery.not-charging {
+  color: @foreground;
+  background: @color14;
+}
+
+#battery.unknown {
+  color: @foreground;
+  background: @color7;
 }
 
 #battery.warning {

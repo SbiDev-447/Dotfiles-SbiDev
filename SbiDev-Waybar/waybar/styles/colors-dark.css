@@ -25,3 +25,6 @@ waybar = { src = "waybar.css", dst = "~/.config/waybar/colors.css" }
 @define-color color11 #F9E2AF;
 @define-color color12 #9381FF;
 @define-color color13 #BEA7E5;
+@define-color color14 #7fb4ca;
+@define-color alert-warning #ec7a63;
+@define-color alert-critical #ef5350;

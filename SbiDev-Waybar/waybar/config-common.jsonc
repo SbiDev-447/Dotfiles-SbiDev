@@ -40,8 +40,8 @@
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
-    "on-click": "setsid alacritty -e btop",
-    "on-click-right": "setsid alacritty -e btm",
+    "on-click": "setsid kitty -e btop",
+    "on-click-right": "setsid kitty -e btm",
   },
 
   "memory": {
@@ -62,6 +62,7 @@
     "tooltip": true,
     "tooltip-format": "CPU: {temperatureC}°C",
   },
+
   "niri/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -75,10 +76,11 @@
     "all-outputs": true,
     "format": "{icon}",
     "format-icons": {
-      "focused": "󰄯",
-      "urgent": "󰄯",
-      "default": "󰄰",
+      "focused": "󰝥",
+      "urgent": "󰝥",
+      "default": "",
     },
+
     "persistent-workspaces": {
       "1": [],
       "2": [],
@@ -124,7 +126,7 @@
   },
 
   "custom/localsend": {
-    "format": " ",
+    "format": "",
     "tooltip": false,
     "on-click": "flatpak run org.localsend.localsend_app",
   },
@@ -223,7 +225,7 @@
   },
 
   "custom/dmenu": {
-    "format": "󰏒 ",
+    "format": "󰏒",
     "on-click": "$HOME/.local/bin/dmenu",
     "tooltip": false,
   },
