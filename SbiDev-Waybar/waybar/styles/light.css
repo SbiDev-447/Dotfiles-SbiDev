@@ -63,7 +63,7 @@ window#waybar {
 
 /* temperature */
 #temperature.warning {
-  color: @alert-warning;
+  color: @alert-warning-text;
 }
 
 #temperature.critical {
@@ -153,7 +153,8 @@ window#waybar {
 
 #pulseaudio.sink.muted,
 #pulseaudio.sink.sink-muted {
-  color: @color1;
+  color: @foreground;
+  background: @alert-critical;
 }
 
 /* backlight (módulo nativo) */
