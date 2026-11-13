@@ -69,15 +69,51 @@ return {
     },
   },
   {
-    -- Plugin: git.nvim
-    -- URL: https://github.com/dinhhuy258/git.nvim
-    -- Description: Provides Git integration for Neovim.
-    "dinhhuy258/git.nvim",
-    event = "BufReadPre", -- Load the plugin before reading a buffer
-    opts = {
-      keymaps = {
-        blame = "<Leader>gb", -- Keybinding to open blame window
-        browse = "<Leader>go", -- Keybinding to open file/folder in git repository
+    -- Plugin: mini.diff
+    -- URL: https://github.com/nvim-mini/mini.diff
+    -- Description: Hunk signs and inline overlay, with LazyVim-style hunk keymaps.
+    "nvim-mini/mini.diff",
+    keys = {
+      {
+        "<leader>ghs",
+        function()
+          return require("mini.diff").operator("apply") .. "gh"
+        end,
+        expr = true,
+        remap = true,
+        mode = { "n", "x" },
+        desc = "Stage Hunk",
+      },
+      {
+        "<leader>ghr",
+        function()
+          return require("mini.diff").operator("reset") .. "gh"
+        end,
+        expr = true,
+        remap = true,
+        mode = { "n", "x" },
+        desc = "Reset Hunk",
+      },
+      {
+        "<leader>ghp",
+        function()
+          require("mini.diff").toggle_overlay(0)
+        end,
+        desc = "Preview Hunk",
+      },
+      {
+        "<leader>ghn",
+        function()
+          require("mini.diff").goto_hunk("next")
+        end,
+        desc = "Next Hunk",
+      },
+      {
+        "<leader>ghN",
+        function()
+          require("mini.diff").goto_hunk("prev")
+        end,
+        desc = "Prev Hunk",
       },
     },
   },

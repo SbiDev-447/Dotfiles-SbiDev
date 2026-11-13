@@ -1,5 +1,24 @@
 -- This file contains the configuration for the nvim-dap plugin in Neovim.
 
+-- Prompt for runtime arguments before starting a session (same helper as LazyVim's dap.core).
+---@param config dap.Configuration
+---@return dap.Configuration
+local function get_args(config)
+  local args = type(config.args) == "function" and (config.args() or {}) or config.args or {}
+  local args_str = type(args) == "table" and table.concat(args, " ") or args
+
+  config = vim.deepcopy(config)
+  ---@cast args string[]
+  config.args = function()
+    local new_args = vim.fn.expand(vim.fn.input("Run with args: ", args_str))
+    if config.type and config.type == "java" then
+      return new_args
+    end
+    return require("dap.utils").splitstr(new_args)
+  end
+  return config
+end
+
 return {
   {
     -- Plugin: nvim-dap
@@ -110,13 +129,6 @@ return {
           require("dap").step_over()
         end,
         desc = "Step Over",
-      },
-      {
-        "<leader>dp",
-        function()
-          require("dap").pause()
-        end,
-        desc = "Pause",
       },
       {
         "<leader>dr",

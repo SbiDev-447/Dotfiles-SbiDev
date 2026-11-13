@@ -2,7 +2,6 @@ return {
   "selimacerbas/kitehost.nvim",
   dependencies = {
     "folke/which-key.nvim",
-    "nvim-telescope/telescope.nvim", -- recomendado para el picker de paths
   },
   init = function()
     local ok, wk = pcall(require, "which-key")

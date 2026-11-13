@@ -66,12 +66,6 @@ local function setup_nodejs()
           -- Set the Node.js host program
           vim.g.node_host_prog = node_path
 
-          -- Set npm path
-          local npm_path = vim.fn.exepath("npm")
-          if npm_path ~= "" then
-            vim.g.npm_host_prog = npm_path
-          end
-
           if vim.g.debug_nodejs or vim.env.DEBUG_NODEJS then
             print("✓ Node.js for Neovim: " .. node_path .. " (v" .. version .. ")")
 
@@ -206,10 +200,6 @@ function M.info()
     print("Source: Homebrew-managed")
   else
     print("Source: System")
-  end
-
-  if vim.g.npm_host_prog then
-    print("npm: " .. vim.g.npm_host_prog)
   end
 
   if vim.g.debug_nodejs then

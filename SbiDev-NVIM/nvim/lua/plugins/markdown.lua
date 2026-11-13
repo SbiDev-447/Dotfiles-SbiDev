@@ -17,7 +17,7 @@ return {
       enabled = true,
       icons = { "●", "○", "◆", "◇" },
       right_pad = 1,
-      highlight = "render-markdownBullet",
+      highlight = "RenderMarkdownBullet",
     },
     checkbox = {
       enabled = true,

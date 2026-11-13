@@ -3,12 +3,6 @@
 -- Map Ctrl+b in insert mode to delete to the end of the word without leaving insert mode
 vim.keymap.set("i", "<C-b>", "<C-o>de")
 
--- Map Ctrl+c to escape from other modes
-vim.keymap.set({ "i", "n", "v" }, "<C-c>", [[<C-\><C-n>]])
-
--- Screen Keys
-vim.keymap.set({ "n" }, "<leader>uk", "<cmd>Screenkey<CR>")
-
 ----- Tmux Navigation ------
 local nvim_tmux_nav = require("nvim-tmux-navigation")
 
@@ -21,14 +15,6 @@ vim.keymap.set("n", "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext) -- Navigate
 
 ----- OIL -----
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
--- Delete all buffers but the current one
-vim.keymap.set(
-  "n",
-  "<leader>bq",
-  '<Esc>:%bdelete|edit #|normal`"<Return>',
-  { desc = "Delete other buffers but the current one" }
-)
 
 -- Disable key mappings in insert mode
 vim.api.nvim_set_keymap("i", "<A-j>", "<Nop>", { noremap = true, silent = true })
@@ -47,75 +33,38 @@ vim.api.nvim_set_keymap("x", "K", "<Nop>", { noremap = true, silent = true })
 -- Redefine Ctrl+s to save with the custom function
 vim.api.nvim_set_keymap("n", "<C-s>", ":lua SaveFile()<CR>", { noremap = true, silent = true })
 
--- Grep keybinding for visual mode - search selected text
-vim.keymap.set("v", "<leader>sg", function()
-  -- Get the selected text
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
-  local lines = vim.fn.getline(start_pos[2], end_pos[2])
+-- Grep selected text from visual mode
+local function get_visual_selection()
+  local mode = vim.fn.mode()
+  local sel_type = (mode == "v" or mode == "V" or mode == "\22") and mode or "v"
+  local region = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = sel_type })
+  local text = table.concat(region, "\n")
+  if text == "" then
+    return nil
+  end
+  return vim.fn.escape(text, "\\.*[]^$()+?{}")
+end
 
-  if #lines == 0 then
+vim.keymap.set("v", "<leader>sg", function()
+  local text = get_visual_selection()
+  if not text then
     return
   end
-
-  -- Handle single line selection
-  if #lines == 1 then
-    lines[1] = string.sub(lines[1], start_pos[3], end_pos[3])
-  else
-    -- Handle multi-line selection
-    lines[1] = string.sub(lines[1], start_pos[3])
-    lines[#lines] = string.sub(lines[#lines], 1, end_pos[3])
-  end
-
-  local selected_text = table.concat(lines, "\n")
-
-  -- Escape special characters for grep
-  selected_text = vim.fn.escape(selected_text, "\\.*[]^$()+?{}")
-
-  -- Use the selected text for grep
   if pcall(require, "snacks") then
-    require("snacks").picker.grep({ search = selected_text })
-  elseif pcall(require, "fzf-lua") then
-    require("fzf-lua").live_grep({ search = selected_text })
+    require("snacks").picker.grep({ search = text })
   else
     vim.notify("No grep picker available", vim.log.levels.ERROR)
   end
 end, { desc = "Grep Selected Text" })
 
--- Grep keybinding for visual mode with G - search selected text at root level
 vim.keymap.set("v", "<leader>sG", function()
-  -- Get git root or fallback to cwd
-  local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("\n", "")
-  local root = vim.v.shell_error == 0 and git_root ~= "" and git_root or vim.fn.getcwd()
-
-  -- Get the selected text
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
-  local lines = vim.fn.getline(start_pos[2], end_pos[2])
-
-  if #lines == 0 then
+  local text = get_visual_selection()
+  if not text then
     return
   end
-
-  -- Handle single line selection
-  if #lines == 1 then
-    lines[1] = string.sub(lines[1], start_pos[3], end_pos[3])
-  else
-    -- Handle multi-line selection
-    lines[1] = string.sub(lines[1], start_pos[3])
-    lines[#lines] = string.sub(lines[#lines], 1, end_pos[3])
-  end
-
-  local selected_text = table.concat(lines, "\n")
-
-  -- Escape special characters for grep
-  selected_text = vim.fn.escape(selected_text, "\\.*[]^$()+?{}")
-
-  -- Use the selected text for grep at root level
+  local root = vim.fs.root(0, { ".git" }) or vim.fn.getcwd()
   if pcall(require, "snacks") then
-    require("snacks").picker.grep({ search = selected_text, cwd = root })
-  elseif pcall(require, "fzf-lua") then
-    require("fzf-lua").live_grep({ search = selected_text, cwd = root })
+    require("snacks").picker.grep({ search = text, cwd = root })
   else
     vim.notify("No grep picker available", vim.log.levels.ERROR)
   end

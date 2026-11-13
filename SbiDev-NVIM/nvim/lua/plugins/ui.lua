@@ -32,19 +32,6 @@ return {
   -- IMPORTANT: using version "*" to fix a bug
   { "folke/todo-comments.nvim", version = "*" },
 
-  -- Plugin: folke/which-key.nvim
-  -- URL: https://github.com/folke/which-key.nvim
-  -- Description: Plugin to show a popup with available keybindings.
-  -- IMPORTANT: using event "VeryLazy" to optimize loading time
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      preset = "classic",
-      win = { border = "single" },
-    },
-  },
-
   -- Plugin: nvim-docs-view
   -- URL: https://github.com/amrbashir/nvim-docs-view
   -- Description: A Neovim plugin for viewing documentation.
@@ -141,7 +128,7 @@ return {
       require("incline").setup({
         window = { margin = { vertical = 0, horizontal = 1 } }, -- Set the window margin
         hide = {
-          cursorline = true, -- Hide the incline window when the cursorline is active
+          cursorline = "smart", -- Hide only when the incline window overlaps the cursor or selection
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t") -- Get the filename
