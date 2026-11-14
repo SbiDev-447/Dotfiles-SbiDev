@@ -17,7 +17,7 @@
 | `fuzzel-custom-launcher` | Menú de utilidades: btop, fastfetch y nmtui, las tres dentro de Kitty | fuzzel, kitty, btop, fastfetch, nmtui |
 | `fuzzel-Wallpaper` | Selector de wallpapers WebP con soporte de subcarpetas | fuzzel, swaybg, find |
 | `niri_wallpaper.sh` | Rotador aleatorio de wallpapers con persistencia de shuffle | swaybg, shuf, notify-send |
-| `convertToWebp` | Conversor recursivo de imágenes a WebP con confirmación | ImageMagick (convert) |
+| `convertToWebp` | Conversor recursivo de imágenes a WebP con confirmación. Rechaza `/`, `/home`, `/root` y el HOME del usuario para evitar conversiones masivas accidentales | ImageMagick (convert) |
 | `emojipicker.sh` | Selector de ~1500 emojis con búsqueda fuzzy; copia al portapapeles y lo escribe en la ventana activa | fuzzel, wl-clipboard, wtype |
 | `toggle-theme-kitty.sh` | Alterna el tema de kitty commenting y descomentando el `include` de `kitty-theme.conf` / `kitty-theme-light.conf` dentro de los marcadores `# BEGIN_KITTY_THEME`. Recarga kitty con `SIGUSR1` | sed, grep, pkill |
 | `toggle-theme-alacritty.sh` | Alterna el tema de Alacritty comentando y descomentando el `general.import` de `alacritty-theme.toml` / `alacritty-theme-light.toml` dentro de los marcadores `# BEGIN_ALACRITTY_THEME`. No envía ninguna señal: Alacritty se recarga solo al detectar el cambio | sed, grep |

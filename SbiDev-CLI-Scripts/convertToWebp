@@ -31,6 +31,28 @@ if [ ! -d "$TARGET_DIR" ]; then
   exit 1
 fi
 
+# Bloqueo de seguridad: nunca convertir un árbol completo de inicio.
+# Sin argumentos el objetivo es el cwd, así que lanzarlo desde /home recorrería todo el home.
+RESOLVED_DIR=$(realpath -e -- "$TARGET_DIR") || {
+  echo "Error: no se pudo resolver la ruta '$TARGET_DIR'."
+  exit 1
+}
+
+RESOLVED_HOME=""
+if [ -n "${HOME:-}" ] && [ -d "$HOME" ]; then
+  RESOLVED_HOME=$(realpath -e -- "$HOME")
+fi
+
+for forbidden in "/" "/home" "/root" "$RESOLVED_HOME"; do
+  if [ -n "$forbidden" ] && [ "$RESOLVED_DIR" = "$forbidden" ]; then
+    echo "Error: por seguridad, convertToWebp no puede ejecutarse sobre '$forbidden'."
+    echo "Ejecútalo sobre una subcarpeta concreta (por ejemplo, ~/Pictures)."
+    exit 1
+  fi
+done
+
+TARGET_DIR="$RESOLVED_DIR"
+
 # Colores para output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
