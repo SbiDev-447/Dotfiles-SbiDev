@@ -210,9 +210,9 @@ alias wofdecom='woff2_decompress'
 alias npc='niri-pick-color.sh'
 
 # Security
-alias rm = 'rm -i'
-alias mv = 'mv -i'
-alias cp = 'cp -i'
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
 
 # ============================================
 # 6. FUNCIONES ÚTILES
