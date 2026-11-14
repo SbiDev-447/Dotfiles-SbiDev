@@ -1,11 +1,24 @@
 #!/bin/bash
 # ~/.local/bin/fuzzel-power-menu
 
-options="  Bloquear y 󰒲  Suspender\n󰑓 Reiniciar\n⏻ Apagar"
+options="  Bloquear y 󰒲  Suspender\n󰍃 Cerrar sesión\n󰑓 Reiniciar\n⏻ Apagar"
 selected=$(echo -e "$options" | fuzzel --dmenu -l 5 -p "⚡ Energía: ")
+
+# Cerrar la sesión del compositor en uso (Niri o Sway)
+logout() {
+  if [ -n "${NIRI_SOCKET:-}" ] || pgrep -x niri >/dev/null 2>&1; then
+    niri msg action quit --skip-confirmation
+  elif [ -n "${SWAYSOCK:-}" ] || pgrep -x sway >/dev/null 2>&1; then
+    swaymsg exit
+  else
+    echo "Error: no se detectó Niri ni Sway." >&2
+    return 1
+  fi
+}
 
 case "$selected" in
 "  Bloquear y 󰒲  Suspender") ~/.local/bin/swaylock-lock-screen ;;
+"󰍃 Cerrar sesión") logout ;;
 "󰑓 Reiniciar") systemctl reboot ;;
 "⏻ Apagar") systemctl poweroff ;;
 esac

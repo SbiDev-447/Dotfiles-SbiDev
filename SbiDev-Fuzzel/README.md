@@ -37,6 +37,8 @@ Opciones:
 
     🔒 Bloquear y 💤 Suspender - Bloquea la pantalla y suspende el sistema
 
+    🚪 Cerrar sesión - Cierra la sesión del compositor en uso (Niri o Sway)
+
     🔄 Reiniciar - Reinicia el sistema
 
     ⏻ Apagar - Apaga el sistema
