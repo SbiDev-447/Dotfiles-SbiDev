@@ -33,6 +33,7 @@ window#waybar {
 #pulseaudio.microphone,
 #battery,
 #temperature,
+#custom-npc,
 #custom-localsend,
 #custom-dmenu,
 #custom-power {
@@ -107,6 +108,11 @@ window#waybar {
 /* ================================
    MODULES-RIGHT
    ================================ */
+/* custom/npc */
+#custom-npc {
+  color: @color4;
+}
+
 /* network */
 #network.disabled {
   color: @color1;
@@ -235,6 +241,7 @@ window#waybar {
 #bluetooth:hover,
 #pulseaudio:hover,
 #pulseaudio.microphone:hover,
+#custom-npc:hover,
 #custom-localsend:hover,
 #custom-dmenu:hover,
 #custom-power:hover {

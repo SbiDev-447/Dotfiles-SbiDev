@@ -3,7 +3,6 @@
   "modules-center": [
     "sway/workspaces",
     "sway/mode",
-    "privacy",
     "mpris"
   ]
 }

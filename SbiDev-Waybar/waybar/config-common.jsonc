@@ -7,7 +7,12 @@
   "margin-left": 0,
   "margin-right": 0,
   "spacing": 0,
-  "modules-left": ["clock", "cpu", "memory", "temperature"],
+  "modules-left": [
+    "clock",
+    "cpu",
+    "memory",
+    "temperature"
+  ],
   "modules-right": [
     "custom/localsend",
     "custom/dmenu",
@@ -20,21 +25,18 @@
     "battery",
     "custom/power",
   ],
-
   "custom/cachy": {
     "format": " ",
     "tooltip": false,
     "on-click": "setsid kitty",
     "on-click-right": "setsid alacritty",
   },
-
   "clock": {
     "interval": 1,
     "format": "TIME: {:%H:%M}",
     "format-alt": "DATE: {:%d-%m-%y}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
   },
-
   "cpu": {
     "format": " ",
     "interval": 5,
@@ -43,14 +45,12 @@
     "on-click": "setsid kitty -e btop",
     "on-click-right": "setsid kitty -e btm",
   },
-
   "memory": {
     "format": "󰍛 ",
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB ({percentage}%)",
   },
-
   "temperature": {
     "format": "",
     "format-warning": "",
@@ -62,7 +62,6 @@
     "tooltip": true,
     "tooltip-format": "CPU: {temperatureC}°C",
   },
-
   "niri/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -71,7 +70,6 @@
       "active": "󰄯",
     },
   },
-
   "sway/workspaces": {
     "all-outputs": true,
     "format": "{icon}",
@@ -80,7 +78,6 @@
       "urgent": "󰝥",
       "default": "",
     },
-
     "persistent-workspaces": {
       "1": [],
       "2": [],
@@ -93,28 +90,9 @@
       "9": [],
     },
   },
-
   "sway/mode": {
     "format": " >{}",
   },
-
-  "privacy": {
-    "icon-size": 14,
-    "transition-duration": 250,
-    "modules": [
-      {
-        "type": "screenshare",
-        "tooltip": false,
-      },
-    ],
-    "ignore": [
-      {
-        "type": "screenshare",
-        "name": "obs",
-      },
-    ],
-  },
-
   "mpris": {
     "format": "󰐎 ",
     "interval": 1,
@@ -124,16 +102,20 @@
     "tooltip": true,
     "tooltip-format": "{title}",
   },
-
   "custom/localsend": {
     "format": "",
     "tooltip": false,
     "on-click": "flatpak run org.localsend.localsend_app",
   },
-
   "network": {
     "format-icons": {
-      "wifi": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
+      "wifi": [
+        "󰤯 ",
+        "󰤟 ",
+        "󰤢 ",
+        "󰤥 ",
+        "󰤨 "
+      ],
       "disabled": "󰤭 ",
       "disconnected": "󰤩 ",
     },
@@ -148,7 +130,6 @@
     "tooltip": true,
     "max-length": 20,
   },
-
   "bluetooth": {
     "format-on": "󰂯 ",
     "format-off": "󰂲 ",
@@ -161,7 +142,6 @@
     "on-click-right": "setsid blueman-manager",
     "on-click": "sh -c 'if bluetoothctl show | grep -q \"Powered: yes\"; then bluetoothctl power off; else bluetoothctl power on; fi'",
   },
-
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "format-source": "󰍬 ",
@@ -170,28 +150,37 @@
     "on-click-right": "pavucontrol -t 4",
     "tooltip": false,
   },
-
   "pulseaudio#sink": {
     "format": "{volume}% {icon}",
     "format-muted": "󰝟",
-    "format-icons": ["󰕿", "󰖀", "󰕾"],
+    "format-icons": [
+      "󰕿",
+      "󰖀",
+      "󰕾"
+    ],
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "on-click-right": "pavucontrol -t 3",
     "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
     "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
     "tooltip": false,
   },
-
   "backlight": {
     "format": "{percent}% {icon}",
-    "format-icons": ["󰃚", "󰃛", "󰃜", "󰃟", "󰃞", "󰃝", "󰃠"],
+    "format-icons": [
+      "󰃚",
+      "󰃛",
+      "󰃜",
+      "󰃟",
+      "󰃞",
+      "󰃝",
+      "󰃠"
+    ],
     "tooltip": false,
     "on-click": "brightnessctl --class=backlight set 10%+",
     "on-click-right": "brightnessctl --class=backlight set 10%-",
     "on-scroll-up": "brightnessctl --class=backlight set 5%+",
     "on-scroll-down": "brightnessctl --class=backlight set 5%-",
   },
-
   "battery": {
     "interval": 5,
     "states": {
@@ -201,7 +190,18 @@
       "warning": 30,
     },
     "format": "{capacity}% {icon}",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
     "format-charging": "{capacity}%  ",
     "format-plugged": "{capacity}%  ",
     "format-critical": "{capacity}% 󰂃",
@@ -223,13 +223,11 @@
       "on-charging-100": "$HOME/.local/bin/low-battery-notify.sh full 100",
     },
   },
-
   "custom/dmenu": {
     "format": "󰏒",
     "on-click": "$HOME/.local/bin/dmenu",
     "tooltip": false,
   },
-
   "custom/power": {
     "format": "⏻ ",
     "tooltip": false,

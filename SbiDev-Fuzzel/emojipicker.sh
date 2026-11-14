@@ -69,7 +69,7 @@ select_emoji() {
     # extraer, así que propagamos el fallo y el llamador sale limpiamente.
     selected=$(tail -n +$((emoji_data_start + 1)) "$0" | \
         fuzzel --match-mode fzf --dmenu --prompt "🔍 Buscar emoji: " \
-        --font "IosevkaTerm NF:size=14, Noto Color Emoji:size=24" \
+        --font "IosevkaTerm NF:size=14, Noto Color Emoji:size=20" \
         --lines 15 --width 70)
 
     # La primera palabra de la línea es el emoji, el resto es la descripción.

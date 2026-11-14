@@ -9,8 +9,8 @@
 # └──────────────────────────────────────────────────────────────────────────────┘
 
 # BEGIN_ALACRITTY_THEME
-#general.import = ["alacritty-theme.toml"]
-general.import = ["alacritty-theme-light.toml"]
+general.import = ["alacritty-theme.toml"]
+#general.import = ["alacritty-theme-light.toml"]
 # END_ALACRITTY_THEME
 
 

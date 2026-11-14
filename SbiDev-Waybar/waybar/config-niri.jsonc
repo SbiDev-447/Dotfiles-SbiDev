@@ -1,8 +1,28 @@
 {
-  "include": ["config-common.jsonc"],
+  "include": [
+    "config-common.jsonc"
+  ],
+  "modules-right": [
+    "custom/npc",
+    "custom/localsend",
+    "custom/dmenu",
+    "custom/cachy",
+    "network",
+    "bluetooth",
+    "pulseaudio#microphone",
+    "pulseaudio#sink",
+    "backlight",
+    "battery",
+    "custom/power",
+  ],
   "modules-center": [
     "niri/workspaces",
-    "privacy",
     "mpris"
-  ]
+  ],
+  "custom/npc": {
+    "format": " ",
+    "tooltip": false,
+    "on-click": "$HOME/.local/bin/niri-pick-color.sh hex",
+    "on-click-right": "$HOME/.local/bin/niri-pick-color.sh rgb",
+  }
 }

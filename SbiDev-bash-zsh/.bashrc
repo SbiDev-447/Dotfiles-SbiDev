@@ -167,6 +167,11 @@ alias wofdecom='woff2_decompress'
 # Niri (captura de color de pantalla: RGB o HEX, copiado al portapapeles)
 alias npc='niri-pick-color.sh'
 
+# Security
+alias rm = 'rm -i'
+alias mv = 'mv -i'
+alias cp = 'cp -i'
+
 # ============================================
 # 7. FUNCIONES ÚTILES
 # ============================================
